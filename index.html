@@ -519,6 +519,7 @@
       display:none;
     }
     .cookie-banner.show{display:block}
+    body.cookie-open .quick-actions{display:none}
     .cookie-box{
       max-width:980px;
       margin:0 auto;
@@ -611,50 +612,11 @@
         white-space:nowrap;
         padding:10px 12px;
       }
+      body.cookie-open .quick-actions{display:none}
     }
 
     @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
     @keyframes fadeInDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
-   /* === SOLAPE REPRODUCTORES SOBRE HERO (más marcado) === */
-#musica{
-  padding-top: 110px !important;  /* reserva espacio para el solape */
-  padding-bottom: 60px !important;
-  margin-top: -90px !important;   /* acerca la sección al hero */
-  position: relative !important;
-  z-index: 30 !important;
-}
-
-.platforms-container{
-  transform: translateY(-160px) !important; /* <-- más solape */
-  margin-bottom: -160px !important;         /* compensa el hueco */
-}
- /* reCAPTCHA badge: muévelo para que no moleste */
-.grecaptcha-badge{
-  right: auto !important;
-  right: 14px !important;
-  bottom: 14px !important;
-  z-index: 9999 !important;
-}
-/* reCAPTCHA badge: versión más discreta */
-.grecaptcha-badge{
-  transform: scale(0.85) !important;
-  transform-origin: right bottom !important;
-  right: 10px !important;
-  bottom: 10px !important;
-  left: auto !important;
-  z-index: 9999 !important;
-}
-.grecaptcha-badge{
-  opacity: 0.15 !important;
-  transition: opacity .2s ease !important;
-  left: auto !important;
-  right: 10px !important;
-  bottom: 10px !important;
-  z-index: 9999 !important;
-}
-.grecaptcha-badge:hover{
-  opacity: 1 !important;
-}
   </style>
 </head>
 
@@ -1125,15 +1087,20 @@
     const COOKIE_KEY = 'tdqv_cookie_consent';
     function showCookieBannerIfNeeded(){
       const v = localStorage.getItem(COOKIE_KEY);
-      if (!v) document.getElementById('cookieBanner').classList.add('show');
+      if (!v) {
+        document.getElementById('cookieBanner').classList.add('show');
+        document.body.classList.add('cookie-open');
+      }
     }
     function acceptCookies(){
       localStorage.setItem(COOKIE_KEY, 'accepted');
       document.getElementById('cookieBanner').classList.remove('show');
+      document.body.classList.remove('cookie-open');
     }
     function rejectCookies(){
       localStorage.setItem(COOKIE_KEY, 'rejected');
       document.getElementById('cookieBanner').classList.remove('show');
+      document.body.classList.remove('cookie-open');
     }
 
     document.addEventListener('DOMContentLoaded', () => {

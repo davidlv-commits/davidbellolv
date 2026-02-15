@@ -197,6 +197,7 @@
 
     .cookie-banner{position:fixed;left:16px;right:16px;bottom:16px;z-index:9997;background:rgba(5,5,5,.92);border:1px solid rgba(255,255,255,.10);border-radius:14px;padding:16px 16px;display:none;backdrop-filter:blur(10px);box-shadow:0 20px 60px rgba(0,0,0,.5)}
     .cookie-banner.show{display:block}
+    body.cookie-open .floating-actions{display:none}
     .cookie-row{display:flex;gap:14px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
     .cookie-text{max-width:860px;color:#e7e5e4;font-size:.92rem;line-height:1.45}
     .cookie-text a{color:var(--color-accent);text-decoration:underline}
@@ -236,6 +237,7 @@
         white-space:nowrap;
         padding:10px 12px;
       }
+      body.cookie-open .floating-actions{display:none}
     }
 
     @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
@@ -669,9 +671,15 @@
     const COOKIE_KEY = "tdqv_cookie_consent_v1";
     function showCookieBannerIfNeeded(){
       const v = localStorage.getItem(COOKIE_KEY);
-      if(!v) document.getElementById('cookieBanner').classList.add('show');
+      if(!v){
+        document.getElementById('cookieBanner').classList.add('show');
+        document.body.classList.add('cookie-open');
+      }
     }
-    function hideCookieBanner(){ document.getElementById('cookieBanner').classList.remove('show'); }
+    function hideCookieBanner(){
+      document.getElementById('cookieBanner').classList.remove('show');
+      document.body.classList.remove('cookie-open');
+    }
     function acceptEssential(){ localStorage.setItem(COOKIE_KEY, JSON.stringify({level:"essential", ts: Date.now()})); hideCookieBanner(); }
     function acceptAll(){ localStorage.setItem(COOKIE_KEY, JSON.stringify({level:"all", ts: Date.now()})); hideCookieBanner(); }
     document.addEventListener('DOMContentLoaded', () => {
