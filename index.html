@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
   <!-- Iconos -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/lucide@0.468.0"></script>
 
   <style>
     :root{
@@ -326,7 +326,7 @@
     }
     .slider-btn:hover{transform:translateY(-2px);border-color:rgba(217,119,6,.55)}
     .slider-indicators{display:flex;justify-content:center;gap:10px;margin-top:14px}
-    .dot{height:9px;width:9px;background:#333;border-radius:50%;cursor:pointer}
+    .dot{height:9px;width:9px;background:#333;border-radius:50%;cursor:pointer;border:0;padding:0;display:inline-block}
     .dot.active{background:var(--color-accent)}
     .slide-info{padding:18px;text-align:center;color:#e7e7e7}
     .slide-info h3{font-family:var(--font-serif);font-size:1.35rem;margin-bottom:4px}
@@ -795,8 +795,8 @@
       </div>
 
       <div class="slider-indicators">
-        <span class="dot active" onclick="goToSlide(0)" aria-label="Ir al vídeo 1"></span>
-        <span class="dot" onclick="goToSlide(1)" aria-label="Ir al vídeo 2"></span>
+        <button type="button" class="dot active" onclick="goToSlide(0)" aria-label="Ir al vídeo 1"></button>
+        <button type="button" class="dot" onclick="goToSlide(1)" aria-label="Ir al vídeo 2"></button>
       </div>
     </div>
   </section>
@@ -943,7 +943,7 @@
 
         <div class="review-card">
           <div class="review-header">
-            <div class="review-avatar"><img src="https://davidbellolv.com/img/review-diana.jpeg" alt="Diana" /></div>
+            <div class="review-avatar"><img src="img/review-diana.jpg" alt="Diana" /></div>
             <div class="review-meta"><h4>Diana</h4><span>Culiacán</span></div>
           </div>
           <p class="review-text">"¡¡Gracias infinitas por compartir este libro!! Cada página me hace emocionarme; me logra enganchar. Debo confesar que soy una romántica empedernida y la historia me fascina. Una lluvia de éxitos, mi estimado amigo."</p>
@@ -1044,7 +1044,10 @@
       const slides = document.querySelectorAll('.video-slide');
       const dots = document.querySelectorAll('.dot');
       slides.forEach((s,i) => s.classList.toggle('active-slide', i === currentSlide));
-      dots.forEach((d,i) => d.classList.toggle('active', i === currentSlide));
+      dots.forEach((d,i) => {
+        d.classList.toggle('active', i === currentSlide);
+        d.setAttribute('aria-pressed', i === currentSlide ? 'true' : 'false');
+      });
     }
     function nextSlide(){ currentSlide = (currentSlide + 1) % totalSlides; updateSlider(); }
     function prevSlide(){ currentSlide = (currentSlide - 1 + totalSlides) % totalSlides; updateSlider(); }
@@ -1062,13 +1065,36 @@
       document.querySelectorAll('.track-item').forEach(i => {
         if (i !== item) {
           i.classList.remove('active');
+          const h = i.querySelector('.track-header');
+          if (h) h.setAttribute('aria-expanded', 'false');
           const c = i.querySelector('.track-content');
           if (c) c.style.maxHeight = null;
         }
       });
 
       item.classList.toggle('active');
+      header.setAttribute('aria-expanded', item.classList.contains('active') ? 'true' : 'false');
       content.style.maxHeight = item.classList.contains('active') ? (content.scrollHeight + "px") : null;
+    }
+
+    function setupAccessibleControls() {
+      document.querySelectorAll('.track-header').forEach((header, idx) => {
+        header.setAttribute('role', 'button');
+        header.setAttribute('tabindex', '0');
+        header.setAttribute('aria-expanded', 'false');
+        const content = header.parentElement ? header.parentElement.querySelector('.track-content') : null;
+        if (content) {
+          const contentId = `track-panel-${idx + 1}`;
+          content.id = contentId;
+          header.setAttribute('aria-controls', contentId);
+        }
+        header.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleTrack(header);
+          }
+        });
+      });
     }
 
     const COOKIE_KEY = 'tdqv_cookie_consent';
@@ -1089,6 +1115,7 @@
       initIcons();
       setTimeout(initIcons, 120);
       showCookieBannerIfNeeded();
+      setupAccessibleControls();
       updateSlider();
     });
   </script>
