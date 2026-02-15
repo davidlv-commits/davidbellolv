@@ -84,6 +84,8 @@
     .hero{position:relative;height:100vh;min-height:760px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;text-align:center;overflow:hidden;padding-bottom:20vh}
     .video-background{position:absolute;inset:0;z-index:0}
     .video-background video{width:100%;height:100%;object-fit:cover}
+    .desktop-video{display:block}
+    .mobile-video{display:none}
     .hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom, rgba(10,10,10,.35) 0%, rgba(10,10,10,.12) 40%, rgba(10,10,10,.96) 100%);z-index:1}
 
     .hero-top-bar{position:absolute;top:150px;left:0;width:100%;z-index:5;text-align:center;animation:fadeInDown 1s ease-out}
@@ -220,6 +222,20 @@
       .hero{min-height:690px}
       .platforms-container{gap:18px}
       .embed-wrapper{min-width:100%;height:440px}
+      .desktop-video{display:none!important}
+      .mobile-video{display:block!important}
+      .floating-actions{
+        left:12px;
+        right:12px;
+        bottom:10px;
+        flex-direction:row;
+        overflow-x:auto;
+        gap:8px;
+      }
+      .fab{
+        white-space:nowrap;
+        padding:10px 12px;
+      }
     }
 
     @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
@@ -267,10 +283,10 @@
 
   <section id="hero" class="hero">
     <div class="video-background">
-      <video class="desktop-video" autoplay loop muted playsinline>
+      <video class="desktop-video" autoplay loop muted playsinline preload="metadata" aria-hidden="true">
         <source src="../video/hero-desktop.mp4" type="video/mp4" />
       </video>
-      <video class="mobile-video" autoplay loop muted playsinline>
+      <video class="mobile-video" autoplay loop muted playsinline preload="none" aria-hidden="true">
         <source src="../video/hero-mobile.mp4" type="video/mp4" />
       </video>
       <div class="hero-overlay"></div>
@@ -286,8 +302,8 @@
     <div class="hero-content">
       <div class="logo-container">
         <h1 class="sr-only">Tú de qué vas, The Musical</h1>
-        <img src="../img/logo-titulo.png" alt="Tú de qué vas" class="logo-main" />
-        <img src="../img/logo-subtitulo.png" alt="The Musical" class="logo-sub" />
+        <img src="../img/logo-titulo.png" alt="Tú de qué vas" class="logo-main" fetchpriority="high" decoding="async" />
+        <img src="../img/logo-subtitulo.png" alt="The Musical" class="logo-sub" fetchpriority="high" decoding="async" />
       </div>
 
       <p class="hero-desc">
@@ -315,7 +331,7 @@
           <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="450"
             style="width:100%;max-width:660px;overflow:hidden;background:transparent;"
             sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation allow-presentation"
-            src="https://embed.music.apple.com/us/album/t%C3%BA-de-qu%C3%A9-vas/1861250197"></iframe>
+            src="https://embed.music.apple.com/us/album/t%C3%BA-de-qu%C3%A9-vas/1861250197" loading="lazy" title="Apple Music"></iframe>
         </div>
       </div>
 
@@ -327,7 +343,7 @@
     <div class="container">
       <div class="album-intro-grid">
         <div class="album-cover-wrapper">
-          <img src="../img/portada-album.jpeg" alt="Album cover" />
+          <img src="../img/portada-album.jpeg" alt="Album cover" loading="lazy" decoding="async" />
         </div>
 
         <div class="album-text">
@@ -358,7 +374,7 @@
 
       <div class="tracklist-grid">
         <div class="tracklist-media">
-          <video autoplay loop muted playsinline>
+          <video autoplay loop muted playsinline preload="none">
             <source src="../video/tracklist-bg.mp4" type="video/mp4" />
           </video>
         </div>
@@ -387,14 +403,14 @@
         <div class="video-slider-track" id="videoTrack">
           <div class="video-slide active-slide">
             <div class="video-wrapper">
-              <iframe src="https://www.youtube.com/embed/ppz_Q3c42rA?rel=0" title="The Most Beautiful Letter in the World" allowfullscreen></iframe>
+              <iframe src="https://www.youtube.com/embed/ppz_Q3c42rA?rel=0" title="The Most Beautiful Letter in the World" allowfullscreen loading="lazy"></iframe>
             </div>
             <div class="slide-info"><h3>The Most Beautiful Letter in the World</h3><p>Original Version</p></div>
           </div>
 
           <div class="video-slide">
             <div class="video-wrapper">
-              <iframe src="https://www.youtube.com/embed/NkhbEIA7mpk?rel=0" title="The Most Beautiful Letter in the World (Bachata)" allowfullscreen></iframe>
+              <iframe src="https://www.youtube.com/embed/NkhbEIA7mpk?rel=0" title="The Most Beautiful Letter in the World (Bachata)" allowfullscreen loading="lazy"></iframe>
             </div>
             <div class="slide-info"><h3>The Most Beautiful Letter in the World</h3><p>Bachata Version</p></div>
           </div>
@@ -416,7 +432,7 @@
     <div class="container">
       <div class="libretto-container">
         <div class="libretto-img">
-          <img src="../img/libreto-cover.jpg" alt="Digital booklet" />
+          <img src="../img/libreto-cover.jpg" alt="Digital booklet" loading="lazy" decoding="async" />
         </div>
         <div>
           <h3 style="font-family:var(--font-serif);font-size:2.2rem;margin-bottom:18px;">A Gift for You</h3>
@@ -439,7 +455,7 @@
           <p>A special greeting with the music that gives Christmas its soul.</p>
         </div>
         <div class="vertical-video-wrapper">
-          <video controls autoplay loop muted playsinline>
+          <video controls loop muted playsinline preload="none">
             <source src="../video/navidad-cristal.mp4" type="video/mp4" />
           </video>
         </div>
@@ -456,7 +472,7 @@
 
   <section class="mid-banner">
     <div class="container">
-      <img src="../img/banner-tu-de-que-vas-el-musical-web.jpg" alt="Tú de qué vas, The Musical - banner" loading="lazy" />
+      <img src="../img/banner-tu-de-que-vas-el-musical-web.jpg" alt="Tú de qué vas, The Musical - banner" loading="lazy" decoding="async" />
     </div>
   </section>
 
@@ -480,7 +496,7 @@
     <div class="container">
       <div class="book-grid">
         <div class="book-cover-wrapper">
-          <img src="../img/portada-novela.jpg" alt="Tú de qué vas (Novel) cover" />
+          <img src="../img/portada-novela.jpg" alt="Tú de qué vas (Novel) cover" loading="lazy" decoding="async" />
         </div>
         <div class="book-text">
           <h3>The Origin: The Novel</h3>
@@ -503,11 +519,11 @@
       </div>
 
       <div class="reviews-grid">
-        <div class="review-card"><div class="review-header"><div class="review-avatar"><img src="../img/review-mariana.jpeg" alt="Mariana" /></div><div class="review-meta"><h4>Mariana</h4><span>Guadalajara</span></div></div><p class="review-text">“Some books just tell a story, and others make you feel like you’re living inside it. Tú de qué vas is one of those.”</p><div class="review-stars"><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i></div></div>
-        <div class="review-card"><div class="review-header"><div class="review-avatar"><img src="../img/review-fernanda.jpeg" alt="Fernanda" /></div><div class="review-meta"><h4>Fernanda</h4><span>Puebla</span></div></div><p class="review-text">“I always look for stories that resonate in my heart, and Tú de qué vas was a revelation. It hits hard.”</p><div class="review-stars"><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i></div></div>
-        <div class="review-card"><div class="review-header"><div class="review-avatar"><img src="../img/review-sofia.jpeg" alt="Sofía" /></div><div class="review-meta"><h4>Sofía</h4><span>Guadalajara</span></div></div><p class="review-text">“A captivating story that wraps you in a whirlwind of feelings. The characters feel real. So exciting!”</p><div class="review-stars"><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i></div></div>
-        <div class="review-card"><div class="review-header"><div class="review-avatar"><img src="../img/review-ana.jpeg" alt="Ana" /></div><div class="review-meta"><h4>Ana</h4><span>Madrid</span></div></div><p class="review-text">“A beautiful novel. I finished it in record time. A reading that will make you feel, laugh, and cry.”</p><div class="review-stars"><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i></div></div>
-        <div class="review-card"><div class="review-header"><div class="review-avatar"><img src="../img/review-diana.jpg" alt="Diana" /></div><div class="review-meta"><h4>Diana</h4><span>Culiacán</span></div></div><p class="review-text">“Thank you for sharing this book. Every page moves me. I’m a hopeless romantic and this story fascinates me.”</p><div class="review-stars"><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i></div></div>
+        <div class="review-card"><div class="review-header"><div class="review-avatar"><img src="../img/review-mariana.jpeg" alt="Mariana" loading="lazy" decoding="async" /></div><div class="review-meta"><h4>Mariana</h4><span>Guadalajara</span></div></div><p class="review-text">“Some books just tell a story, and others make you feel like you’re living inside it. Tú de qué vas is one of those.”</p><div class="review-stars"><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i></div></div>
+        <div class="review-card"><div class="review-header"><div class="review-avatar"><img src="../img/review-fernanda.jpeg" alt="Fernanda" loading="lazy" decoding="async" /></div><div class="review-meta"><h4>Fernanda</h4><span>Puebla</span></div></div><p class="review-text">“I always look for stories that resonate in my heart, and Tú de qué vas was a revelation. It hits hard.”</p><div class="review-stars"><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i></div></div>
+        <div class="review-card"><div class="review-header"><div class="review-avatar"><img src="../img/review-sofia.jpeg" alt="Sofía" loading="lazy" decoding="async" /></div><div class="review-meta"><h4>Sofía</h4><span>Guadalajara</span></div></div><p class="review-text">“A captivating story that wraps you in a whirlwind of feelings. The characters feel real. So exciting!”</p><div class="review-stars"><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i></div></div>
+        <div class="review-card"><div class="review-header"><div class="review-avatar"><img src="../img/review-ana.jpeg" alt="Ana" loading="lazy" decoding="async" /></div><div class="review-meta"><h4>Ana</h4><span>Madrid</span></div></div><p class="review-text">“A beautiful novel. I finished it in record time. A reading that will make you feel, laugh, and cry.”</p><div class="review-stars"><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i></div></div>
+        <div class="review-card"><div class="review-header"><div class="review-avatar"><img src="../img/review-diana.jpg" alt="Diana" loading="lazy" decoding="async" /></div><div class="review-meta"><h4>Diana</h4><span>Culiacán</span></div></div><p class="review-text">“Thank you for sharing this book. Every page moves me. I’m a hopeless romantic and this story fascinates me.”</p><div class="review-stars"><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i><i data-lucide="star" fill="#d97706" stroke="none"></i></div></div>
       </div>
     </div>
   </section>
@@ -520,7 +536,7 @@
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;text-align:center;max-width:820px;margin:0 auto;">
-        <img src="../img/autor-avatar.jpeg" alt="David Bello"
+        <img src="../img/autor-avatar.jpeg" alt="David Bello" loading="lazy" decoding="async"
           style="width:200px;height:200px;object-fit:cover;border-radius:50%;margin-bottom:28px;border:2px solid var(--color-accent);" />
         <h3 style="font-family:var(--font-serif);font-size:2rem;margin-bottom:10px;color:#fff;">David Bello López-Valeiras</h3>
         <p style="color:var(--color-accent);margin-bottom:0;">Writer & Composer</p>

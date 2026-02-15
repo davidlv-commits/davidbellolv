@@ -181,6 +181,8 @@
     }
     .video-background{position:absolute;inset:0;z-index:0}
     .video-background video{width:100%;height:100%;object-fit:cover}
+    .desktop-video{display:block}
+    .mobile-video{display:none}
     .hero-overlay{
       position:absolute;inset:0;
       background:linear-gradient(to bottom,rgba(10,10,10,.45) 0%,rgba(10,10,10,.12) 40%,rgba(10,10,10,.96) 100%);
@@ -596,6 +598,19 @@
     @media (max-width:767px){
       .desktop-video{display:none!important}
       .mobile-video{display:block!important}
+      .quick-actions{
+        left:12px;
+        right:12px;
+        bottom:10px;
+        display:flex;
+        flex-direction:row;
+        overflow-x:auto;
+        gap:8px;
+      }
+      .quick-actions a,.quick-actions button{
+        white-space:nowrap;
+        padding:10px 12px;
+      }
     }
 
     @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
@@ -675,10 +690,10 @@
   <!-- HERO -->
   <section id="hero" class="hero">
     <div class="video-background">
-      <video class="desktop-video" autoplay loop muted playsinline>
+      <video class="desktop-video" autoplay loop muted playsinline preload="metadata" aria-hidden="true">
         <source src="video/hero-desktop.mp4" type="video/mp4" />
       </video>
-      <video class="mobile-video" autoplay loop muted playsinline>
+      <video class="mobile-video" autoplay loop muted playsinline preload="none" aria-hidden="true">
         <source src="video/hero-mobile.mp4" type="video/mp4" />
       </video>
       <div class="hero-overlay"></div>
@@ -694,8 +709,8 @@
     <div class="hero-content">
       <div class="logo-container">
         <h1 class="sr-only">Tú de qué vas, El Musical</h1>
-        <img src="img/logo-titulo.png" alt="Tú de qué vas" class="logo-main" />
-        <img src="img/logo-subtitulo.png" alt="El Musical" class="logo-sub" />
+        <img src="img/logo-titulo.png" alt="Tú de qué vas" class="logo-main" fetchpriority="high" decoding="async" />
+        <img src="img/logo-subtitulo.png" alt="El Musical" class="logo-sub" fetchpriority="high" decoding="async" />
       </div>
       <p class="hero-desc">Una carta al destino convertida en sinfonía. La banda sonora de un viaje que cambiará tu vida.</p>
     </div>
@@ -717,7 +732,7 @@
             frameborder="0" height="450"
             style="width:100%;max-width:660px;overflow:hidden;background:transparent;"
             sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation allow-presentation"
-            src="https://embed.music.apple.com/us/album/t%C3%BA-de-qu%C3%A9-vas/1861250197"></iframe>
+            src="https://embed.music.apple.com/us/album/t%C3%BA-de-qu%C3%A9-vas/1861250197" loading="lazy" title="Apple Music"></iframe>
         </div>
       </div>
       <div class="platforms-footer-text">Disponible en todas las plataformas digitales</div>
@@ -729,7 +744,7 @@
     <div class="container">
       <div class="album-intro-grid">
         <div class="album-cover-wrapper">
-          <img src="img/portada-album.jpeg" alt="Portada Tú de qué vas, El Musical" />
+          <img src="img/portada-album.jpeg" alt="Portada Tú de qué vas, El Musical" loading="lazy" decoding="async" />
         </div>
         <div class="album-text">
           <h3>Una historia sonora</h3>
@@ -755,7 +770,7 @@
 
       <div class="tracklist-grid">
         <div class="tracklist-media">
-          <video autoplay loop muted playsinline>
+          <video autoplay loop muted playsinline preload="none">
             <source src="video/tracklist-bg.mp4" type="video/mp4" />
           </video>
         </div>
@@ -785,14 +800,14 @@
         <div class="video-slider-track" id="videoTrack">
           <div class="video-slide active-slide">
             <div class="video-wrapper">
-              <iframe src="https://www.youtube.com/embed/ppz_Q3c42rA?rel=0" title="La Carta Más Bonita del Mundo" allowfullscreen></iframe>
+              <iframe src="https://www.youtube.com/embed/ppz_Q3c42rA?rel=0" title="La Carta Más Bonita del Mundo" allowfullscreen loading="lazy"></iframe>
             </div>
             <div class="slide-info"><h3>La Carta Más Bonita del Mundo</h3><p>Versión Original</p></div>
           </div>
 
           <div class="video-slide">
             <div class="video-wrapper">
-              <iframe src="https://www.youtube.com/embed/NkhbEIA7mpk?rel=0" title="La Carta Más Bonita del Mundo (Bachata)" allowfullscreen></iframe>
+              <iframe src="https://www.youtube.com/embed/NkhbEIA7mpk?rel=0" title="La Carta Más Bonita del Mundo (Bachata)" allowfullscreen loading="lazy"></iframe>
             </div>
             <div class="slide-info"><h3>La Carta Más Bonita del Mundo</h3><p>Versión Bachata</p></div>
           </div>
@@ -816,7 +831,7 @@
     <div class="container">
       <div class="libretto-container">
         <div class="libretto-img">
-          <img src="img/libreto-cover.jpg" alt="Libreto Digital" />
+          <img src="img/libreto-cover.jpg" alt="Libreto Digital" loading="lazy" decoding="async" />
         </div>
         <div>
           <h3 style="font-family: var(--font-serif); font-size: 2.2rem; margin-bottom: 16px;">Un Regalo para Ti</h3>
@@ -838,7 +853,7 @@
           <p style="color:#e5e5e5;opacity:.9">Una felicitación especial con la música que da alma a la Navidad.</p>
         </div>
         <div class="vertical-video-wrapper">
-          <video controls autoplay loop muted playsinline>
+          <video controls loop muted playsinline preload="none">
             <source src="video/navidad-cristal.mp4" type="video/mp4" />
           </video>
         </div>
@@ -857,7 +872,7 @@
   <!-- BANNER -->
   <section class="mid-banner">
     <div class="container">
-      <img src="img/banner-tu-de-que-vas-el-musical-web.jpg" alt="Tú de qué vas, El Musical - Banner" loading="lazy" />
+      <img src="img/banner-tu-de-que-vas-el-musical-web.jpg" alt="Tú de qué vas, El Musical - Banner" loading="lazy" decoding="async" />
     </div>
   </section>
 
@@ -883,7 +898,7 @@
     <div class="container">
       <div class="book-grid">
         <div class="book-cover-wrapper">
-          <img src="img/portada-novela.jpg" alt="Libro Tú de qué vas" />
+          <img src="img/portada-novela.jpg" alt="Libro Tú de qué vas" loading="lazy" decoding="async" />
         </div>
         <div class="book-text">
           <h3>El Origen: La Novela</h3>
@@ -909,7 +924,7 @@
       <div class="reviews-grid">
         <div class="review-card">
           <div class="review-header">
-            <div class="review-avatar"><img src="img/review-mariana.jpeg" alt="Mariana" /></div>
+            <div class="review-avatar"><img src="img/review-mariana.jpeg" alt="Mariana" loading="lazy" decoding="async" /></div>
             <div class="review-meta"><h4>Mariana</h4><span>Guadalajara</span></div>
           </div>
           <p class="review-text">"Hay libros que te cuentan una historia y ya, y hay otros que te hacen sentir como si estuvieras viviendo dentro de ellos. La saga Tú de qué vas de David es de esos libros que te atrapan, te sacuden y, cuando lo terminas, te dejan pensando en tu propia vida amorosa."</p>
@@ -920,7 +935,7 @@
 
         <div class="review-card">
           <div class="review-header">
-            <div class="review-avatar"><img src="img/review-fernanda.jpeg" alt="Fernanda" /></div>
+            <div class="review-avatar"><img src="img/review-fernanda.jpeg" alt="Fernanda" loading="lazy" decoding="async" /></div>
             <div class="review-meta"><h4>Fernanda</h4><span>Puebla</span></div>
           </div>
           <p class="review-text">"Siempre he buscado historias que resuenen en mi corazón y 'Tú de qué vas' ha sido una revelación. Este libro no solo atrapa desde la primera página, sino que también ofrece una introspección profunda y necesaria sobre lo que es sentir amor verdadero. Este libro pega muy fuerte."</p>
@@ -931,7 +946,7 @@
 
         <div class="review-card">
           <div class="review-header">
-            <div class="review-avatar"><img src="img/review-sofia.jpeg" alt="Sofía" /></div>
+            <div class="review-avatar"><img src="img/review-sofia.jpeg" alt="Sofía" loading="lazy" decoding="async" /></div>
             <div class="review-meta"><h4>Sofía</h4><span>Guadalajara</span></div>
           </div>
           <p class="review-text">"La historia cautivadora te envuelve en un torbellino de sentimientos, donde los personajes son tan reales que a veces siento que podrían cruzarse en mi camino. David logra capturar las complejidades del amor y la amistad. ¡Qué emocionante!"</p>
@@ -942,7 +957,7 @@
 
         <div class="review-card">
           <div class="review-header">
-            <div class="review-avatar"><img src="img/review-ana.jpeg" alt="Ana" /></div>
+            <div class="review-avatar"><img src="img/review-ana.jpeg" alt="Ana" loading="lazy" decoding="async" /></div>
             <div class="review-meta"><h4>Ana</h4><span>Madrid</span></div>
           </div>
           <p class="review-text">"Preciosa novela que te atrapa desde la primera página, la terminé en un tiempo récord, no podía dejarla. La historia de amor es conmovedora, llena de pasión y momentos inolvidables. Una lectura que te hará sentir, reír y llorar."</p>
@@ -953,7 +968,7 @@
 
         <div class="review-card">
           <div class="review-header">
-            <div class="review-avatar"><img src="img/review-diana.jpg" alt="Diana" /></div>
+            <div class="review-avatar"><img src="img/review-diana.jpg" alt="Diana" loading="lazy" decoding="async" /></div>
             <div class="review-meta"><h4>Diana</h4><span>Culiacán</span></div>
           </div>
           <p class="review-text">"¡¡Gracias infinitas por compartir este libro!! Cada página me hace emocionarme; me logra enganchar. Debo confesar que soy una romántica empedernida y la historia me fascina. Una lluvia de éxitos, mi estimado amigo."</p>
@@ -974,7 +989,7 @@
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;text-align:center;max-width:800px;margin:0 auto;">
-        <img src="img/autor-avatar.jpeg" alt="David Bello López-Valeiras" />
+        <img src="img/autor-avatar.jpeg" alt="David Bello López-Valeiras" loading="lazy" decoding="async" />
         <h3 style="font-family:var(--font-serif);font-size:2rem;margin-bottom:8px;color:#fff;">David Bello López-Valeiras</h3>
         <p style="color:var(--color-accent);margin-bottom:0;">Escritor &amp; Compositor</p>
       </div>
