@@ -100,8 +100,8 @@
     .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:10px}
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
-    #musica{padding-top:110px!important;padding-bottom:60px!important;margin-top:-90px!important;position:relative!important;z-index:30!important}
-    .platforms-container{display:flex;flex-wrap:wrap;justify-content:center;gap:40px;align-items:flex-start;position:relative;z-index:10;transform:translateY(-160px)!important;margin-bottom:-160px!important}
+    #musica{padding-top:100px!important;padding-bottom:60px!important;margin-top:-90px!important;position:relative!important;z-index:30!important}
+    .platforms-container{display:flex;flex-wrap:wrap;justify-content:center;gap:40px;align-items:flex-start;position:relative;z-index:10;transform:translateY(-120px)!important;margin-bottom:-120px!important}
     .embed-wrapper{flex:1;min-width:300px;max-width:520px;height:450px;background:#000;border-radius:12px;overflow:hidden;box-shadow:0 25px 60px -12px rgba(0,0,0,.7)}
     .platforms-footer-text{text-align:center;margin-top:36px;color:#57534e;font-style:italic}
 
@@ -213,6 +213,8 @@
       .hero-top-bar{position:static;margin-bottom:14px;order:-1;animation:none;width:100%}
       .prod-prefix,.prod-author{display:block}
       .hero-subtitle{letter-spacing:2px}
+      #musica{margin-top:-50px!important}
+      .platforms-container{transform:translateY(-70px)!important;margin-bottom:-70px!important}
       .album-intro-grid,.libretto-container,.tracklist-grid,.book-grid,.vertical-video-grid{grid-template-columns:1fr}
       .tracklist-media{position:relative;top:0;margin-bottom:30px}
       .clientify-box{padding:0;width:100%;overflow:hidden}
@@ -221,6 +223,8 @@
     @media (max-width:767px){
       .form-grid{padding:15px;width:100%}
       .hero{min-height:690px}
+      #musica{margin-top:-40px!important}
+      .platforms-container{transform:translateY(-50px)!important;margin-bottom:-50px!important}
       .platforms-container{gap:18px}
       .embed-wrapper{min-width:100%;height:440px}
       .desktop-video{display:none!important}
@@ -457,7 +461,7 @@
           <p>A special greeting with the music that gives Christmas its soul.</p>
         </div>
         <div class="vertical-video-wrapper">
-          <video controls loop muted playsinline preload="none">
+          <video controls autoplay loop muted playsinline preload="metadata">
             <source src="../video/navidad-cristal.mp4" type="video/mp4" />
           </video>
         </div>

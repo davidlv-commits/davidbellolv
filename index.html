@@ -224,9 +224,9 @@
 
     /* MÚSICA */
     #musica{
-      padding-top:0;
+      padding-top:100px;
       padding-bottom:60px;
-      margin-top:-70px; /* 👈 solape suave de reproductores sobre el hero */
+      margin-top:-90px;
       position:relative;
       z-index:30;
     }
@@ -235,7 +235,8 @@
       justify-content:center;
       gap:40px;
       align-items:flex-start;
-      margin-top:0; /* 👈 ya no hace falta el -120px */
+      transform:translateY(-120px);
+      margin-bottom:-120px;
       position:relative;z-index:10;
     }
     .embed-wrapper{
@@ -582,7 +583,8 @@
       .prod-prefix,.prod-author{display:block}
       .hero-subtitle{letter-spacing:2px}
 
-      #musica{margin-top:-40px}
+      #musica{margin-top:-50px}
+      .platforms-container{transform:translateY(-70px);margin-bottom:-70px}
       .album-intro-grid,.libretto-container,.platforms-container,.tracklist-grid,.book-grid,.vertical-video-grid{grid-template-columns:1fr}
       .tracklist-media{position:relative;top:0;margin-bottom:26px}
       .book-cover-wrapper img{max-width:100%;transform:none}
@@ -593,7 +595,8 @@
       .quick-actions a,.quick-actions button{font-size:.82rem;padding:10px 12px}
       .form-grid{padding:16px}
       footer{padding-bottom:160px}
-      #musica{margin-top:-30px}
+      #musica{margin-top:-40px}
+      .platforms-container{transform:translateY(-50px);margin-bottom:-50px}
     }
 
     @media (max-width:767px){
@@ -815,7 +818,7 @@
           <p style="color:#e5e5e5;opacity:.9">Una felicitación especial con la música que da alma a la Navidad.</p>
         </div>
         <div class="vertical-video-wrapper">
-          <video controls loop muted playsinline preload="none">
+          <video controls autoplay loop muted playsinline preload="metadata">
             <source src="video/navidad-cristal.mp4" type="video/mp4" />
           </video>
         </div>
