@@ -252,6 +252,68 @@
       font-style:italic;
     }
 
+    /* NUEVO LANZAMIENTO */
+    .release-launch{
+      padding:90px 0 70px;
+      background:linear-gradient(180deg,#0b0b0b 0%,#121212 100%);
+      border-top:1px solid rgba(255,255,255,.06);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .release-launch-grid{
+      display:grid;
+      grid-template-columns:1.05fr 1fr;
+      gap:40px;
+      align-items:center;
+    }
+    .release-launch-cover{
+      width:100%;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:0 30px 70px rgba(0,0,0,.55);
+    }
+    .release-kicker{
+      color:var(--color-accent);
+      letter-spacing:2px;
+      text-transform:uppercase;
+      font-size:.8rem;
+      margin-bottom:8px;
+      font-weight:600;
+    }
+    .release-title{
+      font-family:var(--font-serif);
+      font-size:2.3rem;
+      color:#fff;
+      margin:0 0 12px;
+    }
+    .release-text{
+      color:#ddd6cf;
+      margin:0 0 14px;
+      line-height:1.75;
+      max-width:60ch;
+    }
+    .release-quote{
+      margin:4px 0 20px;
+      padding:14px 16px;
+      border-left:3px solid var(--color-accent);
+      background:rgba(255,255,255,.05);
+      border-radius:8px;
+      color:#fff;
+      font-style:italic;
+    }
+    .release-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+    .release-video{
+      width:100%;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow:0 22px 40px rgba(0,0,0,.45);
+      background:#000;
+    }
+
     /* ÁLBUM */
     .album-intro-grid{
       display:grid;
@@ -599,7 +661,7 @@
 
       #musica{margin-top:-50px}
       .platforms-container{transform:translateY(-70px);margin-bottom:-70px}
-      .album-intro-grid,.libretto-container,.platforms-container,.tracklist-grid,.book-grid,.vertical-video-grid{grid-template-columns:1fr}
+      .release-launch-grid,.album-intro-grid,.libretto-container,.platforms-container,.tracklist-grid,.book-grid,.vertical-video-grid{grid-template-columns:1fr}
       .tracklist-media{position:relative;top:0;margin-bottom:26px}
       .book-cover-wrapper img{max-width:100%;transform:none}
     }
@@ -720,6 +782,36 @@
         </div>
       </div>
       <div class="platforms-footer-text">Disponible en todas las plataformas digitales</div>
+    </div>
+  </section>
+
+  <!-- NUEVO LANZAMIENTO -->
+  <section id="nuevo-lanzamiento" class="release-launch">
+    <div class="container">
+      <div class="release-launch-grid">
+        <div>
+          <img src="img/portada-album.jpeg" alt="Portada de No te querré siempre" class="release-launch-cover" loading="lazy" decoding="async" />
+        </div>
+        <div>
+          <p class="release-kicker">Nuevo lanzamiento</p>
+          <h2 class="release-title">No te querré siempre</h2>
+          <p class="release-text">
+            Esta canción puede englobarse dentro del universo de <em>Tú de qué vas</em>. Nace de un capítulo en el que la protagonista pregunta:
+            <strong>“Hoy no me quieres”</strong>.
+          </p>
+          <p class="release-quote">“Hoy no me quieres… No te querré siempre.”</p>
+          <p class="release-text">
+            De esa frase surgió la letra y la composición de <strong>No te querré siempre</strong>.
+          </p>
+          <div class="release-actions">
+            <a href="#" class="btn btn-primary btn-rounded"><i data-lucide="play"></i> Escúchala ahora</a>
+            <a href="#" class="btn btn-outline btn-rounded"><i data-lucide="music-2"></i> Apple Music</a>
+          </div>
+          <video class="release-video" controls autoplay loop muted playsinline preload="metadata">
+            <source src="video/no-te-querre-siempre.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
     </div>
   </section>
 
