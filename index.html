@@ -345,6 +345,12 @@
       display:flex;
       gap:12px;
       flex-wrap:wrap;
+      align-items:center;
+    }
+    .release-actions .btn{
+      width:210px;
+      justify-content:center;
+      text-align:center;
     }
     .btn-spotify{
       background:#1db954!important;
@@ -365,6 +371,12 @@
       background:#000!important;
       border-color:#fff!important;
       color:#fff!important;
+    }
+    @media (max-width:560px){
+      .release-actions .btn{
+        width:100%;
+        max-width:320px;
+      }
     }
 
     /* ÁLBUM */
@@ -855,8 +867,8 @@
           </p>
           <h3 class="release-cta-title">Emociónate con No te querré siempre</h3>
           <div class="release-actions">
-            <a href="https://open.spotify.com/album/2XVm8EkY7tadPJmRhMOX0f?si=fr6c1PNrS_Kpb-eO2f9QDQ" target="_blank" rel="noopener" class="btn btn-rounded btn-spotify"><i data-lucide="play"></i> Spotify</a>
-            <a href="https://music.apple.com/us/album/no-te-querr%C3%A9-siempre-single/1876539482?l=es-MX" target="_blank" rel="noopener" class="btn btn-rounded btn-apple"><i data-lucide="music-2"></i> Apple Music</a>
+            <a href="https://open.spotify.com/album/2XVm8EkY7tadPJmRhMOX0f?si=fr6c1PNrS_Kpb-eO2f9QDQ" target="_blank" rel="noopener" class="btn btn-rounded btn-spotify" data-track="release_spotify_click" data-platform="spotify"><i data-lucide="play"></i> Spotify</a>
+            <a href="https://music.apple.com/us/album/no-te-querr%C3%A9-siempre-single/1876539482?l=es-MX" target="_blank" rel="noopener" class="btn btn-rounded btn-apple" data-track="release_apple_click" data-platform="apple_music"><i data-lucide="music-2"></i> Apple Music</a>
           </div>
         </div>
       </div>
@@ -1161,19 +1173,19 @@
 
   <!-- QUICK ACTIONS -->
   <div class="quick-actions" aria-label="Accesos rápidos">
-    <a href="index.html#musica" class="qa-accent" aria-label="Ir a Música">
+    <a href="index.html#musica" class="qa-accent" aria-label="Ir a Música" data-track="quick_music_click">
       <i data-lucide="headphones" class="qa-icon"></i> Música
     </a>
 
-    <button type="button" class="qa-accent" onclick="scrollToGift()" aria-label="Ir a Regalo">
+    <button type="button" class="qa-accent" onclick="scrollToGift()" aria-label="Ir a Regalo" data-track="quick_gift_click">
       <i data-lucide="gift" class="qa-icon"></i> Regalo
     </button>
 
-    <a href="https://www.instagram.com/davidbellolv/" target="_blank" rel="noopener" aria-label="Sígueme en Instagram">
+    <a href="https://www.instagram.com/davidbellolv/" target="_blank" rel="noopener" aria-label="Sígueme en Instagram" data-track="quick_instagram_click" data-platform="instagram">
       <i data-lucide="instagram" class="qa-icon"></i> Sígueme en Instagram
     </a>
 
-    <button type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Subir arriba">
+    <button type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Subir arriba" data-track="quick_up_click">
       <i data-lucide="arrow-up" class="qa-icon"></i> Arriba
     </button>
   </div>
@@ -1192,6 +1204,13 @@
     </div>
   </div>
 
+  <script>
+    window.TDQV_ANALYTICS_CONFIG = {
+      ga4MeasurementId: "",
+      clarityProjectId: ""
+    };
+  </script>
+  <script src="js/analytics.js"></script>
   <script>
     function initIcons() {
       try { lucide.createIcons(); } catch (e) {}
@@ -1267,6 +1286,17 @@
     }
 
     const COOKIE_KEY = 'tdqv_cookie_consent';
+    function getConsentLevelFromStorage() {
+      const raw = localStorage.getItem(COOKIE_KEY);
+      if (raw === 'accepted') return 'all';
+      if (raw === 'rejected') return 'essential';
+      return 'unset';
+    }
+    function applyAnalyticsConsent() {
+      if (window.TDQVAnalytics) {
+        window.TDQVAnalytics.applyConsent(getConsentLevelFromStorage(), { language: 'es' });
+      }
+    }
     function showCookieBannerIfNeeded(){
       const v = localStorage.getItem(COOKIE_KEY);
       if (!v) {
@@ -1278,6 +1308,7 @@
       localStorage.setItem(COOKIE_KEY, 'accepted');
       document.getElementById('cookieBanner').classList.remove('show');
       document.body.classList.remove('cookie-open');
+      applyAnalyticsConsent();
     }
     function rejectCookies(){
       localStorage.setItem(COOKIE_KEY, 'rejected');
@@ -1291,6 +1322,7 @@
       showCookieBannerIfNeeded();
       setupAccessibleControls();
       updateSlider();
+      applyAnalyticsConsent();
     });
   </script>
 

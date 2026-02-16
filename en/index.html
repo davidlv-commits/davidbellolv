@@ -130,11 +130,15 @@
     .release-context-title{margin:0;color:var(--color-dark-text);font-size:1.7rem;font-family:var(--font-serif)}
     .release-context .release-text{color:#44403c}
     .release-quote-light{background:rgba(0,0,0,.04);color:#1c1917;border-left-color:var(--color-accent)}
-    .release-actions{display:flex;gap:12px;flex-wrap:wrap}
+    .release-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .release-actions .btn{width:210px;justify-content:center;text-align:center}
     .btn-spotify{background:#1db954!important;border-color:#1db954!important;color:#fff!important}
     .btn-spotify:hover{background:#169c46!important;border-color:#169c46!important;color:#fff!important}
     .btn-apple{background:#111!important;border-color:rgba(255,255,255,.85)!important;color:#fff!important}
     .btn-apple:hover{background:#000!important;border-color:#fff!important;color:#fff!important}
+    @media (max-width:560px){
+      .release-actions .btn{width:100%;max-width:320px}
+    }
 
     .album-intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
     .album-cover-wrapper img{width:100%;border-radius:4px;box-shadow:0 25px 50px rgba(0,0,0,.5);border:1px solid #333}
@@ -368,8 +372,8 @@
       </p>
 
       <div class="hero-ctas">
-        <a href="index.html#musica" class="btn btn-primary btn-rounded"><i data-lucide="play"></i> Listen now</a>
-        <a href="index.html#libreto" class="btn btn-outline btn-rounded"><i data-lucide="gift"></i> Get the gift</a>
+        <a href="index.html#musica" class="btn btn-primary btn-rounded" data-track="hero_listen_click"><i data-lucide="play"></i> Listen now</a>
+        <a href="index.html#libreto" class="btn btn-outline btn-rounded" data-track="hero_gift_click"><i data-lucide="gift"></i> Get the gift</a>
       </div>
     </div>
   </section>
@@ -411,8 +415,8 @@
           </p>
           <h3 class="release-cta-title">Feel No te querré siempre</h3>
           <div class="release-actions">
-            <a href="https://open.spotify.com/album/2XVm8EkY7tadPJmRhMOX0f?si=fr6c1PNrS_Kpb-eO2f9QDQ" target="_blank" rel="noopener" class="btn btn-rounded btn-spotify"><i data-lucide="play"></i> Spotify</a>
-            <a href="https://music.apple.com/us/album/no-te-querr%C3%A9-siempre-single/1876539482?l=es-MX" target="_blank" rel="noopener" class="btn btn-rounded btn-apple"><i data-lucide="music-2"></i> Apple Music</a>
+            <a href="https://open.spotify.com/album/2XVm8EkY7tadPJmRhMOX0f?si=fr6c1PNrS_Kpb-eO2f9QDQ" target="_blank" rel="noopener" class="btn btn-rounded btn-spotify" data-track="release_spotify_click" data-platform="spotify"><i data-lucide="play"></i> Spotify</a>
+            <a href="https://music.apple.com/us/album/no-te-querr%C3%A9-siempre-single/1876539482?l=es-MX" target="_blank" rel="noopener" class="btn btn-rounded btn-apple" data-track="release_apple_click" data-platform="apple_music"><i data-lucide="music-2"></i> Apple Music</a>
           </div>
         </div>
       </div>
@@ -663,9 +667,9 @@
   </footer>
 
   <div class="floating-actions" aria-label="Quick actions">
-    <a class="fab" href="index.html#musica"><i data-lucide="headphones"></i><span class="label">Music</span></a>
-    <a class="fab" href="index.html#libreto"><i data-lucide="gift"></i><span class="label">Gift</span></a>
-    <a class="fab" href="https://www.instagram.com/davidbellolv" target="_blank" rel="noopener"><i data-lucide="instagram"></i><span class="label">Follow me</span></a>
+    <a class="fab" href="index.html#musica" data-track="quick_music_click"><i data-lucide="headphones"></i><span class="label">Music</span></a>
+    <a class="fab" href="index.html#libreto" data-track="quick_gift_click"><i data-lucide="gift"></i><span class="label">Gift</span></a>
+    <a class="fab" href="https://www.instagram.com/davidbellolv" target="_blank" rel="noopener" data-track="quick_instagram_click" data-platform="instagram"><i data-lucide="instagram"></i><span class="label">Follow me</span></a>
   </div>
 
   <div id="gift-popup" class="popup-overlay" aria-hidden="true">
@@ -690,6 +694,13 @@
     </div>
   </div>
 
+  <script>
+    window.TDQV_ANALYTICS_CONFIG = {
+      ga4MeasurementId: "",
+      clarityProjectId: ""
+    };
+  </script>
+  <script src="../js/analytics.js"></script>
   <script>
     lucide.createIcons();
 
@@ -767,6 +778,24 @@
     }
 
     const COOKIE_KEY = "tdqv_cookie_consent_v1";
+    function getConsentLevelFromStorage(){
+      const raw = localStorage.getItem(COOKIE_KEY);
+      if(!raw) return "unset";
+      try{
+        const parsed = JSON.parse(raw);
+        if(parsed && parsed.level === "all") return "all";
+        if(parsed && parsed.level === "essential") return "essential";
+      } catch(e){
+        if(raw === "accepted") return "all";
+        if(raw === "rejected") return "essential";
+      }
+      return "unset";
+    }
+    function applyAnalyticsConsent(){
+      if(window.TDQVAnalytics){
+        window.TDQVAnalytics.applyConsent(getConsentLevelFromStorage(), { language: "en" });
+      }
+    }
     function showCookieBannerIfNeeded(){
       const v = localStorage.getItem(COOKIE_KEY);
       if(!v){
@@ -778,12 +807,20 @@
       document.getElementById('cookieBanner').classList.remove('show');
       document.body.classList.remove('cookie-open');
     }
-    function acceptEssential(){ localStorage.setItem(COOKIE_KEY, JSON.stringify({level:"essential", ts: Date.now()})); hideCookieBanner(); }
-    function acceptAll(){ localStorage.setItem(COOKIE_KEY, JSON.stringify({level:"all", ts: Date.now()})); hideCookieBanner(); }
+    function acceptEssential(){
+      localStorage.setItem(COOKIE_KEY, JSON.stringify({level:"essential", ts: Date.now()}));
+      hideCookieBanner();
+    }
+    function acceptAll(){
+      localStorage.setItem(COOKIE_KEY, JSON.stringify({level:"all", ts: Date.now()}));
+      hideCookieBanner();
+      applyAnalyticsConsent();
+    }
     document.addEventListener('DOMContentLoaded', () => {
       showCookieBannerIfNeeded();
       setupAccessibleControls();
       updateSlider();
+      applyAnalyticsConsent();
     });
   </script>
 </body>
