@@ -75,6 +75,17 @@
     .nav-links{display:flex;gap:26px;align-items:center}
     .nav-links a{font-size:.78rem;text-transform:uppercase;letter-spacing:1.5px;color:#a8a29e}
     .nav-links a:hover{color:var(--color-accent)}
+    .nav-right{display:flex;align-items:center;gap:14px}
+    .lang-link{
+      font-size:.78rem;
+      letter-spacing:1.3px;
+      text-transform:uppercase;
+      color:#a8a29e;
+      border:1px solid rgba(255,255,255,.10);
+      padding:8px 12px;
+      border-radius:999px;
+    }
+    .lang-link:hover{color:#fff;border-color:rgba(217,119,6,.45)}
     .mobile-menu-btn{display:none;color:#fff;background:none;border:none;font-size:1.5rem;cursor:pointer}
     .nav-mobile{display:none}
     .nav-mobile.active{display:block;position:absolute;top:64px;left:0;right:0;background:rgba(10,10,10,.98);border-top:1px solid rgba(255,255,255,.06);padding:18px 20px}
@@ -257,9 +268,12 @@
         <i data-lucide="music"></i> Tú de qué vas
       </a>
 
-      <button class="mobile-menu-btn" aria-label="Open menu" onclick="toggleMenu()">
-        <i data-lucide="menu"></i>
-      </button>
+      <div class="nav-right">
+        <a class="lang-link" href="../index.html" aria-label="Spanish version">ES</a>
+        <button class="mobile-menu-btn" aria-label="Open menu" onclick="toggleMenu()">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
 
       <nav class="nav-links" aria-label="Main">
         <a href="index.html#hero">Home</a>
@@ -270,7 +284,6 @@
         <a href="index.html#libro">Novel</a>
         <a href="index.html#deja-tu-resena">Your Review</a>
         <a href="index.html#autor">Author</a>
-        <a href="../index.html" title="Spanish version">ES</a>
       </nav>
     </div>
 
