@@ -116,16 +116,18 @@
     .embed-wrapper{flex:1;min-width:300px;max-width:520px;height:450px;background:#000;border-radius:12px;overflow:hidden;box-shadow:0 25px 60px -12px rgba(0,0,0,.7)}
     .platforms-footer-text{text-align:center;margin-top:36px;color:#57534e;font-style:italic}
 
-    .release-launch{padding:90px 0 70px;background:var(--color-paper);color:var(--color-dark-text);border-top:1px solid rgba(0,0,0,.08);border-bottom:1px solid rgba(0,0,0,.08)}
-    .release-launch-grid{display:grid;grid-template-columns:.95fr 1.15fr;gap:40px;align-items:center}
-    .release-media{display:grid;gap:16px;justify-items:center}
-    .release-launch-cover{width:100%;max-width:430px;border-radius:14px;border:1px solid rgba(0,0,0,.12);box-shadow:0 24px 50px rgba(0,0,0,.22)}
-    .release-kicker{color:var(--color-accent);letter-spacing:2px;text-transform:uppercase;font-size:.8rem;margin-bottom:8px;font-weight:600}
-    .release-title{font-family:var(--font-serif);font-size:2.3rem;color:var(--color-dark-text);margin:0 0 12px}
-    .release-text{color:#44403c;margin:0 0 14px;line-height:1.75;max-width:60ch}
-    .release-quote{margin:4px 0 20px;padding:14px 16px;border-left:3px solid var(--color-accent);background:rgba(0,0,0,.04);border-radius:8px;color:#1c1917;font-style:italic}
-    .release-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}
-    .release-video{width:100%;max-width:430px;max-height:300px;border-radius:12px;border:1px solid rgba(0,0,0,.14);box-shadow:0 18px 35px rgba(0,0,0,.20);background:#000;object-fit:cover}
+    .release-story{padding:90px 0 70px;background:#11100f;color:#f5f5f4;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
+    .release-story-grid{display:grid;grid-template-columns:1fr 1fr;gap:42px;align-items:start}
+    .release-kicker{color:var(--color-accent);letter-spacing:2px;text-transform:uppercase;font-size:.8rem;margin:0 0 8px;font-weight:600}
+    .release-title{font-family:var(--font-serif);font-size:2.3rem;color:#fff;margin:0 0 14px}
+    .release-text{color:#d6d3d1;margin:0 0 14px;line-height:1.75;max-width:60ch}
+    .release-quote{margin:4px 0 18px;padding:14px 16px;border-left:3px solid var(--color-accent);background:rgba(255,255,255,.05);border-radius:8px;color:#f5f5f4;font-style:italic}
+    .release-launch-cover{width:100%;max-width:470px;border-radius:14px;border:1px solid rgba(255,255,255,.14);box-shadow:0 24px 50px rgba(0,0,0,.45);margin-top:14px}
+    .release-video{width:100%;border-radius:12px;border:1px solid rgba(255,255,255,.18);box-shadow:0 18px 35px rgba(0,0,0,.35);background:#000;object-fit:cover;aspect-ratio:16/9;margin-top:10px}
+    .release-cta{padding:48px 0 56px;background:var(--color-paper);border-top:1px solid rgba(0,0,0,.08);border-bottom:1px solid rgba(0,0,0,.08)}
+    .release-cta-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    .release-cta-text{margin:0;color:var(--color-dark-text);font-size:1.35rem;font-family:var(--font-serif)}
+    .release-actions{display:flex;gap:12px;flex-wrap:wrap}
 
     .album-intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
     .album-cover-wrapper img{width:100%;border-radius:4px;box-shadow:0 25px 50px rgba(0,0,0,.5);border:1px solid #333}
@@ -249,7 +251,7 @@
       .hero-subtitle{letter-spacing:2px}
       #musica{margin-top:-50px!important}
       .platforms-container{transform:translateY(-70px)!important;margin-bottom:-70px!important}
-      .release-launch-grid,.album-intro-grid,.libretto-container,.tracklist-grid,.book-grid,.vertical-video-grid{grid-template-columns:1fr}
+      .release-story-grid,.album-intro-grid,.libretto-container,.tracklist-grid,.book-grid,.vertical-video-grid{grid-template-columns:1fr}
       .tracklist-media{position:relative;top:0;margin-bottom:30px}
       .clientify-box{padding:0;width:100%;overflow:hidden}
       .fab .label{display:none}
@@ -259,6 +261,7 @@
       .hero{min-height:690px}
       #musica{margin-top:-40px!important}
       .platforms-container{transform:translateY(-50px)!important;margin-bottom:-50px!important}
+      .release-cta-inner{justify-content:center;text-align:center}
       .platforms-container{gap:18px}
       .embed-wrapper{min-width:100%;height:440px}
       .desktop-video{display:none!important}
@@ -386,15 +389,9 @@
     </div>
   </section>
 
-  <section id="new-release" class="release-launch">
+  <section id="new-release" class="release-story">
     <div class="container">
-      <div class="release-launch-grid">
-        <div class="release-media">
-          <img src="../img/no-te-querre-siempre-cover.jpg" alt="No te querré siempre cover" class="release-launch-cover" loading="lazy" decoding="async" />
-          <video class="release-video" controls autoplay loop muted playsinline preload="metadata">
-            <source src="../video/no-te-querre-siempre.mp4" type="video/mp4" />
-          </video>
-        </div>
+      <div class="release-story-grid">
         <div>
           <p class="release-kicker">New release</p>
           <h2 class="release-title">No te querré siempre</h2>
@@ -402,15 +399,29 @@
             This song fits naturally inside the <em>Tú de qué vas</em> universe. It was born from a chapter where the main character asks:
             <strong>“Don’t you love me today?”</strong>
           </p>
-          <p class="release-quote">“Don’t you love me today?... I won’t love you forever.”</p>
+          <img src="../img/no-te-querre-siempre-cover.jpg" alt="No te querré siempre cover" class="release-launch-cover" loading="lazy" decoding="async" />
+        </div>
+        <div>
           <p class="release-text">
             The original line that led to this song appears in the video, and from it came the lyrics and composition of
             <strong>No te querré siempre</strong>.
           </p>
-          <div class="release-actions">
-            <a href="https://open.spotify.com/album/2XVm8EkY7tadPJmRhMOX0f?si=fr6c1PNrS_Kpb-eO2f9QDQ" target="_blank" rel="noopener" class="btn btn-primary btn-rounded"><i data-lucide="play"></i> Listen now</a>
-            <a href="https://music.apple.com/us/album/no-te-querr%C3%A9-siempre-single/1876539482?l=es-MX" target="_blank" rel="noopener" class="btn btn-outline btn-rounded"><i data-lucide="music-2"></i> Apple Music</a>
-          </div>
+          <p class="release-quote">“Don’t you love me today?... I won’t love you forever.”</p>
+          <video class="release-video" controls autoplay loop muted playsinline preload="metadata">
+            <source src="../video/no-te-querre-siempre.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="release-cta">
+    <div class="container">
+      <div class="release-cta-inner">
+        <p class="release-cta-text">Feel No te querré siempre</p>
+        <div class="release-actions">
+          <a href="https://open.spotify.com/album/2XVm8EkY7tadPJmRhMOX0f?si=fr6c1PNrS_Kpb-eO2f9QDQ" target="_blank" rel="noopener" class="btn btn-primary btn-rounded"><i data-lucide="play"></i> Listen now</a>
+          <a href="https://music.apple.com/us/album/no-te-querr%C3%A9-siempre-single/1876539482?l=es-MX" target="_blank" rel="noopener" class="btn btn-outline btn-rounded"><i data-lucide="music-2"></i> Apple Music</a>
         </div>
       </div>
     </div>
