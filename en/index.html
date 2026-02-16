@@ -116,15 +116,16 @@
     .embed-wrapper{flex:1;min-width:300px;max-width:520px;height:450px;background:#000;border-radius:12px;overflow:hidden;box-shadow:0 25px 60px -12px rgba(0,0,0,.7)}
     .platforms-footer-text{text-align:center;margin-top:36px;color:#57534e;font-style:italic}
 
-    .release-launch{padding:90px 0 70px;background:linear-gradient(180deg,#0b0b0b 0%,#121212 100%);border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}
-    .release-launch-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center}
-    .release-launch-cover{width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 70px rgba(0,0,0,.55)}
+    .release-launch{padding:90px 0 70px;background:var(--color-paper);color:var(--color-dark-text);border-top:1px solid rgba(0,0,0,.08);border-bottom:1px solid rgba(0,0,0,.08)}
+    .release-launch-grid{display:grid;grid-template-columns:.95fr 1.15fr;gap:40px;align-items:center}
+    .release-media{display:grid;gap:16px;justify-items:center}
+    .release-launch-cover{width:100%;max-width:430px;border-radius:14px;border:1px solid rgba(0,0,0,.12);box-shadow:0 24px 50px rgba(0,0,0,.22)}
     .release-kicker{color:var(--color-accent);letter-spacing:2px;text-transform:uppercase;font-size:.8rem;margin-bottom:8px;font-weight:600}
-    .release-title{font-family:var(--font-serif);font-size:2.3rem;color:#fff;margin:0 0 12px}
-    .release-text{color:#ddd6cf;margin:0 0 14px;line-height:1.75;max-width:60ch}
-    .release-quote{margin:4px 0 20px;padding:14px 16px;border-left:3px solid var(--color-accent);background:rgba(255,255,255,.05);border-radius:8px;color:#fff;font-style:italic}
+    .release-title{font-family:var(--font-serif);font-size:2.3rem;color:var(--color-dark-text);margin:0 0 12px}
+    .release-text{color:#44403c;margin:0 0 14px;line-height:1.75;max-width:60ch}
+    .release-quote{margin:4px 0 20px;padding:14px 16px;border-left:3px solid var(--color-accent);background:rgba(0,0,0,.04);border-radius:8px;color:#1c1917;font-style:italic}
     .release-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}
-    .release-video{width:100%;border-radius:12px;border:1px solid rgba(255,255,255,.14);box-shadow:0 22px 40px rgba(0,0,0,.45);background:#000}
+    .release-video{width:100%;max-width:430px;max-height:300px;border-radius:12px;border:1px solid rgba(0,0,0,.14);box-shadow:0 18px 35px rgba(0,0,0,.20);background:#000;object-fit:cover}
 
     .album-intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
     .album-cover-wrapper img{width:100%;border-radius:4px;box-shadow:0 25px 50px rgba(0,0,0,.5);border:1px solid #333}
@@ -388,27 +389,28 @@
   <section id="new-release" class="release-launch">
     <div class="container">
       <div class="release-launch-grid">
-        <div>
-          <img src="../img/portada-album.jpeg" alt="No te querré siempre cover" class="release-launch-cover" loading="lazy" decoding="async" />
+        <div class="release-media">
+          <img src="../img/no-te-querre-siempre-cover.jpg" alt="No te querré siempre cover" class="release-launch-cover" loading="lazy" decoding="async" />
+          <video class="release-video" controls autoplay loop muted playsinline preload="metadata">
+            <source src="../video/no-te-querre-siempre.mp4" type="video/mp4" />
+          </video>
         </div>
         <div>
           <p class="release-kicker">New release</p>
           <h2 class="release-title">No te querré siempre</h2>
           <p class="release-text">
             This song fits naturally inside the <em>Tú de qué vas</em> universe. It was born from a chapter where the main character asks:
-            <strong>“You don’t love me today.”</strong>
+            <strong>“Don’t you love me today?”</strong>
           </p>
-          <p class="release-quote">“You don’t love me today... I won’t love you forever.”</p>
+          <p class="release-quote">“Don’t you love me today?... I won’t love you forever.”</p>
           <p class="release-text">
-            From that line came the lyrics and composition of <strong>No te querré siempre</strong>.
+            The original line that led to this song appears in the video, and from it came the lyrics and composition of
+            <strong>No te querré siempre</strong>.
           </p>
           <div class="release-actions">
             <a href="https://open.spotify.com/album/2XVm8EkY7tadPJmRhMOX0f?si=fr6c1PNrS_Kpb-eO2f9QDQ" target="_blank" rel="noopener" class="btn btn-primary btn-rounded"><i data-lucide="play"></i> Listen now</a>
             <a href="https://music.apple.com/us/album/no-te-querr%C3%A9-siempre-single/1876539482?l=es-MX" target="_blank" rel="noopener" class="btn btn-outline btn-rounded"><i data-lucide="music-2"></i> Apple Music</a>
           </div>
-          <video class="release-video" controls autoplay loop muted playsinline preload="metadata">
-            <source src="../video/no-te-querre-siempre.mp4" type="video/mp4" />
-          </video>
         </div>
       </div>
     </div>

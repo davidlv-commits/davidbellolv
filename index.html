@@ -255,21 +255,28 @@
     /* NUEVO LANZAMIENTO */
     .release-launch{
       padding:90px 0 70px;
-      background:linear-gradient(180deg,#0b0b0b 0%,#121212 100%);
-      border-top:1px solid rgba(255,255,255,.06);
-      border-bottom:1px solid rgba(255,255,255,.06);
+      background:var(--color-paper);
+      color:var(--color-dark-text);
+      border-top:1px solid rgba(0,0,0,.08);
+      border-bottom:1px solid rgba(0,0,0,.08);
     }
     .release-launch-grid{
       display:grid;
-      grid-template-columns:1.05fr 1fr;
+      grid-template-columns:.95fr 1.15fr;
       gap:40px;
       align-items:center;
     }
+    .release-media{
+      display:grid;
+      gap:16px;
+      justify-items:center;
+    }
     .release-launch-cover{
       width:100%;
+      max-width:430px;
       border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      box-shadow:0 30px 70px rgba(0,0,0,.55);
+      border:1px solid rgba(0,0,0,.12);
+      box-shadow:0 24px 50px rgba(0,0,0,.22);
     }
     .release-kicker{
       color:var(--color-accent);
@@ -282,11 +289,11 @@
     .release-title{
       font-family:var(--font-serif);
       font-size:2.3rem;
-      color:#fff;
+      color:var(--color-dark-text);
       margin:0 0 12px;
     }
     .release-text{
-      color:#ddd6cf;
+      color:#44403c;
       margin:0 0 14px;
       line-height:1.75;
       max-width:60ch;
@@ -295,9 +302,9 @@
       margin:4px 0 20px;
       padding:14px 16px;
       border-left:3px solid var(--color-accent);
-      background:rgba(255,255,255,.05);
+      background:rgba(0,0,0,.04);
       border-radius:8px;
-      color:#fff;
+      color:#1c1917;
       font-style:italic;
     }
     .release-actions{
@@ -308,10 +315,13 @@
     }
     .release-video{
       width:100%;
+      max-width:430px;
+      max-height:300px;
       border-radius:12px;
-      border:1px solid rgba(255,255,255,.14);
-      box-shadow:0 22px 40px rgba(0,0,0,.45);
+      border:1px solid rgba(0,0,0,.14);
+      box-shadow:0 18px 35px rgba(0,0,0,.20);
       background:#000;
+      object-fit:cover;
     }
 
     /* ÁLBUM */
@@ -789,27 +799,28 @@
   <section id="nuevo-lanzamiento" class="release-launch">
     <div class="container">
       <div class="release-launch-grid">
-        <div>
-          <img src="img/portada-album.jpeg" alt="Portada de No te querré siempre" class="release-launch-cover" loading="lazy" decoding="async" />
+        <div class="release-media">
+          <img src="img/no-te-querre-siempre-cover.jpg" alt="Portada de No te querré siempre" class="release-launch-cover" loading="lazy" decoding="async" />
+          <video class="release-video" controls autoplay loop muted playsinline preload="metadata">
+            <source src="video/no-te-querre-siempre.mp4" type="video/mp4" />
+          </video>
         </div>
         <div>
           <p class="release-kicker">Nuevo lanzamiento</p>
           <h2 class="release-title">No te querré siempre</h2>
           <p class="release-text">
             Esta canción puede englobarse dentro del universo de <em>Tú de qué vas</em>. Nace de un capítulo en el que la protagonista pregunta:
-            <strong>“Hoy no me quieres”</strong>.
+            <strong>¿Hoy no me quieres?</strong>
           </p>
-          <p class="release-quote">“Hoy no me quieres… No te querré siempre.”</p>
+          <p class="release-quote">“¿Hoy no me quieres?... No te querré siempre.”</p>
           <p class="release-text">
-            De esa frase surgió la letra y la composición de <strong>No te querré siempre</strong>.
+            La frase original que llevó a esta canción está en el vídeo, y de ella surgieron la letra y la composición de
+            <strong>No te querré siempre</strong>.
           </p>
           <div class="release-actions">
             <a href="https://open.spotify.com/album/2XVm8EkY7tadPJmRhMOX0f?si=fr6c1PNrS_Kpb-eO2f9QDQ" target="_blank" rel="noopener" class="btn btn-primary btn-rounded"><i data-lucide="play"></i> Escúchala ahora</a>
             <a href="https://music.apple.com/us/album/no-te-querr%C3%A9-siempre-single/1876539482?l=es-MX" target="_blank" rel="noopener" class="btn btn-outline btn-rounded"><i data-lucide="music-2"></i> Apple Music</a>
           </div>
-          <video class="release-video" controls autoplay loop muted playsinline preload="metadata">
-            <source src="video/no-te-querre-siempre.mp4" type="video/mp4" />
-          </video>
         </div>
       </div>
     </div>
