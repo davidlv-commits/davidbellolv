@@ -558,6 +558,20 @@
     }
     .cookie-btn.accept:hover{background:var(--color-accent-hover);color:#fff}
 
+    /* reCAPTCHA badge: keep visible but away from floating actions */
+    body .grecaptcha-badge{
+      right:10px!important;
+      left:auto!important;
+      top:76px!important;
+      bottom:auto!important;
+      z-index:900!important;
+      transform:scale(.82)!important;
+      transform-origin:right top!important;
+      opacity:.3!important;
+      transition:opacity .2s ease!important;
+    }
+    body .grecaptcha-badge:hover{opacity:1!important}
+
     /* Responsive */
     @media (max-width:1024px){
       .nav-links{display:none}
@@ -602,6 +616,11 @@
     @media (max-width:767px){
       .desktop-video{display:none!important}
       .mobile-video{display:block!important}
+      body .grecaptcha-badge{
+        top:68px!important;
+        right:8px!important;
+        transform:scale(.72)!important;
+      }
       .quick-actions{
         left:12px;
         right:12px;

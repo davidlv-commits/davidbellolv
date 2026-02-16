@@ -215,7 +215,19 @@
     .cookie-actions{display:flex;gap:10px;flex-wrap:wrap}
     .cookie-actions .btn{padding:10px 14px;font-size:.78rem;letter-spacing:1.2px}
 
-    body .grecaptcha-badge{right:14px!important;left:auto!important;bottom:95px!important;z-index:9999!important;transform:scale(.9)!important;transform-origin:right bottom!important}
+    /* reCAPTCHA badge: keep visible but away from floating actions */
+    body .grecaptcha-badge{
+      right:10px!important;
+      left:auto!important;
+      top:76px!important;
+      bottom:auto!important;
+      z-index:900!important;
+      transform:scale(.82)!important;
+      transform-origin:right top!important;
+      opacity:.3!important;
+      transition:opacity .2s ease!important;
+    }
+    body .grecaptcha-badge:hover{opacity:1!important}
 
     @media (max-width:1024px){
       .nav-links{display:none}
@@ -240,6 +252,11 @@
       .embed-wrapper{min-width:100%;height:440px}
       .desktop-video{display:none!important}
       .mobile-video{display:block!important}
+      body .grecaptcha-badge{
+        top:68px!important;
+        right:8px!important;
+        transform:scale(.72)!important;
+      }
       .floating-actions{
         left:12px;
         right:12px;
