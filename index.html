@@ -301,41 +301,70 @@
       border-radius:14px;
       border:1px solid rgba(255,255,255,.14);
       box-shadow:0 24px 50px rgba(0,0,0,.45);
-      margin-top:14px;
+    }
+    .release-cta-title{
+      margin:18px 0 12px;
+      color:#fff;
+      font-family:var(--font-serif);
+      font-size:1.55rem;
     }
     .release-video{
       width:100%;
       border-radius:12px;
-      border:1px solid rgba(255,255,255,.18);
-      box-shadow:0 18px 35px rgba(0,0,0,.35);
+      border:1px solid rgba(0,0,0,.14);
+      box-shadow:0 18px 35px rgba(0,0,0,.2);
       background:#000;
       object-fit:cover;
       aspect-ratio:16/9;
-      margin-top:10px;
     }
-    .release-cta{
+    .release-context{
       padding:48px 0 56px;
       background:var(--color-paper);
       border-top:1px solid rgba(0,0,0,.08);
       border-bottom:1px solid rgba(0,0,0,.08);
     }
-    .release-cta-inner{
-      display:flex;
+    .release-context-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:42px;
       align-items:center;
-      justify-content:space-between;
-      gap:20px;
-      flex-wrap:wrap;
     }
-    .release-cta-text{
+    .release-context-title{
       margin:0;
       color:var(--color-dark-text);
-      font-size:1.35rem;
+      font-size:1.7rem;
       font-family:var(--font-serif);
+    }
+    .release-context .release-text{color:#44403c}
+    .release-quote-light{
+      background:rgba(0,0,0,.04);
+      color:#1c1917;
+      border-left-color:var(--color-accent);
     }
     .release-actions{
       display:flex;
       gap:12px;
       flex-wrap:wrap;
+    }
+    .btn-spotify{
+      background:#1db954!important;
+      border-color:#1db954!important;
+      color:#fff!important;
+    }
+    .btn-spotify:hover{
+      background:#169c46!important;
+      border-color:#169c46!important;
+      color:#fff!important;
+    }
+    .btn-apple{
+      background:#111!important;
+      border-color:#111!important;
+      color:#fff!important;
+    }
+    .btn-apple:hover{
+      background:#000!important;
+      border-color:#000!important;
+      color:#fff!important;
     }
 
     /* ÁLBUM */
@@ -685,7 +714,7 @@
 
       #musica{margin-top:-50px}
       .platforms-container{transform:translateY(-70px);margin-bottom:-70px}
-      .release-story-grid,.album-intro-grid,.libretto-container,.platforms-container,.tracklist-grid,.book-grid,.vertical-video-grid{grid-template-columns:1fr}
+      .release-story-grid,.release-context-grid,.album-intro-grid,.libretto-container,.platforms-container,.tracklist-grid,.book-grid,.vertical-video-grid{grid-template-columns:1fr}
       .tracklist-media{position:relative;top:0;margin-bottom:26px}
       .book-cover-wrapper img{max-width:100%;transform:none}
     }
@@ -697,7 +726,7 @@
       footer{padding-bottom:160px}
       #musica{margin-top:-40px}
       .platforms-container{transform:translateY(-50px);margin-bottom:-50px}
-      .release-cta-inner{justify-content:center;text-align:center}
+      .release-actions{justify-content:center}
     }
 
     @media (max-width:767px){
@@ -815,35 +844,40 @@
     <div class="container">
       <div class="release-story-grid">
         <div>
+          <img src="img/no-te-querre-siempre-cover.jpg" alt="Portada de No te querré siempre" class="release-launch-cover" loading="lazy" decoding="async" />
+        </div>
+        <div>
           <p class="release-kicker">Nuevo lanzamiento</p>
           <h2 class="release-title">No te querré siempre</h2>
           <p class="release-text">
             Esta canción puede englobarse dentro del universo de <em>Tú de qué vas</em>. Nace de un capítulo en el que la protagonista pregunta:
             <strong>¿Hoy no me quieres?</strong>
           </p>
-          <img src="img/no-te-querre-siempre-cover.jpg" alt="Portada de No te querré siempre" class="release-launch-cover" loading="lazy" decoding="async" />
-        </div>
-        <div>
-          <p class="release-text">
-            La frase original que llevó a esta canción está en el vídeo, y de ella surgieron la letra y la composición de
-            <strong>No te querré siempre</strong>.
-          </p>
-          <p class="release-quote">“¿Hoy no me quieres?... No te querré siempre.”</p>
-          <video class="release-video" controls autoplay loop muted playsinline preload="metadata">
-            <source src="video/no-te-querre-siempre.mp4" type="video/mp4" />
-          </video>
+          <h3 class="release-cta-title">Emociónate con No te querré siempre</h3>
+          <div class="release-actions">
+            <a href="https://open.spotify.com/album/2XVm8EkY7tadPJmRhMOX0f?si=fr6c1PNrS_Kpb-eO2f9QDQ" target="_blank" rel="noopener" class="btn btn-rounded btn-spotify"><i data-lucide="play"></i> Spotify</a>
+            <a href="https://music.apple.com/us/album/no-te-querr%C3%A9-siempre-single/1876539482?l=es-MX" target="_blank" rel="noopener" class="btn btn-rounded btn-apple"><i data-lucide="music-2"></i> Apple Music</a>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="release-cta">
+  <section class="release-context">
     <div class="container">
-      <div class="release-cta-inner">
-        <p class="release-cta-text">Emociónate con No te querré siempre</p>
-        <div class="release-actions">
-          <a href="https://open.spotify.com/album/2XVm8EkY7tadPJmRhMOX0f?si=fr6c1PNrS_Kpb-eO2f9QDQ" target="_blank" rel="noopener" class="btn btn-primary btn-rounded"><i data-lucide="play"></i> Escúchala ahora</a>
-          <a href="https://music.apple.com/us/album/no-te-querr%C3%A9-siempre-single/1876539482?l=es-MX" target="_blank" rel="noopener" class="btn btn-outline btn-rounded"><i data-lucide="music-2"></i> Apple Music</a>
+      <div class="release-context-grid">
+        <div>
+          <h3 class="release-context-title">La frase original</h3>
+          <p class="release-text">
+            La frase original que llevó a esta canción está en el vídeo, y de ella surgieron la letra y la composición de
+            <strong>No te querré siempre</strong>.
+          </p>
+          <p class="release-quote release-quote-light">“¿Hoy no me quieres?... No te querré siempre.”</p>
+        </div>
+        <div>
+          <video class="release-video" controls autoplay loop muted playsinline preload="metadata">
+            <source src="video/no-te-querre-siempre.mp4" type="video/mp4" />
+          </video>
         </div>
       </div>
     </div>
