@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Backoffice Métricas | David Bello</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <style>
+    :root{
+      --bg:#0d0d0d;
+      --panel:#171717;
+      --panel-soft:#1f1f1f;
+      --text:#efefef;
+      --muted:#b3b3b3;
+      --accent:#d97706;
+      --ok:#22c55e;
+      --border:rgba(255,255,255,.12);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.45}
+    .wrap{max-width:1100px;margin:0 auto;padding:28px 18px 40px}
+    h1{font-size:1.8rem;margin:0 0 6px}
+    p{margin:0}
+    .muted{color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:18px}
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px}
+    .span-6{grid-column:span 6}
+    .span-12{grid-column:span 12}
+    .k{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(217,119,6,.18);color:#ffd7a8;font-size:.78rem;margin-bottom:10px}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 14px;border-radius:10px;border:1px solid var(--border);text-decoration:none;color:var(--text);font-weight:600;font-size:.92rem}
+    .btn:hover{border-color:rgba(217,119,6,.7)}
+    .btn-primary{background:var(--accent);color:#111;border-color:transparent}
+    .btn-primary:hover{filter:brightness(1.05)}
+    code{display:block;background:var(--panel-soft);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-top:10px;overflow:auto;color:#ffd7a8}
+    ul{margin:10px 0 0;padding-left:18px}
+    li{margin:6px 0}
+    .ok{color:var(--ok);font-weight:600}
+    .table{width:100%;border-collapse:collapse;margin-top:10px}
+    .table th,.table td{border-bottom:1px solid var(--border);padding:10px 8px;text-align:left;font-size:.92rem;vertical-align:top}
+    .table th{color:#f7d9b3}
+    @media (max-width:900px){
+      .span-6{grid-column:span 12}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Backoffice de Métricas</h1>
+    <p class="muted">Panel operativo central para revisar rendimiento y comportamiento sin buscar enlaces cada vez.</p>
+
+    <div class="grid">
+      <section class="card span-6">
+        <span class="k">Configuración activa</span>
+        <p><strong>GA4 Measurement ID:</strong> <span id="gaId">G-4V3KPXTJPN</span></p>
+        <p><strong>Clarity Project ID:</strong> <span id="clarityId">vif42io02i</span></p>
+        <p class="muted" style="margin-top:8px">Estado esperado: <span class="ok">Tracking activo tras aceptar cookies</span>.</p>
+      </section>
+
+      <section class="card span-6">
+        <span class="k">Accesos rápidos</span>
+        <div class="row" style="margin-top:2px">
+          <a class="btn btn-primary" href="https://analytics.google.com/" target="_blank" rel="noopener">Abrir GA4</a>
+          <a class="btn" href="https://analytics.google.com/analytics/web/#/realtime" target="_blank" rel="noopener">Realtime</a>
+          <a class="btn" id="clarityLink" href="https://clarity.microsoft.com/projects/view/vif42io02i" target="_blank" rel="noopener">Abrir Clarity</a>
+        </div>
+      </section>
+
+      <section class="card span-12">
+        <span class="k">Eventos instrumentados</span>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Evento</th>
+              <th>Qué mide</th>
+              <th>Dónde se dispara</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code style="display:inline;background:none;border:0;padding:0;margin:0">cta_click</code></td>
+              <td>Clics en CTAs y accesos rápidos</td>
+              <td>Spotify, Apple Music, Música, Regalo, Instagram, Novela</td>
+            </tr>
+            <tr>
+              <td><code style="display:inline;background:none;border:0;padding:0;margin:0">scroll_depth</code></td>
+              <td>Profundidad de lectura</td>
+              <td>25%, 50%, 75%, 90%</td>
+            </tr>
+            <tr>
+              <td><code style="display:inline;background:none;border:0;padding:0;margin:0">video_play</code></td>
+              <td>Inicio de reproducción</td>
+              <td>Todos los vídeos HTML5 de la web</td>
+            </tr>
+            <tr>
+              <td><code style="display:inline;background:none;border:0;padding:0;margin:0">video_complete</code></td>
+              <td>Vídeo completado</td>
+              <td>Cuando el vídeo termina</td>
+            </tr>
+            <tr>
+              <td><code style="display:inline;background:none;border:0;padding:0;margin:0">engaged_time</code></td>
+              <td>Tiempo mínimo útil en página</td>
+              <td>En salida de página si supera 20s</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card span-12">
+        <span class="k">Checklist de validación (2 minutos)</span>
+        <ol style="margin:10px 0 0;padding-left:20px">
+          <li>Abrir <a href="https://davidbellolv.com/" target="_blank" rel="noopener">davidbellolv.com</a> en incógnito y aceptar cookies.</li>
+          <li>Hacer clic en Spotify, Apple Music y el botón rápido de Novela.</li>
+          <li>Reproducir un vídeo y hacer scroll hasta al menos 50%.</li>
+          <li>Entrar en GA4 Realtime y confirmar eventos nuevos.</li>
+          <li>Entrar en Clarity y confirmar sesión/heatmap en unos minutos.</li>
+        </ol>
+      </section>
+
+      <section class="card span-12">
+        <span class="k">Snippet de referencia</span>
+        <p class="muted">Si cambian IDs, actualizar en <code>/index.html</code> y <code>/en/index.html</code>.</p>
+        <code>window.TDQV_ANALYTICS_CONFIG = {
+  ga4MeasurementId: "G-4V3KPXTJPN",
+  clarityProjectId: "vif42io02i"
+};</code>
+      </section>
+    </div>
+  </div>
+</body>
+</html>
