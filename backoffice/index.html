@@ -3,129 +3,244 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Backoffice Métricas | David Bello</title>
+  <title>Backoffice V2 | Métricas Unificadas</title>
   <meta name="robots" content="noindex,nofollow" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
   <style>
     :root{
-      --bg:#0d0d0d;
-      --panel:#171717;
-      --panel-soft:#1f1f1f;
-      --text:#efefef;
-      --muted:#b3b3b3;
+      --bg:#0b0b0c;
+      --panel:#151518;
+      --panel-soft:#1c1c20;
+      --text:#f4f4f5;
+      --muted:#b0b3bb;
       --accent:#d97706;
-      --ok:#22c55e;
-      --border:rgba(255,255,255,.12);
+      --line:rgba(255,255,255,.1);
+      --ok:#16a34a;
+      --warn:#ea580c;
     }
     *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.45}
-    .wrap{max-width:1100px;margin:0 auto;padding:28px 18px 40px}
-    h1{font-size:1.8rem;margin:0 0 6px}
-    p{margin:0}
-    .muted{color:var(--muted)}
+    body{margin:0;background:radial-gradient(1200px 600px at 100% -20%, rgba(217,119,6,.15), transparent 60%), var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+    a{color:inherit}
+    .wrap{max-width:1200px;margin:0 auto;padding:28px 18px 40px}
+    .top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
+    .title h1{margin:0;font-size:1.9rem}
+    .title p{margin:6px 0 0;color:var(--muted)}
+    .status{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{border:1px solid var(--line);background:var(--panel-soft);border-radius:999px;padding:6px 10px;font-size:.8rem;color:#ddd}
+    .chip.ok{border-color:rgba(22,163,74,.4);color:#b9f8cb;background:rgba(22,163,74,.12)}
+    .chip.warn{border-color:rgba(234,88,12,.45);color:#ffd5bf;background:rgba(234,88,12,.12)}
     .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:18px}
-    .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px}
-    .span-6{grid-column:span 6}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 35%), var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
     .span-12{grid-column:span 12}
-    .k{display:inline-block;padding:4px 8px;border-radius:999px;background:rgba(217,119,6,.18);color:#ffd7a8;font-size:.78rem;margin-bottom:10px}
-    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 14px;border-radius:10px;border:1px solid var(--border);text-decoration:none;color:var(--text);font-weight:600;font-size:.92rem}
+    .span-8{grid-column:span 8}
+    .span-6{grid-column:span 6}
+    .span-4{grid-column:span 4}
+    .span-3{grid-column:span 3}
+    .kpi-label{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+    .kpi-value{margin-top:6px;font-size:1.65rem;font-weight:700}
+    .kpi-sub{margin-top:4px;font-size:.85rem;color:#c8c8ce}
+    .card h2{margin:0 0 10px;font-size:1.05rem}
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 14px;border-radius:10px;border:1px solid var(--line);text-decoration:none;font-weight:600;font-size:.9rem;background:var(--panel-soft)}
     .btn:hover{border-color:rgba(217,119,6,.7)}
     .btn-primary{background:var(--accent);color:#111;border-color:transparent}
     .btn-primary:hover{filter:brightness(1.05)}
-    code{display:block;background:var(--panel-soft);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-top:10px;overflow:auto;color:#ffd7a8}
-    ul{margin:10px 0 0;padding-left:18px}
-    li{margin:6px 0}
-    .ok{color:var(--ok);font-weight:600}
-    .table{width:100%;border-collapse:collapse;margin-top:10px}
-    .table th,.table td{border-bottom:1px solid var(--border);padding:10px 8px;text-align:left;font-size:.92rem;vertical-align:top}
-    .table th{color:#f7d9b3}
-    @media (max-width:900px){
-      .span-6{grid-column:span 12}
+    .table{width:100%;border-collapse:collapse}
+    .table th,.table td{border-bottom:1px solid var(--line);padding:10px 8px;text-align:left;font-size:.92rem;vertical-align:top}
+    .table th{color:#ffd9b3;font-size:.82rem;letter-spacing:1px;text-transform:uppercase}
+    code{display:block;background:var(--panel-soft);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:10px;white-space:pre-wrap;color:#ffd7a8}
+    .muted{color:var(--muted)}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+    @media (max-width:1024px){
+      .span-8,.span-6,.span-4,.span-3{grid-column:span 12}
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>Backoffice de Métricas</h1>
-    <p class="muted">Panel operativo central para revisar rendimiento y comportamiento sin buscar enlaces cada vez.</p>
+    <div class="top">
+      <div class="title">
+        <h1>Backoffice V2</h1>
+        <p>Métricas unificadas de rendimiento y comportamiento en un solo panel.</p>
+      </div>
+      <div class="status">
+        <span id="sourceChip" class="chip warn">Fuente: sin datos</span>
+        <span class="chip">GA4: <span class="mono">G-4V3KPXTJPN</span></span>
+        <span class="chip">Clarity: <span class="mono">vif42io02i</span></span>
+      </div>
+    </div>
 
     <div class="grid">
-      <section class="card span-6">
-        <span class="k">Configuración activa</span>
-        <p><strong>GA4 Measurement ID:</strong> <span id="gaId">G-4V3KPXTJPN</span></p>
-        <p><strong>Clarity Project ID:</strong> <span id="clarityId">vif42io02i</span></p>
-        <p class="muted" style="margin-top:8px">Estado esperado: <span class="ok">Tracking activo tras aceptar cookies</span>.</p>
+      <section class="card span-3"><div class="kpi-label">Usuarios (7d)</div><div id="kpiUsers" class="kpi-value">-</div><div class="kpi-sub">Total de usuarios únicos</div></section>
+      <section class="card span-3"><div class="kpi-label">Sesiones (7d)</div><div id="kpiSessions" class="kpi-value">-</div><div class="kpi-sub">Visitas totales</div></section>
+      <section class="card span-3"><div class="kpi-label">Engagement</div><div id="kpiEngagement" class="kpi-value">-</div><div class="kpi-sub">Tasa de interacción</div></section>
+      <section class="card span-3"><div class="kpi-label">Clicks CTA (7d)</div><div id="kpiCta" class="kpi-value">-</div><div class="kpi-sub">Suma de conversiones blandas</div></section>
+
+      <section class="card span-8">
+        <h2>Tendencia diaria</h2>
+        <canvas id="trendChart" height="120"></canvas>
+      </section>
+
+      <section class="card span-4">
+        <h2>Distribución de clics</h2>
+        <canvas id="ctaChart" height="170"></canvas>
       </section>
 
       <section class="card span-6">
-        <span class="k">Accesos rápidos</span>
-        <div class="row" style="margin-top:2px">
-          <a class="btn btn-primary" href="https://analytics.google.com/" target="_blank" rel="noopener">Abrir GA4</a>
-          <a class="btn" href="https://analytics.google.com/analytics/web/#/realtime" target="_blank" rel="noopener">Realtime</a>
-          <a class="btn" id="clarityLink" href="https://clarity.microsoft.com/projects/view/vif42io02i" target="_blank" rel="noopener">Abrir Clarity</a>
-        </div>
+        <h2>Páginas principales</h2>
+        <table class="table" id="pagesTable">
+          <thead><tr><th>Página</th><th>Vistas</th></tr></thead>
+          <tbody></tbody>
+        </table>
       </section>
 
-      <section class="card span-12">
-        <span class="k">Eventos instrumentados</span>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Evento</th>
-              <th>Qué mide</th>
-              <th>Dónde se dispara</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code style="display:inline;background:none;border:0;padding:0;margin:0">cta_click</code></td>
-              <td>Clics en CTAs y accesos rápidos</td>
-              <td>Spotify, Apple Music, Música, Regalo, Instagram, Novela</td>
-            </tr>
-            <tr>
-              <td><code style="display:inline;background:none;border:0;padding:0;margin:0">scroll_depth</code></td>
-              <td>Profundidad de lectura</td>
-              <td>25%, 50%, 75%, 90%</td>
-            </tr>
-            <tr>
-              <td><code style="display:inline;background:none;border:0;padding:0;margin:0">video_play</code></td>
-              <td>Inicio de reproducción</td>
-              <td>Todos los vídeos HTML5 de la web</td>
-            </tr>
-            <tr>
-              <td><code style="display:inline;background:none;border:0;padding:0;margin:0">video_complete</code></td>
-              <td>Vídeo completado</td>
-              <td>Cuando el vídeo termina</td>
-            </tr>
-            <tr>
-              <td><code style="display:inline;background:none;border:0;padding:0;margin:0">engaged_time</code></td>
-              <td>Tiempo mínimo útil en página</td>
-              <td>En salida de página si supera 20s</td>
-            </tr>
-          </tbody>
+      <section class="card span-6">
+        <h2>Eventos clave</h2>
+        <table class="table" id="eventsTable">
+          <thead><tr><th>Evento</th><th>Total</th></tr></thead>
+          <tbody></tbody>
         </table>
       </section>
 
       <section class="card span-12">
-        <span class="k">Checklist de validación (2 minutos)</span>
-        <ol style="margin:10px 0 0;padding-left:20px">
-          <li>Abrir <a href="https://davidbellolv.com/" target="_blank" rel="noopener">davidbellolv.com</a> en incógnito y aceptar cookies.</li>
-          <li>Hacer clic en Spotify, Apple Music y el botón rápido de Novela.</li>
-          <li>Reproducir un vídeo y hacer scroll hasta al menos 50%.</li>
-          <li>Entrar en GA4 Realtime y confirmar eventos nuevos.</li>
-          <li>Entrar en Clarity y confirmar sesión/heatmap en unos minutos.</li>
-        </ol>
+        <h2>Accesos operativos</h2>
+        <div class="row">
+          <a class="btn btn-primary" href="https://analytics.google.com/" target="_blank" rel="noopener">Abrir GA4</a>
+          <a class="btn" href="https://analytics.google.com/analytics/web/#/realtime" target="_blank" rel="noopener">Realtime GA4</a>
+          <a class="btn" href="https://clarity.microsoft.com/projects/view/vif42io02i" target="_blank" rel="noopener">Abrir Clarity</a>
+          <a class="btn" href="https://davidbellolv.com/" target="_blank" rel="noopener">Abrir sitio</a>
+        </div>
       </section>
 
       <section class="card span-12">
-        <span class="k">Snippet de referencia</span>
-        <p class="muted">Si cambian IDs, actualizar en <code>/index.html</code> y <code>/en/index.html</code>.</p>
-        <code>window.TDQV_ANALYTICS_CONFIG = {
-  ga4MeasurementId: "G-4V3KPXTJPN",
-  clarityProjectId: "vif42io02i"
-};</code>
+        <h2>Conector de datos</h2>
+        <p class="muted">El panel lee <code style="display:inline;padding:2px 6px">/backoffice/metrics.json</code>. Puedes actualizar ese JSON manualmente o con automatización diaria (Comet/Codex) para tener números frescos sin tocar el front.</p>
+        <code>{
+  "last_updated": "2026-02-17T10:00:00Z",
+  "kpis": { "users_7d": 0, "sessions_7d": 0, "engagement_rate": 0, "cta_clicks_7d": 0 },
+  "series": {
+    "labels": ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"],
+    "sessions": [0,0,0,0,0,0,0],
+    "users": [0,0,0,0,0,0,0]
+  },
+  "cta_breakdown": { "Spotify": 0, "Apple Music": 0, "Novela": 0, "Instagram": 0, "Regalo": 0 },
+  "top_pages": [{ "path": "/", "views": 0 }],
+  "events": [{ "name": "cta_click", "count": 0 }]
+}</code>
       </section>
     </div>
   </div>
+
+  <script>
+    function fmt(n){ return Number(n || 0).toLocaleString('es-ES'); }
+    function pct(v){ return (Number(v || 0) * 100).toFixed(1) + '%'; }
+
+    const FALLBACK = {
+      last_updated: null,
+      kpis: { users_7d: 0, sessions_7d: 0, engagement_rate: 0, cta_clicks_7d: 0 },
+      series: { labels: ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"], sessions: [0,0,0,0,0,0,0], users: [0,0,0,0,0,0,0] },
+      cta_breakdown: { "Spotify": 0, "Apple Music": 0, "Novela": 0, "Instagram": 0, "Regalo": 0 },
+      top_pages: [],
+      events: []
+    };
+
+    async function loadMetrics(){
+      try{
+        const res = await fetch('./metrics.json', { cache: 'no-store' });
+        if(!res.ok) throw new Error('metrics.json no disponible');
+        const data = await res.json();
+        document.getElementById('sourceChip').className = 'chip ok';
+        document.getElementById('sourceChip').textContent = 'Fuente: metrics.json actualizado';
+        return data;
+      } catch(_e){
+        document.getElementById('sourceChip').className = 'chip warn';
+        document.getElementById('sourceChip').textContent = 'Fuente: sin datos (plantilla)';
+        return FALLBACK;
+      }
+    }
+
+    function renderKpis(data){
+      document.getElementById('kpiUsers').textContent = fmt(data.kpis.users_7d);
+      document.getElementById('kpiSessions').textContent = fmt(data.kpis.sessions_7d);
+      document.getElementById('kpiEngagement').textContent = pct(data.kpis.engagement_rate);
+      document.getElementById('kpiCta').textContent = fmt(data.kpis.cta_clicks_7d);
+    }
+
+    function renderTables(data){
+      const pagesBody = document.querySelector('#pagesTable tbody');
+      const eventsBody = document.querySelector('#eventsTable tbody');
+      pagesBody.innerHTML = '';
+      eventsBody.innerHTML = '';
+
+      (data.top_pages || []).slice(0,8).forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td class="mono">' + row.path + '</td><td>' + fmt(row.views) + '</td>';
+        pagesBody.appendChild(tr);
+      });
+      if(!pagesBody.children.length){
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td colspan="2" class="muted">Sin datos todavía</td>';
+        pagesBody.appendChild(tr);
+      }
+
+      (data.events || []).slice(0,8).forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td class="mono">' + row.name + '</td><td>' + fmt(row.count) + '</td>';
+        eventsBody.appendChild(tr);
+      });
+      if(!eventsBody.children.length){
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td colspan="2" class="muted">Sin datos todavía</td>';
+        eventsBody.appendChild(tr);
+      }
+    }
+
+    function renderCharts(data){
+      const labels = (data.series && data.series.labels) ? data.series.labels : [];
+      const sessions = (data.series && data.series.sessions) ? data.series.sessions : [];
+      const users = (data.series && data.series.users) ? data.series.users : [];
+
+      const trendCtx = document.getElementById('trendChart');
+      new Chart(trendCtx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [
+            { label:'Sesiones', data:sessions, borderColor:'#d97706', backgroundColor:'rgba(217,119,6,.2)', tension:.35, fill:true },
+            { label:'Usuarios', data:users, borderColor:'#60a5fa', backgroundColor:'rgba(96,165,250,.15)', tension:.35, fill:false }
+          ]
+        },
+        options: {
+          responsive:true,
+          plugins:{ legend:{ labels:{ color:'#e6e6e8' } } },
+          scales:{
+            x:{ ticks:{ color:'#b4b8c0' }, grid:{ color:'rgba(255,255,255,.06)' } },
+            y:{ ticks:{ color:'#b4b8c0' }, grid:{ color:'rgba(255,255,255,.06)' } }
+          }
+        }
+      });
+
+      const cta = data.cta_breakdown || {};
+      const ctaCtx = document.getElementById('ctaChart');
+      new Chart(ctaCtx, {
+        type:'doughnut',
+        data:{
+          labels:Object.keys(cta),
+          datasets:[{ data:Object.values(cta), backgroundColor:['#1db954','#111111','#d97706','#e1306c','#3b82f6'], borderColor:'#0b0b0c', borderWidth:2 }]
+        },
+        options:{
+          responsive:true,
+          plugins:{ legend:{ labels:{ color:'#e6e6e8' } } }
+        }
+      });
+    }
+
+    (async function init(){
+      const data = await loadMetrics();
+      renderKpis(data);
+      renderTables(data);
+      renderCharts(data);
+    })();
+  </script>
 </body>
 </html>

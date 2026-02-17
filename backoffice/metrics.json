@@ -1,0 +1,31 @@
+{
+  "last_updated": "2026-02-17T10:00:00Z",
+  "kpis": {
+    "users_7d": 0,
+    "sessions_7d": 0,
+    "engagement_rate": 0,
+    "cta_clicks_7d": 0
+  },
+  "series": {
+    "labels": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"],
+    "sessions": [0, 0, 0, 0, 0, 0, 0],
+    "users": [0, 0, 0, 0, 0, 0, 0]
+  },
+  "cta_breakdown": {
+    "Spotify": 0,
+    "Apple Music": 0,
+    "Novela": 0,
+    "Instagram": 0,
+    "Regalo": 0
+  },
+  "top_pages": [
+    { "path": "/", "views": 0 },
+    { "path": "/en/", "views": 0 }
+  ],
+  "events": [
+    { "name": "cta_click", "count": 0 },
+    { "name": "video_play", "count": 0 },
+    { "name": "scroll_depth", "count": 0 },
+    { "name": "engaged_time", "count": 0 }
+  ]
+}
