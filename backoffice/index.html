@@ -71,10 +71,10 @@
     </div>
 
     <div class="grid">
-      <section class="card span-3"><div class="kpi-label">Usuarios (7d)</div><div id="kpiUsers" class="kpi-value">-</div><div class="kpi-sub">Total de usuarios únicos</div></section>
-      <section class="card span-3"><div class="kpi-label">Sesiones (7d)</div><div id="kpiSessions" class="kpi-value">-</div><div class="kpi-sub">Visitas totales</div></section>
+      <section class="card span-3"><div class="kpi-label">Usuarios (30d)</div><div id="kpiUsers" class="kpi-value">-</div><div class="kpi-sub">Usuarios únicos</div></section>
+      <section class="card span-3"><div class="kpi-label">Sesiones (30d)</div><div id="kpiSessions" class="kpi-value">-</div><div class="kpi-sub">Visitas totales</div></section>
       <section class="card span-3"><div class="kpi-label">Engagement</div><div id="kpiEngagement" class="kpi-value">-</div><div class="kpi-sub">Tasa de interacción</div></section>
-      <section class="card span-3"><div class="kpi-label">Clicks CTA (7d)</div><div id="kpiCta" class="kpi-value">-</div><div class="kpi-sub">Suma de conversiones blandas</div></section>
+      <section class="card span-3"><div class="kpi-label">Pageviews (30d)</div><div id="kpiViews" class="kpi-value">-</div><div class="kpi-sub">Vistas de página</div></section>
 
       <section class="card span-8">
         <h2>Tendencia diaria</h2>
@@ -82,7 +82,7 @@
       </section>
 
       <section class="card span-4">
-        <h2>Distribución de clics</h2>
+        <h2>Distribución de clics CTA</h2>
         <canvas id="ctaChart" height="170"></canvas>
       </section>
 
@@ -102,6 +102,30 @@
         </table>
       </section>
 
+      <section class="card span-4">
+        <h2>Países</h2>
+        <table class="table" id="countriesTable">
+          <thead><tr><th>País</th><th>Usuarios</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <section class="card span-4">
+        <h2>Dispositivos</h2>
+        <table class="table" id="devicesTable">
+          <thead><tr><th>Dispositivo</th><th>Usuarios</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <section class="card span-4">
+        <h2>Canales</h2>
+        <table class="table" id="channelsTable">
+          <thead><tr><th>Canal</th><th>Sesiones</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
       <section class="card span-12">
         <h2>Accesos operativos</h2>
         <div class="row">
@@ -114,19 +138,8 @@
 
       <section class="card span-12">
         <h2>Conector de datos</h2>
-        <p class="muted">El panel lee <code style="display:inline;padding:2px 6px">/backoffice/metrics.json</code>. Puedes actualizar ese JSON manualmente o con automatización diaria (Comet/Codex) para tener números frescos sin tocar el front.</p>
-        <code>{
-  "last_updated": "2026-02-17T10:00:00Z",
-  "kpis": { "users_7d": 0, "sessions_7d": 0, "engagement_rate": 0, "cta_clicks_7d": 0 },
-  "series": {
-    "labels": ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"],
-    "sessions": [0,0,0,0,0,0,0],
-    "users": [0,0,0,0,0,0,0]
-  },
-  "cta_breakdown": { "Spotify": 0, "Apple Music": 0, "Novela": 0, "Instagram": 0, "Regalo": 0 },
-  "top_pages": [{ "path": "/", "views": 0 }],
-  "events": [{ "name": "cta_click", "count": 0 }]
-}</code>
+        <p class="muted">El panel lee <code style="display:inline;padding:2px 6px">/backoffice/metrics.json</code>. El workflow diario de GitHub Actions lo actualiza automáticamente desde GA4.</p>
+        <code id="lastUpdatedBox">Última actualización: pendiente</code>
       </section>
     </div>
   </div>
@@ -137,11 +150,15 @@
 
     const FALLBACK = {
       last_updated: null,
-      kpis: { users_7d: 0, sessions_7d: 0, engagement_rate: 0, cta_clicks_7d: 0 },
-      series: { labels: ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"], sessions: [0,0,0,0,0,0,0], users: [0,0,0,0,0,0,0] },
-      cta_breakdown: { "Spotify": 0, "Apple Music": 0, "Novela": 0, "Instagram": 0, "Regalo": 0 },
+      window_days: 30,
+      kpis: { users_7d: 0, sessions_7d: 0, engagement_rate: 0, cta_clicks_7d: 0, pageviews_7d: 0 },
+      series: { labels: ["Lun","Mar","Mie","Jue","Vie","Sab","Dom"], sessions: [0,0,0,0,0,0,0], users: [0,0,0,0,0,0,0] },
+      cta_breakdown: { "Spotify": 0, "Apple Music": 0, "Novela": 0, "Instagram": 0, "Regalo": 0, "Música": 0 },
       top_pages: [],
-      events: []
+      events: [],
+      countries: [],
+      devices: [],
+      channels: []
     };
 
     async function loadMetrics(){
@@ -159,40 +176,35 @@
       }
     }
 
+    function fillTable(tableId, rows, colA, colB){
+      const tbody = document.querySelector('#' + tableId + ' tbody');
+      tbody.innerHTML = '';
+      (rows || []).forEach((row) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td class="mono">' + (row[colA] || '-') + '</td><td>' + fmt(row[colB] || row.count || 0) + '</td>';
+        tbody.appendChild(tr);
+      });
+      if(!tbody.children.length){
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td colspan="2" class="muted">Sin datos todavía</td>';
+        tbody.appendChild(tr);
+      }
+    }
+
     function renderKpis(data){
       document.getElementById('kpiUsers').textContent = fmt(data.kpis.users_7d);
       document.getElementById('kpiSessions').textContent = fmt(data.kpis.sessions_7d);
       document.getElementById('kpiEngagement').textContent = pct(data.kpis.engagement_rate);
-      document.getElementById('kpiCta').textContent = fmt(data.kpis.cta_clicks_7d);
+      document.getElementById('kpiViews').textContent = fmt(data.kpis.pageviews_7d);
+      document.getElementById('lastUpdatedBox').textContent = 'Última actualización: ' + (data.last_updated || 'sin datos');
     }
 
     function renderTables(data){
-      const pagesBody = document.querySelector('#pagesTable tbody');
-      const eventsBody = document.querySelector('#eventsTable tbody');
-      pagesBody.innerHTML = '';
-      eventsBody.innerHTML = '';
-
-      (data.top_pages || []).slice(0,8).forEach(row => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = '<td class="mono">' + row.path + '</td><td>' + fmt(row.views) + '</td>';
-        pagesBody.appendChild(tr);
-      });
-      if(!pagesBody.children.length){
-        const tr = document.createElement('tr');
-        tr.innerHTML = '<td colspan="2" class="muted">Sin datos todavía</td>';
-        pagesBody.appendChild(tr);
-      }
-
-      (data.events || []).slice(0,8).forEach(row => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = '<td class="mono">' + row.name + '</td><td>' + fmt(row.count) + '</td>';
-        eventsBody.appendChild(tr);
-      });
-      if(!eventsBody.children.length){
-        const tr = document.createElement('tr');
-        tr.innerHTML = '<td colspan="2" class="muted">Sin datos todavía</td>';
-        eventsBody.appendChild(tr);
-      }
+      fillTable('pagesTable', (data.top_pages || []).map(r => ({ path: r.path, views: r.views })), 'path', 'views');
+      fillTable('eventsTable', (data.events || []).map(r => ({ name: r.name, count: r.count })), 'name', 'count');
+      fillTable('countriesTable', (data.countries || []).map(r => ({ country: r.country, count: r.count })), 'country', 'count');
+      fillTable('devicesTable', (data.devices || []).map(r => ({ device: r.device, count: r.count })), 'device', 'count');
+      fillTable('channelsTable', (data.channels || []).map(r => ({ channel: r.channel, count: r.count })), 'channel', 'count');
     }
 
     function renderCharts(data){
@@ -200,8 +212,7 @@
       const sessions = (data.series && data.series.sessions) ? data.series.sessions : [];
       const users = (data.series && data.series.users) ? data.series.users : [];
 
-      const trendCtx = document.getElementById('trendChart');
-      new Chart(trendCtx, {
+      new Chart(document.getElementById('trendChart'), {
         type: 'line',
         data: {
           labels,
@@ -221,12 +232,11 @@
       });
 
       const cta = data.cta_breakdown || {};
-      const ctaCtx = document.getElementById('ctaChart');
-      new Chart(ctaCtx, {
+      new Chart(document.getElementById('ctaChart'), {
         type:'doughnut',
         data:{
           labels:Object.keys(cta),
-          datasets:[{ data:Object.values(cta), backgroundColor:['#1db954','#111111','#d97706','#e1306c','#3b82f6'], borderColor:'#0b0b0c', borderWidth:2 }]
+          datasets:[{ data:Object.values(cta), backgroundColor:['#1db954','#111111','#d97706','#e1306c','#3b82f6','#60a5fa'], borderColor:'#0b0b0c', borderWidth:2 }]
         },
         options:{
           responsive:true,

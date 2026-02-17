@@ -1,10 +1,12 @@
 {
   "last_updated": "2026-02-17T10:00:00Z",
+  "window_days": 30,
   "kpis": {
     "users_7d": 0,
     "sessions_7d": 0,
     "engagement_rate": 0,
-    "cta_clicks_7d": 0
+    "cta_clicks_7d": 0,
+    "pageviews_7d": 0
   },
   "series": {
     "labels": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"],
@@ -16,7 +18,8 @@
     "Apple Music": 0,
     "Novela": 0,
     "Instagram": 0,
-    "Regalo": 0
+    "Regalo": 0,
+    "Música": 0
   },
   "top_pages": [
     { "path": "/", "views": 0 },
@@ -25,7 +28,16 @@
   "events": [
     { "name": "cta_click", "count": 0 },
     { "name": "video_play", "count": 0 },
+    { "name": "video_complete", "count": 0 },
     { "name": "scroll_depth", "count": 0 },
     { "name": "engaged_time", "count": 0 }
-  ]
+  ],
+  "countries": [],
+  "devices": [],
+  "channels": [],
+  "source": {
+    "property_id": "",
+    "ga4_measurement_id": "G-4V3KPXTJPN",
+    "clarity_project_id": "vif42io02i"
+  }
 }
