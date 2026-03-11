@@ -19,10 +19,24 @@ from typing import Any, Dict, List
 
 from google.analytics.data_v1beta import BetaAnalyticsDataClient
 from google.analytics.data_v1beta.types import DateRange, Dimension, Metric, RunReportRequest
+from google.api_core.exceptions import GoogleAPICallError
 from google.oauth2 import service_account
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "backoffice" / "metrics.json"
+
+
+def _now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def _load_existing_payload() -> Dict[str, Any]:
+    if not OUTPUT.exists():
+        return {}
+    try:
+        return json.loads(OUTPUT.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
 
 
 def _require_env(name: str) -> str:
@@ -280,7 +294,7 @@ def build_metrics() -> Dict[str, Any]:
     ]
 
     return {
-        "last_updated": datetime.now(timezone.utc).isoformat(),
+        "last_updated": _now_iso(),
         "window_days": lookback,
         "kpis": {
             "users_7d": total_users,
@@ -301,11 +315,48 @@ def build_metrics() -> Dict[str, Any]:
             "ga4_measurement_id": "G-4V3KPXTJPN",
             "clarity_project_id": "vif42io02i",
         },
+        "sync": {
+            "status": "ok",
+            "message": "Metrics updated from GA4 successfully.",
+            "last_attempted": _now_iso(),
+        },
     }
 
 
+def build_error_payload(exc: Exception) -> Dict[str, Any]:
+    existing = _load_existing_payload()
+    payload: Dict[str, Any] = existing if isinstance(existing, dict) else {}
+    payload.setdefault("window_days", 30)
+    payload.setdefault("kpis", {})
+    payload.setdefault("series", {"labels": [], "sessions": [], "users": []})
+    payload.setdefault("cta_breakdown", {})
+    payload.setdefault("top_pages", [])
+    payload.setdefault("events", [])
+    payload.setdefault("countries", [])
+    payload.setdefault("devices", [])
+    payload.setdefault("channels", [])
+    payload.setdefault(
+        "source",
+        {
+            "property_id": os.getenv("GA4_PROPERTY_ID", "").strip(),
+            "ga4_measurement_id": "G-4V3KPXTJPN",
+            "clarity_project_id": "vif42io02i",
+        },
+    )
+    payload["sync"] = {
+        "status": "error",
+        "message": str(exc),
+        "error_type": exc.__class__.__name__,
+        "last_attempted": _now_iso(),
+    }
+    return payload
+
+
 def main() -> None:
-    payload = build_metrics()
+    try:
+        payload = build_metrics()
+    except (GoogleAPICallError, RuntimeError, ValueError, KeyError, json.JSONDecodeError) as exc:
+        payload = build_error_payload(exc)
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Updated {OUTPUT}")

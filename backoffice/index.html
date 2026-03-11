@@ -65,6 +65,7 @@
       </div>
       <div class="status">
         <span id="sourceChip" class="chip warn">Fuente: sin datos</span>
+        <span id="syncChip" class="chip warn">Sync: sin verificar</span>
         <span class="chip">GA4: <span class="mono">G-4V3KPXTJPN</span></span>
         <span class="chip">Clarity: <span class="mono">vif42io02i</span></span>
       </div>
@@ -161,17 +162,32 @@
       channels: []
     };
 
+    function setSyncChip(kind, text){
+      const el = document.getElementById('syncChip');
+      el.className = 'chip ' + kind;
+      el.textContent = text;
+    }
+
     async function loadMetrics(){
       try{
         const res = await fetch('./metrics.json', { cache: 'no-store' });
         if(!res.ok) throw new Error('metrics.json no disponible');
         const data = await res.json();
-        document.getElementById('sourceChip').className = 'chip ok';
-        document.getElementById('sourceChip').textContent = 'Fuente: metrics.json actualizado';
+        const sourceChip = document.getElementById('sourceChip');
+        sourceChip.className = 'chip ok';
+        sourceChip.textContent = 'Fuente: metrics.json disponible';
+        if (data.sync && data.sync.status === 'error') {
+          setSyncChip('warn', 'Sync: error GA4');
+          sourceChip.className = 'chip warn';
+          sourceChip.textContent = 'Fuente: metrics.json con incidencia';
+        } else {
+          setSyncChip('ok', 'Sync: OK');
+        }
         return data;
       } catch(_e){
         document.getElementById('sourceChip').className = 'chip warn';
         document.getElementById('sourceChip').textContent = 'Fuente: sin datos (plantilla)';
+        setSyncChip('warn', 'Sync: sin datos');
         return FALLBACK;
       }
     }
@@ -196,7 +212,11 @@
       document.getElementById('kpiSessions').textContent = fmt(data.kpis.sessions_7d);
       document.getElementById('kpiEngagement').textContent = pct(data.kpis.engagement_rate);
       document.getElementById('kpiViews').textContent = fmt(data.kpis.pageviews_7d);
-      document.getElementById('lastUpdatedBox').textContent = 'Última actualización: ' + (data.last_updated || 'sin datos');
+      let statusText = 'Última actualización: ' + (data.last_updated || 'sin datos');
+      if (data.sync && data.sync.status === 'error') {
+        statusText += '\nEstado del sync: ' + (data.sync.message || 'error no especificado');
+      }
+      document.getElementById('lastUpdatedBox').textContent = statusText;
     }
 
     function renderTables(data){

@@ -1,0 +1,15 @@
+AuthType Basic
+AuthName "Backoffice davidbellolv.com"
+AuthUserFile /home/u837856432/domains/davidbellolv.com/public_html/backoffice/.htpasswd
+Require valid-user
+
+Options -Indexes
+
+<Files ".htpasswd">
+  Require all denied
+</Files>
+
+<IfModule mod_headers.c>
+  Header set X-Robots-Tag "noindex, nofollow, noarchive"
+  Header always set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+</IfModule>
