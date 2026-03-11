@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-03-11T07:04:42.844285+00:00",
+  "last_updated": "2026-03-11T07:10:35.650691+00:00",
   "window_days": 30,
   "kpis": {
     "users_7d": 0,
@@ -35,72 +35,24 @@
     "project_id": "vif42io02i",
     "window_days": 3,
     "overview": {
-      "sessions": 2,
+      "sessions": 0,
       "bot_sessions": 0,
-      "users": 2,
-      "pages_per_session": 2.0
+      "users": 0,
+      "pages_per_session": 0.0
     },
-    "top_pages": [
-      {
-        "url": "https://davidbellolv.com/",
-        "count": 2
-      }
-    ],
-    "top_devices": [
-      {
-        "device": "Mobile",
-        "count": 1
-      },
-      {
-        "device": "PC",
-        "count": 1
-      }
-    ],
-    "top_browsers": [
-      {
-        "browser": "Chrome",
-        "count": 1
-      },
-      {
-        "browser": "MobileSafari",
-        "count": 1
-      }
-    ],
-    "frustrations": [
-      {
-        "name": "DeadClickCount",
-        "count": 1
-      },
-      {
-        "name": "ExcessiveScroll",
-        "count": 0
-      },
-      {
-        "name": "RageClickCount",
-        "count": 0
-      },
-      {
-        "name": "QuickbackClick",
-        "count": 0
-      },
-      {
-        "name": "ScriptErrorCount",
-        "count": 0
-      },
-      {
-        "name": "ErrorClickCount",
-        "count": 0
-      }
-    ],
+    "top_pages": [],
+    "top_devices": [],
+    "top_browsers": [],
+    "frustrations": [],
     "sync": {
-      "status": "ok",
-      "message": "Clarity metrics updated successfully.",
-      "last_attempted": "2026-03-11T07:04:42.843949+00:00"
+      "status": "disabled",
+      "message": "Clarity token not configured.",
+      "last_attempted": "2026-03-11T07:10:35.650677+00:00"
     }
   },
   "sync": {
     "status": "ok",
     "message": "Metrics updated from GA4 successfully.",
-    "last_attempted": "2026-03-11T07:04:42.844339+00:00"
+    "last_attempted": "2026-03-11T07:10:35.650749+00:00"
   }
 }
