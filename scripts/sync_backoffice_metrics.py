@@ -170,8 +170,15 @@ def _clarity_base(project_id: str) -> Dict[str, Any]:
 
 
 def _clarity_metric_name(name: str) -> str:
+    normalized = []
+    prev_lower = False
+    for ch in name.strip():
+        if ch.isupper() and prev_lower:
+            normalized.append(" ")
+        normalized.append(ch.lower())
+        prev_lower = ch.islower()
     return (
-        name.lower()
+        "".join(normalized)
         .replace("/", " ")
         .replace("-", " ")
         .replace("_", " ")
@@ -229,8 +236,8 @@ def _fetch_clarity_metrics() -> Dict[str, Any]:
         if metric_key == "traffic":
             total_sessions = sum(_to_int(row.get("totalSessionCount")) for row in information)
             total_bot_sessions = sum(_to_int(row.get("totalBotSessionCount")) for row in information)
-            total_users = sum(_to_int(row.get("distantUserCount")) for row in information)
-            pps_values = [_to_float(row.get("PagesPerSessionPercentage")) for row in information]
+            total_users = sum(_to_int(row.get("distinctUserCount")) for row in information)
+            pps_values = [_to_float(row.get("pagesPerSessionPercentage")) for row in information]
             clarity["overview"] = {
                 "sessions": total_sessions,
                 "bot_sessions": total_bot_sessions,
@@ -242,8 +249,8 @@ def _fetch_clarity_metrics() -> Dict[str, Any]:
         if metric_key == "popular pages":
             clarity["top_pages"] = [
                 {
-                    "url": _label_value(row, ["URL", "PageTitle", "Page Title"]),
-                    "count": _pick_row_count(row, ["totalSessionCount", "sessionCount", "PageViews"]),
+                    "url": _label_value(row, ["url", "name", "URL", "PageTitle", "Page Title"]),
+                    "count": _pick_row_count(row, ["visitsCount", "sessionsCount", "totalSessionCount", "sessionCount", "PageViews"]),
                 }
                 for row in information[:10]
             ]
@@ -252,8 +259,8 @@ def _fetch_clarity_metrics() -> Dict[str, Any]:
         if metric_key == "device":
             clarity["top_devices"] = [
                 {
-                    "device": _label_value(row, ["Device"]),
-                    "count": _pick_row_count(row, ["totalSessionCount", "sessionCount"]),
+                    "device": _label_value(row, ["name", "Device"]),
+                    "count": _pick_row_count(row, ["sessionsCount", "totalSessionCount", "sessionCount"]),
                 }
                 for row in information[:8]
             ]
@@ -262,8 +269,8 @@ def _fetch_clarity_metrics() -> Dict[str, Any]:
         if metric_key == "browser":
             clarity["top_browsers"] = [
                 {
-                    "browser": _label_value(row, ["Browser"]),
-                    "count": _pick_row_count(row, ["totalSessionCount", "sessionCount"]),
+                    "browser": _label_value(row, ["name", "Browser"]),
+                    "count": _pick_row_count(row, ["sessionsCount", "totalSessionCount", "sessionCount"]),
                 }
                 for row in information[:8]
             ]
@@ -286,6 +293,8 @@ def _fetch_clarity_metrics() -> Dict[str, Any]:
                             [
                                 "count",
                                 "totalCount",
+                                "subTotal",
+                                "sessionsCount",
                                 "DeadClickCount",
                                 "RageClickCount",
                                 "QuickbackClick",
