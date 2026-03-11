@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-03-11T06:41:25.104865+00:00",
+  "last_updated": "2026-03-11T06:47:31.686158+00:00",
   "window_days": 30,
   "kpis": {
     "users_7d": 0,
@@ -31,9 +31,28 @@
     "ga4_measurement_id": "G-4V3KPXTJPN",
     "clarity_project_id": "vif42io02i"
   },
+  "clarity": {
+    "project_id": "vif42io02i",
+    "window_days": 3,
+    "overview": {
+      "sessions": 0,
+      "bot_sessions": 0,
+      "users": 0,
+      "pages_per_session": 0.0
+    },
+    "top_pages": [],
+    "top_devices": [],
+    "top_browsers": [],
+    "frustrations": [],
+    "sync": {
+      "status": "disabled",
+      "message": "Clarity token not configured.",
+      "last_attempted": "2026-03-11T06:47:31.686134+00:00"
+    }
+  },
   "sync": {
     "status": "ok",
     "message": "Metrics updated from GA4 successfully.",
-    "last_attempted": "2026-03-11T06:41:25.104932+00:00"
+    "last_attempted": "2026-03-11T06:47:31.686250+00:00"
   }
 }

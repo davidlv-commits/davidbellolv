@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Sync dashboard metrics.json from GA4 Data API.
+"""Sync dashboard metrics.json from GA4 Data API and optional Clarity export API.
 
 Required env vars:
 - GA4_PROPERTY_ID
@@ -7,6 +7,9 @@ Required env vars:
 
 Optional env vars:
 - GA4_LOOKBACK_DAYS (default: 30)
+- CLARITY_API_TOKEN
+- CLARITY_PROJECT_ID (default: vif42io02i)
+- CLARITY_LOOKBACK_DAYS (default: 3, allowed: 1..3)
 """
 
 from __future__ import annotations
@@ -21,9 +24,11 @@ from google.analytics.data_v1beta import BetaAnalyticsDataClient
 from google.analytics.data_v1beta.types import DateRange, Dimension, Metric, RunReportRequest
 from google.api_core.exceptions import GoogleAPICallError
 from google.oauth2 import service_account
+import requests
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "backoffice" / "metrics.json"
+CLARITY_EXPORT_URL = "https://www.clarity.ms/export-data/api/v1/project-live-insights"
 
 
 def _now_iso() -> str:
@@ -33,6 +38,20 @@ def _now_iso() -> str:
 def _load_existing_payload() -> Dict[str, Any]:
     if not OUTPUT.exists():
         return {}
+
+
+def _to_int(value: Any) -> int:
+    try:
+        return int(float(value))
+    except Exception:
+        return 0
+
+
+def _to_float(value: Any) -> float:
+    try:
+        return float(value)
+    except Exception:
+        return 0.0
     try:
         return json.loads(OUTPUT.read_text(encoding="utf-8"))
     except Exception:
@@ -92,19 +111,13 @@ def _run_report(
 def _first_int(report: Any, metric_idx: int = 0) -> int:
     if not report.rows:
         return 0
-    try:
-        return int(float(report.rows[0].metric_values[metric_idx].value))
-    except Exception:
-        return 0
+    return _to_int(report.rows[0].metric_values[metric_idx].value)
 
 
 def _first_float(report: Any, metric_idx: int = 0) -> float:
     if not report.rows:
         return 0.0
-    try:
-        return float(report.rows[0].metric_values[metric_idx].value)
-    except Exception:
-        return 0.0
+    return _to_float(report.rows[0].metric_values[metric_idx].value)
 
 
 def _rows_to_named_pairs(report: Any, name_key: str, value_metric_idx: int = 0) -> List[Dict[str, Any]]:
@@ -113,7 +126,7 @@ def _rows_to_named_pairs(report: Any, name_key: str, value_metric_idx: int = 0) 
         out.append(
             {
                 name_key: row.dimension_values[0].value,
-                "count": int(float(row.metric_values[value_metric_idx].value)),
+                "count": _to_int(row.metric_values[value_metric_idx].value),
             }
         )
     return out
@@ -128,10 +141,171 @@ def _daily_series(report: Any) -> Dict[str, List[Any]]:
         raw = row.dimension_values[0].value  # YYYYMMDD
         label = f"{raw[6:8]}/{raw[4:6]}"
         labels.append(label)
-        sessions.append(int(float(row.metric_values[0].value)))
-        users.append(int(float(row.metric_values[1].value)))
+        sessions.append(_to_int(row.metric_values[0].value))
+        users.append(_to_int(row.metric_values[1].value))
 
     return {"labels": labels, "sessions": sessions, "users": users}
+
+
+def _clarity_base(project_id: str) -> Dict[str, Any]:
+    return {
+        "project_id": project_id,
+        "window_days": 3,
+        "overview": {
+            "sessions": 0,
+            "bot_sessions": 0,
+            "users": 0,
+            "pages_per_session": 0.0,
+        },
+        "top_pages": [],
+        "top_devices": [],
+        "top_browsers": [],
+        "frustrations": [],
+        "sync": {
+            "status": "disabled",
+            "message": "Clarity token not configured.",
+            "last_attempted": _now_iso(),
+        },
+    }
+
+
+def _clarity_metric_name(name: str) -> str:
+    return (
+        name.lower()
+        .replace("/", " ")
+        .replace("-", " ")
+        .replace("_", " ")
+        .replace("  ", " ")
+        .strip()
+    )
+
+
+def _pick_row_count(row: Dict[str, Any], preferred_keys: List[str]) -> int:
+    for key in preferred_keys:
+        if key in row:
+            return _to_int(row[key])
+    for key, value in row.items():
+        if isinstance(value, (int, float)):
+            return _to_int(value)
+        if isinstance(value, str) and value.replace(".", "", 1).isdigit():
+            return _to_int(value)
+    return 0
+
+
+def _label_value(row: Dict[str, Any], keys: List[str]) -> str:
+    for key in keys:
+        value = row.get(key)
+        if value:
+            return str(value)
+    return "-"
+
+
+def _fetch_clarity_metrics() -> Dict[str, Any]:
+    project_id = os.getenv("CLARITY_PROJECT_ID", "vif42io02i").strip() or "vif42io02i"
+    token = os.getenv("CLARITY_API_TOKEN", "").strip()
+    clarity = _clarity_base(project_id)
+
+    if not token:
+        return clarity
+
+    lookback = max(1, min(3, _to_int(os.getenv("CLARITY_LOOKBACK_DAYS", "3")) or 3))
+    clarity["window_days"] = lookback
+
+    response = requests.get(
+        CLARITY_EXPORT_URL,
+        params={"numOfDays": str(lookback)},
+        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
+        timeout=30,
+    )
+    response.raise_for_status()
+    payload = response.json()
+
+    frustrations: List[Dict[str, Any]] = []
+    for entry in payload if isinstance(payload, list) else []:
+        metric_name = str(entry.get("metricName", "")).strip()
+        metric_key = _clarity_metric_name(metric_name)
+        information = entry.get("information") or []
+
+        if metric_key == "traffic":
+            total_sessions = sum(_to_int(row.get("totalSessionCount")) for row in information)
+            total_bot_sessions = sum(_to_int(row.get("totalBotSessionCount")) for row in information)
+            total_users = sum(_to_int(row.get("distantUserCount")) for row in information)
+            pps_values = [_to_float(row.get("PagesPerSessionPercentage")) for row in information]
+            clarity["overview"] = {
+                "sessions": total_sessions,
+                "bot_sessions": total_bot_sessions,
+                "users": total_users,
+                "pages_per_session": round(sum(pps_values) / len(pps_values), 2) if pps_values else 0.0,
+            }
+            continue
+
+        if metric_key == "popular pages":
+            clarity["top_pages"] = [
+                {
+                    "url": _label_value(row, ["URL", "PageTitle", "Page Title"]),
+                    "count": _pick_row_count(row, ["totalSessionCount", "sessionCount", "PageViews"]),
+                }
+                for row in information[:10]
+            ]
+            continue
+
+        if metric_key == "device":
+            clarity["top_devices"] = [
+                {
+                    "device": _label_value(row, ["Device"]),
+                    "count": _pick_row_count(row, ["totalSessionCount", "sessionCount"]),
+                }
+                for row in information[:8]
+            ]
+            continue
+
+        if metric_key == "browser":
+            clarity["top_browsers"] = [
+                {
+                    "browser": _label_value(row, ["Browser"]),
+                    "count": _pick_row_count(row, ["totalSessionCount", "sessionCount"]),
+                }
+                for row in information[:8]
+            ]
+            continue
+
+        if metric_key in {
+            "dead click count",
+            "rage click count",
+            "quickback click",
+            "script error count",
+            "error click count",
+            "excessive scroll",
+        }:
+            frustrations.append(
+                {
+                    "name": metric_name,
+                    "count": sum(
+                        _pick_row_count(
+                            row,
+                            [
+                                "count",
+                                "totalCount",
+                                "DeadClickCount",
+                                "RageClickCount",
+                                "QuickbackClick",
+                                "ScriptErrorCount",
+                                "ErrorClickCount",
+                                "ExcessiveScroll",
+                            ],
+                        )
+                        for row in information
+                    ),
+                }
+            )
+
+    clarity["frustrations"] = frustrations
+    clarity["sync"] = {
+        "status": "ok",
+        "message": "Clarity metrics updated successfully.",
+        "last_attempted": _now_iso(),
+    }
+    return clarity
 
 
 def build_metrics() -> Dict[str, Any]:
@@ -289,9 +463,11 @@ def build_metrics() -> Dict[str, Any]:
     ]
 
     top_pages = [
-        {"path": row.dimension_values[0].value, "views": int(float(row.metric_values[0].value))}
+        {"path": row.dimension_values[0].value, "views": _to_int(row.metric_values[0].value)}
         for row in pages.rows
     ]
+
+    clarity = _fetch_clarity_metrics()
 
     return {
         "last_updated": _now_iso(),
@@ -315,6 +491,7 @@ def build_metrics() -> Dict[str, Any]:
             "ga4_measurement_id": "G-4V3KPXTJPN",
             "clarity_project_id": "vif42io02i",
         },
+        "clarity": clarity,
         "sync": {
             "status": "ok",
             "message": "Metrics updated from GA4 successfully.",
@@ -335,6 +512,7 @@ def build_error_payload(exc: Exception) -> Dict[str, Any]:
     payload.setdefault("countries", [])
     payload.setdefault("devices", [])
     payload.setdefault("channels", [])
+    payload.setdefault("clarity", _clarity_base(os.getenv("CLARITY_PROJECT_ID", "vif42io02i").strip() or "vif42io02i"))
     payload.setdefault(
         "source",
         {

@@ -65,7 +65,8 @@
       </div>
       <div class="status">
         <span id="sourceChip" class="chip warn">Fuente: sin datos</span>
-        <span id="syncChip" class="chip warn">Sync: sin verificar</span>
+        <span id="syncChip" class="chip warn">GA4: sin verificar</span>
+        <span id="clarityChip" class="chip warn">Clarity: sin verificar</span>
         <span class="chip">GA4: <span class="mono">G-4V3KPXTJPN</span></span>
         <span class="chip">Clarity: <span class="mono">vif42io02i</span></span>
       </div>
@@ -139,8 +140,37 @@
 
       <section class="card span-12">
         <h2>Conector de datos</h2>
-        <p class="muted">El panel lee <code style="display:inline;padding:2px 6px">/backoffice/metrics.json</code>. El workflow diario de GitHub Actions lo actualiza automáticamente desde GA4.</p>
+        <p class="muted">El panel lee <code style="display:inline;padding:2px 6px">/backoffice/metrics.json</code>. El workflow diario de GitHub Actions lo actualiza desde GA4 y, si existe token, también desde Microsoft Clarity.</p>
         <code id="lastUpdatedBox">Última actualización: pendiente</code>
+      </section>
+
+      <section class="card span-3"><div class="kpi-label">Clarity sesiones</div><div id="claritySessions" class="kpi-value">-</div><div class="kpi-sub">Ultimos 1-3 dias</div></section>
+      <section class="card span-3"><div class="kpi-label">Clarity usuarios</div><div id="clarityUsers" class="kpi-value">-</div><div class="kpi-sub">Usuarios detectados</div></section>
+      <section class="card span-3"><div class="kpi-label">Bot sessions</div><div id="clarityBots" class="kpi-value">-</div><div class="kpi-sub">Sesion bot detectada</div></section>
+      <section class="card span-3"><div class="kpi-label">Pag./sesion</div><div id="clarityPagesPerSession" class="kpi-value">-</div><div class="kpi-sub">Promedio Clarity</div></section>
+
+      <section class="card span-6">
+        <h2>Clarity: páginas principales</h2>
+        <table class="table" id="clarityPagesTable">
+          <thead><tr><th>Página</th><th>Sesiones</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <section class="card span-3">
+        <h2>Clarity: dispositivos</h2>
+        <table class="table" id="clarityDevicesTable">
+          <thead><tr><th>Dispositivo</th><th>Sesiones</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <section class="card span-3">
+        <h2>Clarity: frustraciones</h2>
+        <table class="table" id="clarityFrustrationsTable">
+          <thead><tr><th>Métrica</th><th>Total</th></tr></thead>
+          <tbody></tbody>
+        </table>
       </section>
     </div>
   </div>
@@ -168,6 +198,12 @@
       el.textContent = text;
     }
 
+    function setClarityChip(kind, text){
+      const el = document.getElementById('clarityChip');
+      el.className = 'chip ' + kind;
+      el.textContent = text;
+    }
+
     async function loadMetrics(){
       try{
         const res = await fetch('./metrics.json?ts=' + Date.now(), { cache: 'no-store' });
@@ -177,17 +213,29 @@
         sourceChip.className = 'chip ok';
         sourceChip.textContent = 'Fuente: metrics.json disponible';
         if (data.sync && data.sync.status === 'error') {
-          setSyncChip('warn', 'Sync: error GA4');
+          setSyncChip('warn', 'GA4: error');
           sourceChip.className = 'chip warn';
           sourceChip.textContent = 'Fuente: metrics.json con incidencia';
         } else {
-          setSyncChip('ok', 'Sync: OK');
+          setSyncChip('ok', 'GA4: OK');
+        }
+        if (data.clarity && data.clarity.sync) {
+          if (data.clarity.sync.status === 'ok') {
+            setClarityChip('ok', 'Clarity: OK');
+          } else if (data.clarity.sync.status === 'disabled') {
+            setClarityChip('warn', 'Clarity: sin token');
+          } else {
+            setClarityChip('warn', 'Clarity: error');
+          }
+        } else {
+          setClarityChip('warn', 'Clarity: sin datos');
         }
         return data;
       } catch(_e){
         document.getElementById('sourceChip').className = 'chip warn';
         document.getElementById('sourceChip').textContent = 'Fuente: sin datos (plantilla)';
-        setSyncChip('warn', 'Sync: sin datos');
+        setSyncChip('warn', 'GA4: sin datos');
+        setClarityChip('warn', 'Clarity: sin datos');
         return FALLBACK;
       }
     }
@@ -216,6 +264,9 @@
       if (data.sync && data.sync.status === 'error') {
         statusText += '\nEstado del sync: ' + (data.sync.message || 'error no especificado');
       }
+      if (data.clarity && data.clarity.sync && data.clarity.sync.status !== 'ok') {
+        statusText += '\nEstado Clarity: ' + (data.clarity.sync.message || 'sin configurar');
+      }
       document.getElementById('lastUpdatedBox').textContent = statusText;
     }
 
@@ -225,6 +276,19 @@
       fillTable('countriesTable', (data.countries || []).map(r => ({ country: r.country, count: r.count })), 'country', 'count');
       fillTable('devicesTable', (data.devices || []).map(r => ({ device: r.device, count: r.count })), 'device', 'count');
       fillTable('channelsTable', (data.channels || []).map(r => ({ channel: r.channel, count: r.count })), 'channel', 'count');
+      const clarity = data.clarity || {};
+      fillTable('clarityPagesTable', (clarity.top_pages || []).map(r => ({ url: r.url, count: r.count })), 'url', 'count');
+      fillTable('clarityDevicesTable', (clarity.top_devices || []).map(r => ({ device: r.device, count: r.count })), 'device', 'count');
+      fillTable('clarityFrustrationsTable', (clarity.frustrations || []).map(r => ({ name: r.name, count: r.count })), 'name', 'count');
+    }
+
+    function renderClarityKpis(data){
+      const clarity = data.clarity || {};
+      const overview = clarity.overview || {};
+      document.getElementById('claritySessions').textContent = fmt(overview.sessions);
+      document.getElementById('clarityUsers').textContent = fmt(overview.users);
+      document.getElementById('clarityBots').textContent = fmt(overview.bot_sessions);
+      document.getElementById('clarityPagesPerSession').textContent = Number(overview.pages_per_session || 0).toFixed(2);
     }
 
     function renderCharts(data){
@@ -268,6 +332,7 @@
     (async function init(){
       const data = await loadMetrics();
       renderKpis(data);
+      renderClarityKpis(data);
       renderTables(data);
       renderCharts(data);
     })();
