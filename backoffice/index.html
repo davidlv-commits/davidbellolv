@@ -170,7 +170,7 @@
 
     async function loadMetrics(){
       try{
-        const res = await fetch('./metrics.json', { cache: 'no-store' });
+        const res = await fetch('./metrics.json?ts=' + Date.now(), { cache: 'no-store' });
         if(!res.ok) throw new Error('metrics.json no disponible');
         const data = await res.json();
         const sourceChip = document.getElementById('sourceChip');
