@@ -9,9 +9,33 @@
     "pageviews_7d": 0
   },
   "series": {
-    "labels": ["Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"],
-    "sessions": [0, 0, 0, 0, 0, 0, 0],
-    "users": [0, 0, 0, 0, 0, 0, 0]
+    "labels": [
+      "Lun",
+      "Mar",
+      "Mie",
+      "Jue",
+      "Vie",
+      "Sab",
+      "Dom"
+    ],
+    "sessions": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "users": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
   },
   "cta_breakdown": {
     "Spotify": 0,
@@ -22,15 +46,36 @@
     "Música": 0
   },
   "top_pages": [
-    { "path": "/", "views": 0 },
-    { "path": "/en/", "views": 0 }
+    {
+      "path": "/",
+      "views": 0
+    },
+    {
+      "path": "/en/",
+      "views": 0
+    }
   ],
   "events": [
-    { "name": "cta_click", "count": 0 },
-    { "name": "video_play", "count": 0 },
-    { "name": "video_complete", "count": 0 },
-    { "name": "scroll_depth", "count": 0 },
-    { "name": "engaged_time", "count": 0 }
+    {
+      "name": "cta_click",
+      "count": 0
+    },
+    {
+      "name": "video_play",
+      "count": 0
+    },
+    {
+      "name": "video_complete",
+      "count": 0
+    },
+    {
+      "name": "scroll_depth",
+      "count": 0
+    },
+    {
+      "name": "engaged_time",
+      "count": 0
+    }
   ],
   "countries": [],
   "devices": [],
@@ -39,5 +84,11 @@
     "property_id": "",
     "ga4_measurement_id": "G-4V3KPXTJPN",
     "clarity_project_id": "vif42io02i"
+  },
+  "sync": {
+    "status": "error",
+    "message": "403 User does not have sufficient permissions for this property. To learn more about Property ID, see https://developers.google.com/analytics/devguides/reporting/data/v1/property-id.",
+    "error_type": "PermissionDenied",
+    "last_attempted": "2026-03-11T06:05:02.428107+00:00"
   }
 }
