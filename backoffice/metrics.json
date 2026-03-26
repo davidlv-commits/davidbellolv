@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-03-25T07:17:03.923582+00:00",
+  "last_updated": "2026-03-26T07:36:05.454817+00:00",
   "window_days": 30,
   "kpis": {
     "users_7d": 0,
@@ -47,12 +47,12 @@
     "sync": {
       "status": "disabled",
       "message": "Clarity token not configured.",
-      "last_attempted": "2026-03-25T07:17:03.923574+00:00"
+      "last_attempted": "2026-03-26T07:36:05.454808+00:00"
     }
   },
   "sync": {
     "status": "ok",
     "message": "Metrics updated from GA4 successfully.",
-    "last_attempted": "2026-03-25T07:17:03.923658+00:00"
+    "last_attempted": "2026-03-26T07:36:05.454866+00:00"
   }
 }
