@@ -547,6 +547,7 @@ if ($activeLink) {
       .tracks { margin-top:18px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
       .track { border:1px dashed rgba(243,216,138,.3); border-radius:12px; padding:14px; background:rgba(8,12,20,.6); }
       .track strong { display:block; margin-bottom:8px; color:#fff7de; }
+      .track-subtitle { display:block; margin-top:-2px; margin-bottom:8px; color:#f3d88a; font-size:.88rem; line-height:1.4; }
       .small { font-size:.93rem; color:#aeb8c7; }
       .empty { padding:24px; }
       .closed { margin-top:16px; border-radius:12px; border:1px solid rgba(253,186,116,.45); background:rgba(154,52,18,.25); color:#ffd8ad; padding:14px; }
@@ -633,7 +634,7 @@ if ($activeLink) {
               <span class="badge">Regalo privado</span>
               <h1>Gracias por estar aquí, <?php echo htmlspecialchars($recipientName, ENT_QUOTES, 'UTF-8'); ?></h1>
               <p>Este espacio está preparado con cariño para que vivas una escucha íntima de las canciones nacidas alrededor de <strong><?php echo htmlspecialchars(EVENT_BOOK_TITLE, ENT_QUOTES, 'UTF-8'); ?></strong>.</p>
-              <p>Disfrútalo con calma. Es un acceso especial para personas que formaron parte de esta historia.</p>
+              <p>Disfrútalo con calma. Es un acceso especial para personas que ya forman parte de esta historia.</p>
               <?php if ($verifiedNow): ?>
                 <div class="ok">Correo confirmado correctamente. Tu acceso ya está activo.</div>
               <?php endif; ?>
@@ -678,8 +679,20 @@ if ($activeLink) {
             <?php else: ?>
               <div class="tracks">
                 <?php foreach ($tracks as $index => $track): ?>
+                  <?php
+                  $trackLabelLower = strtolower((string) ($track['label'] ?? ''));
+                  $trackSubtitle = '';
+                  if (strpos($trackLabelLower, 'carta') !== false) {
+                      $trackSubtitle = 'Versión inédita de La Carta Más Bonita del Mundo';
+                  } elseif (strpos($trackLabelLower, 'libre conmigo') !== false) {
+                      $trackSubtitle = 'Bolero homenaje a mi querido México';
+                  }
+                  ?>
                   <article class="track">
                     <strong>Pista <?php echo $index + 1; ?> · <?php echo htmlspecialchars($track['label'], ENT_QUOTES, 'UTF-8'); ?></strong>
+                    <?php if ($trackSubtitle !== ''): ?>
+                      <span class="track-subtitle"><?php echo htmlspecialchars($trackSubtitle, ENT_QUOTES, 'UTF-8'); ?></span>
+                    <?php endif; ?>
                     <audio controls controlsList="nodownload noplaybackrate" preload="none" disablePictureInPicture data-track="<?php echo htmlspecialchars($track['filename'], ENT_QUOTES, 'UTF-8'); ?>">
                       <source src="<?php echo htmlspecialchars($track['stream_url'], ENT_QUOTES, 'UTF-8'); ?>" type="audio/mpeg" />
                       Tu navegador no soporta reproducción de audio.
