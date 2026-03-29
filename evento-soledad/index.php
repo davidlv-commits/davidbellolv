@@ -702,23 +702,6 @@ if ($submission && trim((string) ($submission['companions'] ?? '')) !== '') {
 
     <main class="main">
       <div class="inner">
-        <section class="card author-box">
-          <img src="./autor-david.jpeg" alt="David Bello López-Valeiras" />
-          <div>
-            <h2>David Bello López-Valeiras · “<?php echo htmlspecialchars(EVENT_BOOK_TITLE, ENT_QUOTES, 'UTF-8'); ?>”</h2>
-            <p class="muted">
-              Esta presentación de <strong>“<?php echo htmlspecialchars(EVENT_BOOK_TITLE, ENT_QUOTES, 'UTF-8'); ?>”</strong> será una noche muy personal:
-              palabras, música en vivo y gratitud compartida en una ciudad, <strong>Morelia</strong>, que ya forma parte de mi historia.
-              El acceso es por registro previo y aforo limitado.
-            </p>
-            <p class="mini-note">Durante el evento habrá consumo libre.</p>
-            <div class="hero-links">
-              <a href="<?php echo htmlspecialchars(EVENT_MAIN_WEBSITE_URL, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener">Web principal</a>
-              <a href="<?php echo htmlspecialchars(EVENT_SPOTIFY_URL, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener">Música en Spotify</a>
-            </div>
-          </div>
-        </section>
-
         <section class="card book-box">
           <img class="book-cover" src="<?php echo htmlspecialchars(EVENT_BOOK_COVER_URL, ENT_QUOTES, 'UTF-8'); ?>" alt="Portada del libro <?php echo htmlspecialchars(EVENT_BOOK_TITLE, ENT_QUOTES, 'UTF-8'); ?>" />
           <div>
@@ -736,6 +719,23 @@ if ($submission && trim((string) ($submission['companions'] ?? '')) !== '') {
                 <p>“Me atrapó desde la primera página. Es una historia emocional y honesta que pega fuerte.”</p>
                 <span>Fernanda · Puebla</span>
               </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="card author-box">
+          <img src="./autor-david.jpeg" alt="David Bello López-Valeiras" />
+          <div>
+            <h2>David Bello López-Valeiras · “<?php echo htmlspecialchars(EVENT_BOOK_TITLE, ENT_QUOTES, 'UTF-8'); ?>”</h2>
+            <p class="muted">
+              Esta presentación de <strong>“<?php echo htmlspecialchars(EVENT_BOOK_TITLE, ENT_QUOTES, 'UTF-8'); ?>”</strong> será una noche muy personal:
+              palabras, música en vivo y gratitud compartida en una ciudad, <strong>Morelia</strong>, que ya forma parte de mi historia.
+              El acceso es por registro previo y aforo limitado.
+            </p>
+            <p class="mini-note">Durante el evento habrá consumo libre.</p>
+            <div class="hero-links">
+              <a href="<?php echo htmlspecialchars(EVENT_MAIN_WEBSITE_URL, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener">Web principal</a>
+              <a href="<?php echo htmlspecialchars(EVENT_SPOTIFY_URL, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener">Música en Spotify</a>
             </div>
           </div>
         </section>
