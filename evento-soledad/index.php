@@ -380,6 +380,11 @@ if ($submission && trim((string) ($submission['companions'] ?? '')) !== '') {
         $companionsData = $decoded;
     }
 }
+
+$shareImageUrl = EVENT_PUBLIC_BASE_URL . '/autor-david.jpeg';
+$sharePageUrl = EVENT_PUBLIC_BASE_URL . '/index.php';
+$shareTitle = 'Presentación de “' . EVENT_BOOK_TITLE . '” · Morelia';
+$shareDescription = 'Evento en vivo en Hotel de la Soledad, Morelia. Acceso por registro y aforo limitado.';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -388,6 +393,18 @@ if ($submission && trim((string) ($submission['companions'] ?? '')) !== '') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex,nofollow,noarchive" />
     <title>Invitación | Presentación del libro</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:title" content="<?php echo htmlspecialchars($shareTitle, ENT_QUOTES, 'UTF-8'); ?>" />
+    <meta property="og:description" content="<?php echo htmlspecialchars($shareDescription, ENT_QUOTES, 'UTF-8'); ?>" />
+    <meta property="og:url" content="<?php echo htmlspecialchars($sharePageUrl, ENT_QUOTES, 'UTF-8'); ?>" />
+    <meta property="og:image" content="<?php echo htmlspecialchars($shareImageUrl, ENT_QUOTES, 'UTF-8'); ?>" />
+    <meta property="og:image:secure_url" content="<?php echo htmlspecialchars($shareImageUrl, ENT_QUOTES, 'UTF-8'); ?>" />
+    <meta property="og:image:alt" content="David Bello López-Valeiras con su libro Tú de qué vas" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="<?php echo htmlspecialchars($shareTitle, ENT_QUOTES, 'UTF-8'); ?>" />
+    <meta name="twitter:description" content="<?php echo htmlspecialchars($shareDescription, ENT_QUOTES, 'UTF-8'); ?>" />
+    <meta name="twitter:image" content="<?php echo htmlspecialchars($shareImageUrl, ENT_QUOTES, 'UTF-8'); ?>" />
     <style>
       :root {
         --bg: #0e1014;

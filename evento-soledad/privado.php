@@ -517,6 +517,11 @@ if ($activeLink) {
     $usedShares = (int) $shareCountStmt->execute()->fetchArray(SQLITE3_NUM)[0];
     $remainingShares = max(0, EVENT_SHARE_LIMIT - $usedShares);
 }
+
+$privateShareImageUrl = EVENT_PUBLIC_BASE_URL . '/autor-david.jpeg';
+$privateSharePageUrl = EVENT_PUBLIC_BASE_URL . '/privado.php';
+$privateShareTitle = 'Regalo privado · ' . EVENT_BOOK_TITLE;
+$privateShareDescription = 'Acceso privado para escuchar canciones inéditas y conocer “' . EVENT_BOOK_TITLE . '”.';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -525,6 +530,18 @@ if ($activeLink) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex,nofollow,noarchive" />
     <title>Acceso privado · Regalo especial</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:title" content="<?php echo htmlspecialchars($privateShareTitle, ENT_QUOTES, 'UTF-8'); ?>" />
+    <meta property="og:description" content="<?php echo htmlspecialchars($privateShareDescription, ENT_QUOTES, 'UTF-8'); ?>" />
+    <meta property="og:url" content="<?php echo htmlspecialchars($privateSharePageUrl, ENT_QUOTES, 'UTF-8'); ?>" />
+    <meta property="og:image" content="<?php echo htmlspecialchars($privateShareImageUrl, ENT_QUOTES, 'UTF-8'); ?>" />
+    <meta property="og:image:secure_url" content="<?php echo htmlspecialchars($privateShareImageUrl, ENT_QUOTES, 'UTF-8'); ?>" />
+    <meta property="og:image:alt" content="David Bello López-Valeiras con su libro Tú de qué vas" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="<?php echo htmlspecialchars($privateShareTitle, ENT_QUOTES, 'UTF-8'); ?>" />
+    <meta name="twitter:description" content="<?php echo htmlspecialchars($privateShareDescription, ENT_QUOTES, 'UTF-8'); ?>" />
+    <meta name="twitter:image" content="<?php echo htmlspecialchars($privateShareImageUrl, ENT_QUOTES, 'UTF-8'); ?>" />
     <style>
       :root { --line: rgba(243,216,138,.28); --line-soft: rgba(243,216,138,.16); --gold:#f3d88a; --ink:#f8fafc; --muted:#cdd5e1; }
       * { box-sizing: border-box; }
