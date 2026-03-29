@@ -20,6 +20,8 @@ const EVENT_PUBLIC_BASE_URL = 'https://davidbellolv.com/evento-soledad';
 const EVENT_MAIN_WEBSITE_URL = 'https://davidbellolv.com/';
 const EVENT_SPOTIFY_URL = 'https://open.spotify.com/album/2XVm8EkY7tadPJmRhMOX0f?si=fr6c1PNrS_Kpb-eO2f9QDQ';
 const EVENT_YOUTUBE_URL = 'https://youtube.com/@davidbellolopez-valeiras24?si=11OPPW9efofUbCS4';
+const EVENT_BOOK_AMAZON_URL = 'https://amzn.eu/d/hEMYm7o';
+const EVENT_BOOK_COVER_URL = '../img/portada-novela.jpg';
 const EVENT_THANKS_LANDING_URL = EVENT_PUBLIC_BASE_URL . '/privado.php';
 const EVENT_GIFT_PUBLIC_URL = EVENT_PUBLIC_BASE_URL . '/privado.php';
 const EVENT_GIFT_AVAILABILITY_DAYS = 15;
