@@ -540,6 +540,9 @@ if ($activeLink) {
       p { margin:0 0 11px; color:var(--muted); line-height:1.66; }
       a { display:inline-block; margin-top:10px; text-decoration:none; color:#111827; background:var(--gold); border-radius:10px; padding:10px 14px; font-weight:700; }
       .ghost { margin-left:10px; background:transparent; color:var(--gold); border:1px solid rgba(243,216,138,.45); }
+      .event-meta { margin:12px 0 10px; display:grid; gap:8px; }
+      .event-meta-item { display:flex; gap:8px; align-items:flex-start; color:#f1f5f9; font-size:.95rem; line-height:1.45; }
+      .event-meta-item .k { color:#f3d88a; font-weight:700; min-width:86px; }
       .grid { margin-top:18px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
       .tile { border-radius:12px; border:1px solid var(--line-soft); background:rgba(17,24,39,.74); padding:15px; }
       .pill,.badge { display:inline-flex; font-size:.78rem; letter-spacing:.03em; text-transform:uppercase; color:var(--gold); border:1px solid rgba(243,216,138,.45); border-radius:999px; padding:4px 9px; margin-bottom:10px; }
@@ -641,6 +644,12 @@ if ($activeLink) {
               <?php if ($accessUntilText !== ''): ?>
                 <p><strong style="color:#f6de9f;">Disponible hasta:</strong> <?php echo htmlspecialchars($accessUntilText, ENT_QUOTES, 'UTF-8'); ?></p>
               <?php endif; ?>
+              <div class="event-meta">
+                <div class="event-meta-item"><span class="k">Día:</span><span>Hoy</span></div>
+                <div class="event-meta-item"><span class="k">Hora:</span><span><?php echo htmlspecialchars(EVENT_TIME_TEXT, ENT_QUOTES, 'UTF-8'); ?></span></div>
+                <div class="event-meta-item"><span class="k">Lugar:</span><span>Hotel de la Soledad</span></div>
+                <div class="event-meta-item"><span class="k">Ciudad:</span><span>Morelia</span></div>
+              </div>
               <a href="<?php echo htmlspecialchars(EVENT_MAIN_WEBSITE_URL, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener">Web principal</a>
               <a class="ghost" href="<?php echo htmlspecialchars(EVENT_SPOTIFY_URL, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener">Spotify</a>
             </div>
