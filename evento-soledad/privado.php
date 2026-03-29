@@ -672,6 +672,19 @@ if ($activeLink) {
               <?php endif; ?>
             </article>
 
+            <article class="author-feature">
+              <div class="author-feature-wrap">
+                <img src="./autor-david.jpeg" alt="David Bello López-Valeiras con el libro" />
+                <div>
+                  <h2 class="title">Un momento muy personal</h2>
+                  <p class="synopsis">
+                    Gracias por formar parte de este tramo del camino. Esta página no es solo un reproductor: es una extensión de la presentación,
+                    de la emoción compartida y del homenaje que sigue vivo en cada escucha.
+                  </p>
+                </div>
+              </div>
+            </article>
+
             <?php if (!$isAccessOpen): ?>
               <div class="closed">Este acceso ha finalizado por vencimiento del plazo privado de escucha.</div>
             <?php elseif (count($tracks) === 0): ?>
@@ -701,19 +714,6 @@ if ($activeLink) {
                 <?php endforeach; ?>
               </div>
             <?php endif; ?>
-
-            <article class="author-feature">
-              <div class="author-feature-wrap">
-                <img src="./autor-david.jpeg" alt="David Bello López-Valeiras con el libro" />
-                <div>
-                  <h2 class="title">Un momento muy personal</h2>
-                  <p class="synopsis">
-                    Gracias por formar parte de este tramo del camino. Esta página no es solo un reproductor: es una extensión de la presentación,
-                    de la emoción compartida y del homenaje que sigue vivo en cada escucha.
-                  </p>
-                </div>
-              </div>
-            </article>
 
             <article class="book-feature">
               <div class="book-feature-wrap">
