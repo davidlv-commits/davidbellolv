@@ -295,6 +295,12 @@ if ($activeLink) {
       .share-form label { display:grid; gap:6px; font-size:.92rem; color:#e8dcbf; }
       .share-form input { min-height:42px; border-radius:10px; border:1px solid rgba(243,216,138,.32); padding:0 12px; background:rgba(0,0,0,.22); color:#fff; }
       .btn { border:0; border-radius:10px; min-height:42px; padding:0 12px; background:linear-gradient(180deg,#d4af37,#ad8621); color:#17130a; font-weight:700; cursor:pointer; }
+      .share-actions { margin-top:12px; display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+      .share-btn { border:1px solid rgba(243,216,138,.45); border-radius:10px; min-height:42px; padding:0 14px; background:rgba(243,216,138,.08); color:#fff7de; font-weight:700; cursor:pointer; }
+      .share-btn.primary { border:0; background:linear-gradient(180deg,#d4af37,#ad8621); color:#17130a; }
+      .share-status { margin:0; font-size:.9rem; color:#cfd7e5; }
+      .share-link-wrap { display:none; margin-top:10px; }
+      .share-link-input { width:100%; min-height:40px; border-radius:10px; border:1px solid rgba(243,216,138,.3); padding:0 12px; background:rgba(0,0,0,.2); color:#f8fafc; font-size:.88rem; }
       audio { width:100%; }
       @media (max-width:760px){ .top{grid-template-columns:1fr;} .top-image{min-height:220px;} .grid,.tracks,.share-form .row{grid-template-columns:1fr;} .ghost{margin-left:0;margin-top:10px;} .content{padding:22px 16px 24px;} .top-copy{padding:22px 16px;} }
     </style>
@@ -365,8 +371,16 @@ if ($activeLink) {
               <h2>Invita hasta <?php echo EVENT_SHARE_LIMIT; ?> personas</h2>
               <p>Ya usaste <strong><?php echo $usedShares; ?></strong> de <?php echo EVENT_SHARE_LIMIT; ?> invitaciones. Restantes: <strong><?php echo $remainingShares; ?></strong>.</p>
               <?php if ($remainingShares > 0): ?>
-                <p>Comparte este enlace para que la persona deje su correo y active su acceso:</p>
-                <p class="small" style="word-break:break-all;"><?php echo htmlspecialchars($shareUrl, ENT_QUOTES, 'UTF-8'); ?></p>
+                <p>Compártelo con un botón: la persona deja su correo y activa su acceso en segundos.</p>
+                <div class="share-actions" data-share-url="<?php echo htmlspecialchars($shareUrl, ENT_QUOTES, 'UTF-8'); ?>">
+                  <button class="share-btn primary" type="button" data-action="native-share">Compartir acceso</button>
+                  <button class="share-btn" type="button" data-action="copy-link">Copiar enlace</button>
+                  <button class="share-btn" type="button" data-action="whatsapp">WhatsApp</button>
+                  <p class="share-status" data-role="share-status" aria-live="polite"></p>
+                </div>
+                <div class="share-link-wrap" data-role="share-link-wrap">
+                  <input class="share-link-input" type="text" readonly value="<?php echo htmlspecialchars($shareUrl, ENT_QUOTES, 'UTF-8'); ?>" />
+                </div>
               <?php else: ?>
                 <div class="closed">Ya alcanzaste el límite de invitaciones compartidas para este acceso.</div>
               <?php endif; ?>
@@ -394,10 +408,76 @@ if ($activeLink) {
       </section>
     </main>
 
-    <?php if ($activeLink && $isAccessOpen && count($tracks) > 0): ?>
+    <?php if ($activeLink): ?>
       <script>
         (function () {
           const token = <?php echo json_encode($token, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>;
+          const shareBox = document.querySelector("[data-share-url]");
+
+          if (shareBox) {
+            const shareUrl = shareBox.getAttribute("data-share-url") || "";
+            const shareStatus = shareBox.querySelector("[data-role='share-status']");
+            const linkWrap = document.querySelector("[data-role='share-link-wrap']");
+            const linkInput = linkWrap ? linkWrap.querySelector("input") : null;
+
+            const setStatus = (text) => {
+              if (shareStatus) shareStatus.textContent = text;
+            };
+
+            const copyLink = async () => {
+              if (!shareUrl) return false;
+              try {
+                await navigator.clipboard.writeText(shareUrl);
+                setStatus("Enlace copiado.");
+                return true;
+              } catch (err) {
+                if (linkWrap) linkWrap.style.display = "block";
+                if (linkInput) {
+                  linkInput.focus();
+                  linkInput.select();
+                }
+                setStatus("No se pudo copiar automáticamente. Copia manualmente el enlace.");
+                return false;
+              }
+            };
+
+            shareBox.addEventListener("click", async (event) => {
+              const trigger = event.target.closest("button[data-action]");
+              if (!trigger) return;
+              const action = trigger.getAttribute("data-action");
+
+              if (action === "native-share") {
+                if (navigator.share) {
+                  try {
+                    await navigator.share({
+                      title: "Acceso privado · Tú de qué vas",
+                      text: "Te comparto mi acceso privado para escuchar las canciones.",
+                      url: shareUrl
+                    });
+                    setStatus("Enlace compartido.");
+                    return;
+                  } catch (err) {
+                    if (err && err.name === "AbortError") return;
+                  }
+                }
+                await copyLink();
+                return;
+              }
+
+              if (action === "copy-link") {
+                await copyLink();
+                return;
+              }
+
+              if (action === "whatsapp") {
+                const message = "Te comparto mi acceso privado para escuchar las canciones: " + shareUrl;
+                window.open("https://wa.me/?text=" + encodeURIComponent(message), "_blank", "noopener");
+                setStatus("WhatsApp abierto.");
+              }
+            });
+          }
+
+          <?php if ($isAccessOpen && count($tracks) > 0): ?>
           const sendEvent = (track, eventType) => {
             const payload = new URLSearchParams();
             payload.set("token", token);
@@ -411,6 +491,7 @@ if ($activeLink) {
             audio.addEventListener("play", () => { if (audio.currentTime < 1) sendEvent(track, "play"); });
             audio.addEventListener("ended", () => sendEvent(track, "ended"));
           });
+          <?php endif; ?>
         })();
       </script>
     <?php endif; ?>
