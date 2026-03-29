@@ -563,8 +563,13 @@ if ($activeLink) {
       .share-status { margin:0; font-size:.9rem; color:#cfd7e5; }
       .share-link-wrap { display:none; margin-top:10px; }
       .share-link-input { width:100%; min-height:40px; border-radius:10px; border:1px solid rgba(243,216,138,.3); padding:0 12px; background:rgba(0,0,0,.2); color:#f8fafc; font-size:.88rem; }
+      .book-feature { margin-top:18px; border:1px solid var(--line-soft); border-radius:12px; background:rgba(17,24,39,.74); padding:15px; }
+      .book-feature-wrap { display:grid; gap:14px; grid-template-columns:140px minmax(0,1fr); align-items:start; }
+      .book-feature img { width:100%; border-radius:10px; border:1px solid rgba(243,216,138,.28); }
+      .book-feature .title { margin:0 0 8px; color:#fff7de; font-size:1.1rem; }
+      .book-feature .synopsis { margin:0; color:#d7dde7; line-height:1.65; }
       audio { width:100%; }
-      @media (max-width:760px){ .top{grid-template-columns:1fr;} .top-image{min-height:220px;} .grid,.tracks,.share-form .row{grid-template-columns:1fr;} .ghost{margin-left:0;margin-top:10px;} .content{padding:22px 16px 24px;} .top-copy{padding:22px 16px;} }
+      @media (max-width:760px){ .top{grid-template-columns:1fr;} .top-image{min-height:220px;} .grid,.tracks,.share-form .row,.book-feature-wrap{grid-template-columns:1fr;} .ghost{margin-left:0;margin-top:10px;} .content{padding:22px 16px 24px;} .top-copy{padding:22px 16px;} .book-feature-wrap{gap:12px;} .book-feature img{max-width:220px;} }
     </style>
   </head>
   <body>
@@ -679,6 +684,20 @@ if ($activeLink) {
                 <?php endforeach; ?>
               </div>
             <?php endif; ?>
+
+            <article class="book-feature">
+              <div class="book-feature-wrap">
+                <img src="<?php echo htmlspecialchars(EVENT_BOOK_COVER_URL, ENT_QUOTES, 'UTF-8'); ?>" alt="Portada de <?php echo htmlspecialchars(EVENT_BOOK_TITLE, ENT_QUOTES, 'UTF-8'); ?>" />
+                <div>
+                  <h2 class="title"><?php echo htmlspecialchars(EVENT_BOOK_TITLE, ENT_QUOTES, 'UTF-8'); ?></h2>
+                  <p class="synopsis">
+                    Daniel vuelve a Madrid arrastrando años de distancia, silencios y preguntas sin respuesta. Lo que parecía un simple reencuentro
+                    se convierte en una historia intensa sobre deseo, miedo, identidad y verdad. <strong>“Tú de qué vas”</strong> es una novela emocional,
+                    directa y honesta, donde cada decisión tiene un precio y cada vínculo deja una huella.
+                  </p>
+                </div>
+              </div>
+            </article>
           </div>
         <?php endif; ?>
       </section>

@@ -702,27 +702,6 @@ if ($submission && trim((string) ($submission['companions'] ?? '')) !== '') {
 
     <main class="main">
       <div class="inner">
-        <section class="card book-box">
-          <img class="book-cover" src="<?php echo htmlspecialchars(EVENT_BOOK_COVER_URL, ENT_QUOTES, 'UTF-8'); ?>" alt="Portada del libro <?php echo htmlspecialchars(EVENT_BOOK_TITLE, ENT_QUOTES, 'UTF-8'); ?>" />
-          <div>
-            <h2>Reseñas de “<?php echo htmlspecialchars(EVENT_BOOK_TITLE, ENT_QUOTES, 'UTF-8'); ?>”</h2>
-            <p class="muted">
-              La novela ya está recibiendo reseñas muy potentes. Si quieres leerla antes o después de la presentación, aquí tienes el acceso directo a la tienda.
-            </p>
-            <a class="book-cta" href="<?php echo htmlspecialchars(EVENT_BOOK_AMAZON_URL, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener">Ver libro en Amazon</a>
-            <div class="review-grid">
-              <article class="review">
-                <p>“Hay libros que cuentan una historia y otros que te hacen vivirla. ‘Tú de qué vas’ te sacude y te deja pensando.”</p>
-                <span>Mariana · Guadalajara</span>
-              </article>
-              <article class="review">
-                <p>“Me atrapó desde la primera página. Es una historia emocional y honesta que pega fuerte.”</p>
-                <span>Fernanda · Puebla</span>
-              </article>
-            </div>
-          </div>
-        </section>
-
         <section class="card author-box">
           <img src="./autor-david.jpeg" alt="David Bello López-Valeiras" />
           <div>
@@ -833,6 +812,27 @@ if ($submission && trim((string) ($submission['companions'] ?? '')) !== '') {
             </div>
             <button class="btn" id="submit_btn" type="submit">Confirmar asistencia</button>
           </form>
+        </section>
+
+        <section class="card book-box">
+          <img class="book-cover" src="<?php echo htmlspecialchars(EVENT_BOOK_COVER_URL, ENT_QUOTES, 'UTF-8'); ?>" alt="Portada del libro <?php echo htmlspecialchars(EVENT_BOOK_TITLE, ENT_QUOTES, 'UTF-8'); ?>" />
+          <div>
+            <h2>Reseñas de “<?php echo htmlspecialchars(EVENT_BOOK_TITLE, ENT_QUOTES, 'UTF-8'); ?>”</h2>
+            <p class="muted">
+              La novela ya está recibiendo reseñas muy potentes. Si quieres leerla antes o después de la presentación, aquí tienes el acceso directo a la tienda.
+            </p>
+            <a class="book-cta" href="<?php echo htmlspecialchars(EVENT_BOOK_AMAZON_URL, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener">Ver libro en Amazon</a>
+            <div class="review-grid">
+              <article class="review">
+                <p>“Hay libros que cuentan una historia y otros que te hacen vivirla. ‘Tú de qué vas’ te sacude y te deja pensando.”</p>
+                <span>Mariana · Guadalajara</span>
+              </article>
+              <article class="review">
+                <p>“Me atrapó desde la primera página. Es una historia emocional y honesta que pega fuerte.”</p>
+                <span>Fernanda · Puebla</span>
+              </article>
+            </div>
+          </div>
         </section>
       </div>
     </main>
