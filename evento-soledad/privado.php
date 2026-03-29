@@ -639,7 +639,6 @@ if ($activeLink) {
           <div class="content">
             <div class="grid">
               <article class="tile"><span class="pill">Homenaje</span><h2>México</h2><p>Dos canciones inéditas, compartidas en privado.</p></article>
-              <article class="tile"><span class="pill">Acceso</span><h2>Personal e intransferible</h2><p>Este enlace identifica tu acceso y la escucha por pista.</p></article>
               <article class="tile"><span class="pill">Duración</span><h2>Ventana de 15 días</h2><p>Al finalizar el plazo, la reproducción se cierra automáticamente.</p></article>
             </div>
 
