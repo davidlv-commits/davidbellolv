@@ -25,6 +25,9 @@ const EVENT_GIFT_PUBLIC_URL = EVENT_PUBLIC_BASE_URL . '/privado.php';
 const EVENT_GIFT_AVAILABILITY_DAYS = 15;
 const EVENT_TOKEN_SALT = 'dblv-evento-privado-2026';
 const EVENT_GIFT_STREAM_SECRET = 'dblv-gift-stream-2026';
+const EVENT_SHARE_ABUSE_MAX_FAILS = 10;
+const EVENT_SHARE_ABUSE_WINDOW_SECONDS = 900;
+const EVENT_SHARE_ABUSE_LOCK_SECONDS = 1800;
 
 // SQLite DB is stored outside public_html.
 const EVENT_DB_PATH = __DIR__ . '/../../private_events/invitaciones_libro.sqlite';

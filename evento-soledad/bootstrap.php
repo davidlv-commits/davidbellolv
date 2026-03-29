@@ -160,6 +160,17 @@ function event_db(): SQLite3
         )'
     );
 
+    $db->exec(
+        'CREATE TABLE IF NOT EXISTS share_access_attempts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            ip_hash TEXT NOT NULL UNIQUE,
+            failed_count INTEGER NOT NULL DEFAULT 0,
+            window_started_at INTEGER NOT NULL DEFAULT 0,
+            locked_until INTEGER NOT NULL DEFAULT 0,
+            updated_at TEXT NOT NULL
+        )'
+    );
+
     return $db;
 }
 
