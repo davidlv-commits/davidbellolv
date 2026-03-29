@@ -91,6 +91,24 @@ function event_db(): SQLite3
     if (!in_array('parent_token', $linkColumns, true)) {
         $db->exec('ALTER TABLE post_event_links ADD COLUMN parent_token TEXT');
     }
+    if (!in_array('verify_token', $linkColumns, true)) {
+        $db->exec('ALTER TABLE post_event_links ADD COLUMN verify_token TEXT');
+    }
+    if (!in_array('verified_at', $linkColumns, true)) {
+        $db->exec('ALTER TABLE post_event_links ADD COLUMN verified_at TEXT');
+    }
+    if (!in_array('verification_sent_at', $linkColumns, true)) {
+        $db->exec('ALTER TABLE post_event_links ADD COLUMN verification_sent_at TEXT');
+    }
+
+    // Backward compatibility: old shared links without verify_token are treated as already verified.
+    $db->exec(
+        "UPDATE post_event_links
+         SET verified_at = COALESCE(sent_at, created_at)
+         WHERE role = 'gift_shared'
+           AND (verify_token IS NULL OR TRIM(verify_token) = '')
+           AND (verified_at IS NULL OR TRIM(verified_at) = '')"
+    );
 
     $db->exec(
         'CREATE TABLE IF NOT EXISTS post_event_visits (

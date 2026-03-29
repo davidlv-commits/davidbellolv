@@ -13,7 +13,17 @@ function event_find_link(SQLite3 $db, string $token): ?array
     if ($token === '') {
         return null;
     }
-    $stmt = $db->prepare('SELECT * FROM post_event_links WHERE token = :token LIMIT 1');
+    $stmt = $db->prepare(
+        "SELECT * FROM post_event_links
+         WHERE token = :token
+           AND (
+             role <> 'gift_shared'
+             OR verified_at IS NOT NULL
+             OR verify_token IS NULL
+             OR TRIM(verify_token) = ''
+           )
+         LIMIT 1"
+    );
     $stmt->bindValue(':token', $token, SQLITE3_TEXT);
     $res = $stmt->execute();
     $row = $res ? $res->fetchArray(SQLITE3_ASSOC) : null;
@@ -57,6 +67,39 @@ function event_verify_share_signature(string $token, string $sig): bool
     }
     $expected = event_share_signature($token);
     return hash_equals($expected, $sig);
+}
+
+function event_send_share_verification_email(string $recipientName, string $email, string $verifyToken): bool
+{
+    if ($email === '' || $verifyToken === '') {
+        return false;
+    }
+
+    $verifyUrl = EVENT_GIFT_PUBLIC_URL . '?verify=' . rawurlencode($verifyToken);
+    $safeName = htmlspecialchars($recipientName !== '' ? $recipientName : 'invitado', ENT_QUOTES, 'UTF-8');
+    $safeVerifyUrl = htmlspecialchars($verifyUrl, ENT_QUOTES, 'UTF-8');
+    $safeBookTitle = htmlspecialchars(EVENT_BOOK_TITLE, ENT_QUOTES, 'UTF-8');
+    $safeFrom = htmlspecialchars(EVENT_FROM_NAME, ENT_QUOTES, 'UTF-8');
+    $safeMain = htmlspecialchars(EVENT_MAIN_WEBSITE_URL, ENT_QUOTES, 'UTF-8');
+    $safeSpotify = htmlspecialchars(EVENT_SPOTIFY_URL, ENT_QUOTES, 'UTF-8');
+
+    $subject = 'Confirma tu acceso privado · ' . EVENT_BOOK_TITLE;
+
+    $html = '<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>'
+      . '<body style="margin:0;padding:24px;background:#0a0f17;color:#f8fafc;font-family:Arial,Helvetica,sans-serif;">'
+      . '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px;margin:0 auto;background:#111827;border:1px solid rgba(243,216,138,.3);border-radius:16px;overflow:hidden;">'
+      . '<tr><td style="padding:22px 22px 8px;">'
+      . '<p style="margin:0 0 8px;color:#f3d88a;font-weight:700;letter-spacing:.02em;">Acceso privado</p>'
+      . '<h1 style="margin:0 0 12px;font-size:28px;line-height:1.25;color:#fff7de;">Hola ' . $safeName . '</h1>'
+      . '<p style="margin:0 0 14px;color:#cdd5e1;line-height:1.7;">Recibimos tu solicitud para acceder al regalo musical de <strong>' . $safeBookTitle . '</strong>. Para activarlo, confirma tu correo con este botón:</p>'
+      . '<p style="margin:16px 0 18px;"><a href="' . $safeVerifyUrl . '" style="display:inline-block;background:#f3d88a;color:#111827;text-decoration:none;font-weight:700;padding:12px 18px;border-radius:10px;">Confirmar acceso</a></p>'
+      . '<p style="margin:0;color:#93a0b5;font-size:14px;line-height:1.6;">Si el botón no abre, copia este enlace:<br><span style="word-break:break-all;color:#cdd5e1;">' . $safeVerifyUrl . '</span></p>'
+      . '<hr style="border:none;border-top:1px solid rgba(243,216,138,.25);margin:18px 0;">'
+      . '<p style="margin:0 0 6px;color:#93a0b5;font-size:13px;">' . $safeFrom . '</p>'
+      . '<p style="margin:0;font-size:13px;"><a href="' . $safeMain . '" style="color:#f3d88a;text-decoration:none;">Web</a> · <a href="' . $safeSpotify . '" style="color:#f3d88a;text-decoration:none;">Spotify</a></p>'
+      . '</td></tr></table></body></html>';
+
+    return event_send_html_email($email, $subject, $html);
 }
 
 /**
@@ -116,11 +159,73 @@ function event_private_audio_tracks(string $token): array
 
 $db = event_db();
 $token = trim((string) ($_GET['t'] ?? ''));
+$verifyToken = trim((string) ($_GET['verify'] ?? ''));
+$verifiedNow = ((string) ($_GET['verified'] ?? '') === '1');
 $shareFrom = trim((string) ($_GET['share_from'] ?? ''));
 $shareSig = trim((string) ($_GET['s'] ?? ''));
 $shareError = '';
+$shareNotice = '';
 $shareNameInput = '';
 $shareEmailInput = '';
+
+if ($verifyToken !== '') {
+    $verifyStmt = $db->prepare(
+        "SELECT * FROM post_event_links
+         WHERE role = 'gift_shared'
+           AND verify_token = :verify_token
+         LIMIT 1"
+    );
+    $verifyStmt->bindValue(':verify_token', $verifyToken, SQLITE3_TEXT);
+    $pending = $verifyStmt->execute()->fetchArray(SQLITE3_ASSOC);
+
+    if (!$pending) {
+        $shareError = 'El enlace de confirmación no es válido o ya fue usado.';
+    } else {
+        $inviterToken = trim((string) ($pending['parent_token'] ?? ''));
+        $inviter = event_find_link($db, $inviterToken);
+        if (!$inviter) {
+            $shareError = 'La invitación original ya no está disponible.';
+        } else {
+            $window = event_link_window($inviter);
+            if (!$window['is_open']) {
+                $shareError = 'La invitación original venció y no se puede activar este acceso.';
+            } else {
+                $countStmt = $db->prepare(
+                    "SELECT COUNT(*) FROM post_event_links
+                     WHERE parent_token = :parent_token
+                       AND role = 'gift_shared'
+                       AND verified_at IS NOT NULL"
+                );
+                $countStmt->bindValue(':parent_token', $inviterToken, SQLITE3_TEXT);
+                $usedSlots = (int) $countStmt->execute()->fetchArray(SQLITE3_NUM)[0];
+
+                if ($usedSlots >= EVENT_SHARE_LIMIT) {
+                    $shareError = 'El cupo de invitaciones ya se completó antes de confirmar este acceso.';
+                } else {
+                    $nowIso = event_now_iso();
+                    $upd = $db->prepare(
+                        "UPDATE post_event_links
+                         SET verified_at = :verified_at,
+                             sent_at = COALESCE(sent_at, :sent_at),
+                             verify_token = NULL
+                         WHERE id = :id"
+                    );
+                    $upd->bindValue(':verified_at', $nowIso, SQLITE3_TEXT);
+                    $upd->bindValue(':sent_at', $nowIso, SQLITE3_TEXT);
+                    $upd->bindValue(':id', (int) ($pending['id'] ?? 0), SQLITE3_INTEGER);
+                    $ok = $upd->execute();
+                    if ($ok === false) {
+                        $shareError = 'No se pudo confirmar tu acceso. Inténtalo de nuevo.';
+                    } else {
+                        $token = (string) ($pending['token'] ?? '');
+                        header('Location: privado.php?t=' . rawurlencode($token) . '&verified=1');
+                        exit;
+                    }
+                }
+            }
+        }
+    }
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && (string) ($_POST['action'] ?? '') === 'claim_share') {
     $shareFrom = trim((string) ($_POST['share_from'] ?? ''));
@@ -142,7 +247,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (string) ($_POST['action'] ?? '') =
                 $shareError = 'Este acceso ya venció.';
             } else {
                 $countStmt = $db->prepare(
-                    "SELECT COUNT(*) FROM post_event_links WHERE parent_token = :parent_token AND role = 'gift_shared'"
+                    "SELECT COUNT(*) FROM post_event_links
+                     WHERE parent_token = :parent_token
+                       AND role = 'gift_shared'
+                       AND verified_at IS NOT NULL"
                 );
                 $countStmt->bindValue(':parent_token', $shareFrom, SQLITE3_TEXT);
                 $usedSlots = (int) $countStmt->execute()->fetchArray(SQLITE3_NUM)[0];
@@ -154,6 +262,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (string) ($_POST['action'] ?? '') =
                         "SELECT token FROM post_event_links
                          WHERE parent_token = :parent_token
                            AND role = 'gift_shared'
+                           AND verified_at IS NOT NULL
                            AND LOWER(recipient_email) = :recipient_email
                          LIMIT 1"
                     );
@@ -166,29 +275,87 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (string) ($_POST['action'] ?? '') =
                         exit;
                     }
 
-                    $newToken = event_generate_token(24);
-                    $nowIso = event_now_iso();
-                    $insert = $db->prepare(
-                        'INSERT INTO post_event_links
-                         (rsvp_id, recipient_name, recipient_email, role, token, parent_token, sent_at, created_at)
-                         VALUES
-                         (:rsvp_id, :recipient_name, :recipient_email, :role, :token, :parent_token, :sent_at, :created_at)'
+                    $pendingStmt = $db->prepare(
+                        "SELECT id, token, verify_token FROM post_event_links
+                         WHERE parent_token = :parent_token
+                           AND role = 'gift_shared'
+                           AND verified_at IS NULL
+                           AND LOWER(recipient_email) = :recipient_email
+                         LIMIT 1"
                     );
-                    $insert->bindValue(':rsvp_id', (int) ($inviter['rsvp_id'] ?? 0), SQLITE3_INTEGER);
-                    $insert->bindValue(':recipient_name', substr($shareNameInput, 0, 120), SQLITE3_TEXT);
-                    $insert->bindValue(':recipient_email', $shareEmailInput, SQLITE3_TEXT);
-                    $insert->bindValue(':role', 'gift_shared', SQLITE3_TEXT);
-                    $insert->bindValue(':token', $newToken, SQLITE3_TEXT);
-                    $insert->bindValue(':parent_token', $shareFrom, SQLITE3_TEXT);
-                    $insert->bindValue(':sent_at', $nowIso, SQLITE3_TEXT);
-                    $insert->bindValue(':created_at', $nowIso, SQLITE3_TEXT);
-                    $ok = $insert->execute();
+                    $pendingStmt->bindValue(':parent_token', $shareFrom, SQLITE3_TEXT);
+                    $pendingStmt->bindValue(':recipient_email', $shareEmailInput, SQLITE3_TEXT);
+                    $pending = $pendingStmt->execute()->fetchArray(SQLITE3_ASSOC);
 
-                    if ($ok === false) {
-                        $shareError = 'No se pudo crear el acceso compartido. Inténtalo de nuevo.';
+                    $verify = event_generate_token(32);
+                    $accessToken = '';
+                    $pendingId = 0;
+                    $nowIso = event_now_iso();
+
+                    if ($pending && (int) ($pending['id'] ?? 0) > 0) {
+                        $pendingId = (int) $pending['id'];
+                        $accessToken = trim((string) ($pending['token'] ?? ''));
+                        $updPending = $db->prepare(
+                            "UPDATE post_event_links
+                             SET recipient_name = :recipient_name,
+                                 verify_token = :verify_token,
+                                 verification_sent_at = :verification_sent_at
+                             WHERE id = :id"
+                        );
+                        $updPending->bindValue(':recipient_name', substr($shareNameInput, 0, 120), SQLITE3_TEXT);
+                        $updPending->bindValue(':verify_token', $verify, SQLITE3_TEXT);
+                        $updPending->bindValue(':verification_sent_at', $nowIso, SQLITE3_TEXT);
+                        $updPending->bindValue(':id', $pendingId, SQLITE3_INTEGER);
+                        $ok = $updPending->execute();
+                        if ($ok === false) {
+                            $shareError = 'No se pudo actualizar la solicitud pendiente. Inténtalo de nuevo.';
+                        }
                     } else {
-                        header('Location: privado.php?t=' . rawurlencode($newToken));
-                        exit;
+                        $accessToken = event_generate_token(24);
+                        $insert = $db->prepare(
+                            'INSERT INTO post_event_links
+                             (rsvp_id, recipient_name, recipient_email, role, token, parent_token, sent_at, created_at, verify_token, verified_at, verification_sent_at)
+                             VALUES
+                             (:rsvp_id, :recipient_name, :recipient_email, :role, :token, :parent_token, NULL, :created_at, :verify_token, NULL, :verification_sent_at)'
+                        );
+                        $insert->bindValue(':rsvp_id', (int) ($inviter['rsvp_id'] ?? 0), SQLITE3_INTEGER);
+                        $insert->bindValue(':recipient_name', substr($shareNameInput, 0, 120), SQLITE3_TEXT);
+                        $insert->bindValue(':recipient_email', $shareEmailInput, SQLITE3_TEXT);
+                        $insert->bindValue(':role', 'gift_shared', SQLITE3_TEXT);
+                        $insert->bindValue(':token', $accessToken, SQLITE3_TEXT);
+                        $insert->bindValue(':parent_token', $shareFrom, SQLITE3_TEXT);
+                        $insert->bindValue(':created_at', $nowIso, SQLITE3_TEXT);
+                        $insert->bindValue(':verify_token', $verify, SQLITE3_TEXT);
+                        $insert->bindValue(':verification_sent_at', $nowIso, SQLITE3_TEXT);
+                        $ok = $insert->execute();
+                        if ($ok === false) {
+                            $shareError = 'No se pudo iniciar la verificación. Inténtalo de nuevo.';
+                        } else {
+                            $pendingId = (int) $db->lastInsertRowID();
+                        }
+                    }
+
+                    if ($shareError === '') {
+                        $mailOk = event_send_share_verification_email(substr($shareNameInput, 0, 120), $shareEmailInput, $verify);
+                        if (!$mailOk) {
+                            $shareError = 'No se pudo enviar el correo de confirmación. Revisa el email y vuelve a intentar.';
+                            if ($pendingId > 0) {
+                                $deleteStmt = $db->prepare('DELETE FROM post_event_links WHERE id = :id AND verified_at IS NULL');
+                                $deleteStmt->bindValue(':id', $pendingId, SQLITE3_INTEGER);
+                                $deleteStmt->execute();
+                            }
+                        } else {
+                            $shareNotice = 'Te enviamos un correo de verificación a ' . $shareEmailInput . '. Confírmalo para activar tu acceso.';
+                            $shareNameInput = '';
+                            $shareEmailInput = '';
+                            $shareError = '';
+                            $shareSig = trim((string) ($_POST['share_sig'] ?? ''));
+                            $shareFrom = trim((string) ($_POST['share_from'] ?? ''));
+                            $isShareMode = true;
+                            $shareInviter = $inviter;
+                            $token = '';
+                            $activeLink = null;
+                        }
                     }
                 }
             }
@@ -199,6 +366,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && (string) ($_POST['action'] ?? '') =
 $activeLink = event_find_link($db, $token);
 $isShareMode = false;
 $shareInviter = null;
+$showVerifyState = ($verifyToken !== '' && $activeLink === null);
 
 if (!$activeLink && $shareFrom !== '' && event_verify_share_signature($shareFrom, $shareSig)) {
     $shareInviter = event_find_link($db, $shareFrom);
@@ -213,7 +381,7 @@ if (!$activeLink && $shareFrom !== '' && event_verify_share_signature($shareFrom
     }
 }
 
-if (!$activeLink && !$isShareMode) {
+if (!$activeLink && !$isShareMode && !$showVerifyState) {
     http_response_code(404);
 }
 
@@ -250,7 +418,10 @@ if ($activeLink) {
 
     $shareUrl = EVENT_GIFT_PUBLIC_URL . '?share_from=' . rawurlencode($token) . '&s=' . rawurlencode(event_share_signature($token));
     $shareCountStmt = $db->prepare(
-        "SELECT COUNT(*) FROM post_event_links WHERE parent_token = :parent_token AND role = 'gift_shared'"
+        "SELECT COUNT(*) FROM post_event_links
+         WHERE parent_token = :parent_token
+           AND role = 'gift_shared'
+           AND verified_at IS NOT NULL"
     );
     $shareCountStmt->bindValue(':parent_token', $token, SQLITE3_TEXT);
     $usedShares = (int) $shareCountStmt->execute()->fetchArray(SQLITE3_NUM)[0];
@@ -290,6 +461,7 @@ if ($activeLink) {
       .empty { padding:24px; }
       .closed { margin-top:16px; border-radius:12px; border:1px solid rgba(253,186,116,.45); background:rgba(154,52,18,.25); color:#ffd8ad; padding:14px; }
       .warn { margin-top:12px; border-radius:12px; border:1px solid rgba(252,165,165,.45); background:rgba(153,27,27,.25); color:#ffd0d0; padding:12px; }
+      .ok { margin-top:12px; border-radius:12px; border:1px solid rgba(134,239,172,.45); background:rgba(20,83,45,.35); color:#d1fae5; padding:12px; }
       .share-form { margin-top:12px; display:grid; gap:10px; max-width:560px; }
       .share-form .row { display:grid; gap:10px; grid-template-columns:1fr 1fr; }
       .share-form label { display:grid; gap:6px; font-size:.92rem; color:#e8dcbf; }
@@ -315,12 +487,15 @@ if ($activeLink) {
               <span class="badge">Invitación compartida</span>
               <h1>Acceso limitado</h1>
               <p>Este acceso se abre por invitación privada y tiene cupo reducido.</p>
-              <p>Completa tu nombre y correo para entrar.</p>
+              <p>Completa tus datos y confirma tu correo para activar la entrada.</p>
             </div>
           </div>
           <div class="content">
             <?php if ($shareError !== ''): ?>
               <div class="warn"><?php echo htmlspecialchars($shareError, ENT_QUOTES, 'UTF-8'); ?></div>
+            <?php endif; ?>
+            <?php if ($shareNotice !== ''): ?>
+              <div class="ok"><?php echo htmlspecialchars($shareNotice, ENT_QUOTES, 'UTF-8'); ?></div>
             <?php endif; ?>
             <form class="share-form" method="post" action="privado.php">
               <input type="hidden" name="action" value="claim_share" />
@@ -337,6 +512,15 @@ if ($activeLink) {
               <button class="btn" type="submit">Activar acceso</button>
             </form>
           </div>
+        <?php elseif ($showVerifyState): ?>
+          <div class="empty">
+            <h1>Confirmación de acceso</h1>
+            <?php if ($shareError !== ''): ?>
+              <div class="warn"><?php echo htmlspecialchars($shareError, ENT_QUOTES, 'UTF-8'); ?></div>
+            <?php else: ?>
+              <p>No se pudo validar el acceso con este enlace.</p>
+            <?php endif; ?>
+          </div>
         <?php elseif (!$activeLink): ?>
           <div class="empty">
             <h1>Acceso no válido</h1>
@@ -351,6 +535,9 @@ if ($activeLink) {
               <h1>Gracias, <?php echo htmlspecialchars($recipientName, ENT_QUOTES, 'UTF-8'); ?></h1>
               <p>Esta página es tu acceso personal al regalo musical de <strong><?php echo htmlspecialchars(EVENT_BOOK_TITLE, ENT_QUOTES, 'UTF-8'); ?></strong>.</p>
               <p>Tu enlace está activo y asociado a tu registro.</p>
+              <?php if ($verifiedNow): ?>
+                <div class="ok">Correo confirmado correctamente. Tu acceso ya está activo.</div>
+              <?php endif; ?>
               <?php if ($accessUntilText !== ''): ?>
                 <p><strong style="color:#f6de9f;">Disponible hasta:</strong> <?php echo htmlspecialchars($accessUntilText, ENT_QUOTES, 'UTF-8'); ?></p>
               <?php endif; ?>
