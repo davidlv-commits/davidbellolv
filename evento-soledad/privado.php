@@ -102,6 +102,57 @@ function event_send_share_verification_email(string $recipientName, string $emai
     return event_send_html_email($email, $subject, $html);
 }
 
+function event_generate_share_slug(SQLite3 $db): string
+{
+    for ($i = 0; $i < 10; $i++) {
+        $raw = rtrim(strtr(base64_encode(random_bytes(9)), '+/', '-_'), '=');
+        $slug = substr($raw, 0, 12);
+        if ($slug === '') {
+            continue;
+        }
+        $stmt = $db->prepare(
+            "SELECT id FROM post_event_links WHERE share_slug = :share_slug LIMIT 1"
+        );
+        $stmt->bindValue(':share_slug', $slug, SQLITE3_TEXT);
+        $exists = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
+        if (!$exists) {
+            return $slug;
+        }
+    }
+
+    return event_generate_token(8);
+}
+
+function event_get_or_create_share_slug(SQLite3 $db, array $link): string
+{
+    $existing = trim((string) ($link['share_slug'] ?? ''));
+    if ($existing !== '') {
+        return $existing;
+    }
+
+    $id = (int) ($link['id'] ?? 0);
+    if ($id <= 0) {
+        return '';
+    }
+
+    $slug = event_generate_share_slug($db);
+    $upd = $db->prepare(
+        "UPDATE post_event_links
+         SET share_slug = :share_slug
+         WHERE id = :id
+           AND (share_slug IS NULL OR TRIM(share_slug) = '')"
+    );
+    $upd->bindValue(':share_slug', $slug, SQLITE3_TEXT);
+    $upd->bindValue(':id', $id, SQLITE3_INTEGER);
+    $upd->execute();
+
+    $check = $db->prepare("SELECT share_slug FROM post_event_links WHERE id = :id LIMIT 1");
+    $check->bindValue(':id', $id, SQLITE3_INTEGER);
+    $row = $check->execute()->fetchArray(SQLITE3_ASSOC);
+
+    return trim((string) ($row['share_slug'] ?? ''));
+}
+
 /**
  * @return array<int, array{filename: string, label: string, stream_url: string}>
  */
@@ -161,12 +212,35 @@ $db = event_db();
 $token = trim((string) ($_GET['t'] ?? ''));
 $verifyToken = trim((string) ($_GET['verify'] ?? ''));
 $verifiedNow = ((string) ($_GET['verified'] ?? '') === '1');
+$shareCode = trim((string) ($_GET['share_code'] ?? ''));
 $shareFrom = trim((string) ($_GET['share_from'] ?? ''));
 $shareSig = trim((string) ($_GET['s'] ?? ''));
 $shareError = '';
 $shareNotice = '';
 $shareNameInput = '';
 $shareEmailInput = '';
+
+if ($shareFrom === '' && $shareCode !== '') {
+    $slugStmt = $db->prepare(
+        "SELECT token FROM post_event_links
+         WHERE share_slug = :share_slug
+           AND (
+             role <> 'gift_shared'
+             OR verified_at IS NOT NULL
+             OR verify_token IS NULL
+             OR TRIM(verify_token) = ''
+           )
+         LIMIT 1"
+    );
+    $slugStmt->bindValue(':share_slug', $shareCode, SQLITE3_TEXT);
+    $slugRow = $slugStmt->execute()->fetchArray(SQLITE3_ASSOC);
+    if ($slugRow && trim((string) ($slugRow['token'] ?? '')) !== '') {
+        $shareFrom = trim((string) $slugRow['token']);
+        $shareSig = event_share_signature($shareFrom);
+    } else {
+        $shareError = 'El enlace corto no es válido.';
+    }
+}
 
 if ($verifyToken !== '') {
     $verifyStmt = $db->prepare(
@@ -416,7 +490,12 @@ if ($activeLink) {
         $tracks = event_private_audio_tracks($token);
     }
 
-    $shareUrl = EVENT_GIFT_PUBLIC_URL . '?share_from=' . rawurlencode($token) . '&s=' . rawurlencode(event_share_signature($token));
+    $shareSlug = event_get_or_create_share_slug($db, $activeLink);
+    if ($shareSlug !== '') {
+        $shareUrl = rtrim(EVENT_MAIN_WEBSITE_URL, '/') . '/s/' . rawurlencode($shareSlug);
+    } else {
+        $shareUrl = EVENT_GIFT_PUBLIC_URL . '?share_from=' . rawurlencode($token) . '&s=' . rawurlencode(event_share_signature($token));
+    }
     $shareCountStmt = $db->prepare(
         "SELECT COUNT(*) FROM post_event_links
          WHERE parent_token = :parent_token

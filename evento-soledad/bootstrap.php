@@ -100,6 +100,14 @@ function event_db(): SQLite3
     if (!in_array('verification_sent_at', $linkColumns, true)) {
         $db->exec('ALTER TABLE post_event_links ADD COLUMN verification_sent_at TEXT');
     }
+    if (!in_array('share_slug', $linkColumns, true)) {
+        $db->exec('ALTER TABLE post_event_links ADD COLUMN share_slug TEXT');
+    }
+    $db->exec(
+        "CREATE UNIQUE INDEX IF NOT EXISTS idx_post_event_links_share_slug
+         ON post_event_links(share_slug)
+         WHERE share_slug IS NOT NULL AND TRIM(share_slug) <> ''"
+    );
 
     // Backward compatibility: old shared links without verify_token are treated as already verified.
     $db->exec(
