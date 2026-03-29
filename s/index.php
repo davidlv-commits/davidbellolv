@@ -33,8 +33,8 @@ if (!$row || trim((string) ($row['token'] ?? '')) === '') {
 }
 
 $token = (string) $row['token'];
-$sig = hash_hmac('sha256', $token, EVENT_TOKEN_SALT);
-$target = EVENT_GIFT_PUBLIC_URL . '?share_from=' . rawurlencode($token) . '&s=' . rawurlencode($sig);
+$_GET['share_code'] = $shareCode;
+$_GET['share_from'] = $token;
+$_GET['s'] = hash_hmac('sha256', $token, EVENT_TOKEN_SALT);
 
-header('Location: ' . $target, true, 302);
-exit;
+require __DIR__ . '/../evento-soledad/privado.php';

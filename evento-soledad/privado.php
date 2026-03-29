@@ -102,6 +102,16 @@ function event_send_share_verification_email(string $recipientName, string $emai
     return event_send_html_email($email, $subject, $html);
 }
 
+function event_self_action_url(): string
+{
+    $uri = (string) ($_SERVER['REQUEST_URI'] ?? '');
+    $path = parse_url($uri, PHP_URL_PATH);
+    if (!is_string($path) || $path === '') {
+        return '';
+    }
+    return $path;
+}
+
 function event_generate_share_slug(SQLite3 $db): string
 {
     for ($i = 0; $i < 10; $i++) {
@@ -192,7 +202,7 @@ function event_private_audio_tracks(string $token): array
 
         $expires = time() + 900;
         $signature = hash_hmac('sha256', $token . '|' . $item . '|' . $expires, EVENT_GIFT_STREAM_SECRET);
-        $streamUrl = 'stream_gift.php?t=' . rawurlencode($token)
+        $streamUrl = EVENT_PUBLIC_BASE_URL . '/stream_gift.php?t=' . rawurlencode($token)
             . '&f=' . rawurlencode($item)
             . '&e=' . $expires
             . '&s=' . rawurlencode($signature);
@@ -466,6 +476,7 @@ $tracks = [];
 $shareUrl = '';
 $usedShares = 0;
 $remainingShares = EVENT_SHARE_LIMIT;
+$selfActionUrl = event_self_action_url();
 
 if ($activeLink) {
     $recipientName = trim((string) ($activeLink['recipient_name'] ?? '')) ?: 'invitado';
@@ -576,7 +587,7 @@ if ($activeLink) {
             <?php if ($shareNotice !== ''): ?>
               <div class="ok"><?php echo htmlspecialchars($shareNotice, ENT_QUOTES, 'UTF-8'); ?></div>
             <?php endif; ?>
-            <form class="share-form" method="post" action="privado.php">
+            <form class="share-form" method="post" action="<?php echo htmlspecialchars($selfActionUrl, ENT_QUOTES, 'UTF-8'); ?>">
               <input type="hidden" name="action" value="claim_share" />
               <input type="hidden" name="share_from" value="<?php echo htmlspecialchars($shareFrom, ENT_QUOTES, 'UTF-8'); ?>" />
               <input type="hidden" name="share_sig" value="<?php echo htmlspecialchars($shareSig, ENT_QUOTES, 'UTF-8'); ?>" />
@@ -749,7 +760,7 @@ if ($activeLink) {
             payload.set("token", token);
             payload.set("track", track);
             payload.set("event", eventType);
-            navigator.sendBeacon("track_gift_event.php", payload);
+            navigator.sendBeacon(<?php echo json_encode(EVENT_PUBLIC_BASE_URL . '/track_gift_event.php', JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>, payload);
           };
           document.querySelectorAll("audio[data-track]").forEach((audio) => {
             const track = audio.dataset.track;
