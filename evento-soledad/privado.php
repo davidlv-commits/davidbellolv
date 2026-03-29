@@ -563,13 +563,17 @@ if ($activeLink) {
       .share-status { margin:0; font-size:.9rem; color:#cfd7e5; }
       .share-link-wrap { display:none; margin-top:10px; }
       .share-link-input { width:100%; min-height:40px; border-radius:10px; border:1px solid rgba(243,216,138,.3); padding:0 12px; background:rgba(0,0,0,.2); color:#f8fafc; font-size:.88rem; }
-      .book-feature { margin-top:18px; border:1px solid var(--line-soft); border-radius:12px; background:rgba(17,24,39,.74); padding:15px; }
+      .author-feature { margin-top:18px; border:1px solid var(--line-soft); border-radius:14px; background:linear-gradient(145deg, rgba(15,22,33,.92), rgba(10,14,22,.95)); padding:16px; }
+      .author-feature-wrap { display:grid; gap:14px; grid-template-columns:180px minmax(0,1fr); align-items:start; }
+      .author-feature img { width:100%; border-radius:12px; border:1px solid rgba(243,216,138,.28); }
+      .book-feature { margin-top:16px; border:1px solid var(--line-soft); border-radius:14px; background:rgba(17,24,39,.74); padding:15px; }
       .book-feature-wrap { display:grid; gap:14px; grid-template-columns:140px minmax(0,1fr); align-items:start; }
       .book-feature img { width:100%; border-radius:10px; border:1px solid rgba(243,216,138,.28); }
       .book-feature .title { margin:0 0 8px; color:#fff7de; font-size:1.1rem; }
       .book-feature .synopsis { margin:0; color:#d7dde7; line-height:1.65; }
+      .amazon-cta { margin-top:12px; }
       audio { width:100%; }
-      @media (max-width:760px){ .top{grid-template-columns:1fr;} .top-image{min-height:220px;} .grid,.tracks,.share-form .row,.book-feature-wrap{grid-template-columns:1fr;} .ghost{margin-left:0;margin-top:10px;} .content{padding:22px 16px 24px;} .top-copy{padding:22px 16px;} .book-feature-wrap{gap:12px;} .book-feature img{max-width:220px;} }
+      @media (max-width:760px){ .top{grid-template-columns:1fr;} .top-image{min-height:220px;} .grid,.tracks,.share-form .row,.book-feature-wrap,.author-feature-wrap{grid-template-columns:1fr;} .ghost{margin-left:0;margin-top:10px;} .content{padding:22px 16px 24px;} .top-copy{padding:22px 16px;} .book-feature-wrap,.author-feature-wrap{gap:12px;} .book-feature img,.author-feature img{max-width:220px;} }
     </style>
   </head>
   <body>
@@ -626,10 +630,10 @@ if ($activeLink) {
           <div class="top">
             <div class="top-image"></div>
             <div class="top-copy">
-              <span class="badge">Acceso privado</span>
-              <h1>Gracias, <?php echo htmlspecialchars($recipientName, ENT_QUOTES, 'UTF-8'); ?></h1>
-              <p>Esta página es tu acceso personal al regalo musical de <strong><?php echo htmlspecialchars(EVENT_BOOK_TITLE, ENT_QUOTES, 'UTF-8'); ?></strong>.</p>
-              <p>Tu enlace está activo y asociado a tu registro.</p>
+              <span class="badge">Regalo privado</span>
+              <h1>Gracias por estar aquí, <?php echo htmlspecialchars($recipientName, ENT_QUOTES, 'UTF-8'); ?></h1>
+              <p>Este espacio está preparado con cariño para que vivas una escucha íntima de las canciones nacidas alrededor de <strong><?php echo htmlspecialchars(EVENT_BOOK_TITLE, ENT_QUOTES, 'UTF-8'); ?></strong>.</p>
+              <p>Disfrútalo con calma. Es un acceso especial para personas que formaron parte de esta historia.</p>
               <?php if ($verifiedNow): ?>
                 <div class="ok">Correo confirmado correctamente. Tu acceso ya está activo.</div>
               <?php endif; ?>
@@ -643,12 +647,12 @@ if ($activeLink) {
 
           <div class="content">
             <div class="grid">
-              <article class="tile"><span class="pill">Homenaje</span><h2>México</h2><p>Dos canciones inéditas, compartidas en privado.</p></article>
-              <article class="tile"><span class="pill">Duración</span><h2>Ventana de 15 días</h2><p>Al finalizar el plazo, la reproducción se cierra automáticamente.</p></article>
+              <article class="tile"><span class="pill">Homenaje</span><h2>México</h2><p>Dos canciones inéditas creadas desde el corazón, compartidas en privado.</p></article>
+              <article class="tile"><span class="pill">Tiempo</span><h2>Disponible 15 días</h2><p>Este regalo permanecerá abierto durante 15 días desde su activación.</p></article>
             </div>
 
             <article class="tile" style="margin-top:16px;">
-              <span class="pill">Compartir acceso</span>
+              <span class="pill">Compartir regalo</span>
               <h2>Invita hasta <?php echo EVENT_SHARE_LIMIT; ?> personas</h2>
               <p>Ya usaste <strong><?php echo $usedShares; ?></strong> de <?php echo EVENT_SHARE_LIMIT; ?> invitaciones. Restantes: <strong><?php echo $remainingShares; ?></strong>.</p>
               <?php if ($remainingShares > 0): ?>
@@ -685,6 +689,19 @@ if ($activeLink) {
               </div>
             <?php endif; ?>
 
+            <article class="author-feature">
+              <div class="author-feature-wrap">
+                <img src="./autor-david.jpeg" alt="David Bello López-Valeiras con el libro" />
+                <div>
+                  <h2 class="title">Un momento muy personal</h2>
+                  <p class="synopsis">
+                    Gracias por formar parte de este tramo del camino. Esta página no es solo un reproductor: es una extensión de la presentación,
+                    de la emoción compartida y del homenaje que sigue vivo en cada escucha.
+                  </p>
+                </div>
+              </div>
+            </article>
+
             <article class="book-feature">
               <div class="book-feature-wrap">
                 <img src="<?php echo htmlspecialchars(EVENT_BOOK_COVER_URL, ENT_QUOTES, 'UTF-8'); ?>" alt="Portada de <?php echo htmlspecialchars(EVENT_BOOK_TITLE, ENT_QUOTES, 'UTF-8'); ?>" />
@@ -695,6 +712,7 @@ if ($activeLink) {
                     se convierte en una historia intensa sobre deseo, miedo, identidad y verdad. <strong>“Tú de qué vas”</strong> es una novela emocional,
                     directa y honesta, donde cada decisión tiene un precio y cada vínculo deja una huella.
                   </p>
+                  <a class="amazon-cta" href="<?php echo htmlspecialchars(EVENT_BOOK_AMAZON_URL, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener">Ver libro en Amazon</a>
                 </div>
               </div>
             </article>
