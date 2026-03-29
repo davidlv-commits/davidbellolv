@@ -90,19 +90,18 @@ function share_attempts_clear(SQLite3 $db, string $ipHash): void
 
 $db = event_db();
 $ipHash = share_ip_hash();
-$attemptState = share_attempts_get($db, $ipHash);
-$nowTs = time();
-
-if ($attemptState && $attemptState['locked_until'] > $nowTs) {
-    $retryAfter = max(60, $attemptState['locked_until'] - $nowTs);
-    http_response_code(429);
-    header('Retry-After: ' . $retryAfter);
-    echo 'Demasiados intentos. Vuelve a intentarlo más tarde.';
-    exit;
-}
 
 $shareCode = trim((string) ($_GET['c'] ?? ''));
 if ($shareCode === '' || !preg_match('/^[A-Za-z0-9_-]{6,64}$/', $shareCode)) {
+    $attemptState = share_attempts_get($db, $ipHash);
+    $nowTs = time();
+    if ($attemptState && $attemptState['locked_until'] > $nowTs) {
+        $retryAfter = max(60, $attemptState['locked_until'] - $nowTs);
+        http_response_code(429);
+        header('Retry-After: ' . $retryAfter);
+        echo 'Demasiados intentos. Vuelve a intentarlo más tarde.';
+        exit;
+    }
     share_attempts_record_failure($db, $ipHash);
     http_response_code(404);
     echo 'Enlace no válido.';
@@ -125,6 +124,15 @@ $stmt->bindValue(':share_slug', $shareCode, SQLITE3_TEXT);
 $row = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
 
 if (!$row || trim((string) ($row['token'] ?? '')) === '') {
+    $attemptState = share_attempts_get($db, $ipHash);
+    $nowTs = time();
+    if ($attemptState && $attemptState['locked_until'] > $nowTs) {
+        $retryAfter = max(60, $attemptState['locked_until'] - $nowTs);
+        http_response_code(429);
+        header('Retry-After: ' . $retryAfter);
+        echo 'Demasiados intentos. Vuelve a intentarlo más tarde.';
+        exit;
+    }
     share_attempts_record_failure($db, $ipHash);
     http_response_code(404);
     echo 'Enlace no válido.';
