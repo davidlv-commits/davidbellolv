@@ -436,7 +436,7 @@
     function sendLead(data) {
       var payload = Object.assign({}, V, data, { page:'libre-conmigo', captured_at: new Date().toISOString() });
       if (T) T.track('lead_captured', { page:'libre-conmigo', source:data.source||'unknown', has_email:!!data.email });
-      try { navigator.sendBeacon('https://dblvglobal.com/api/v1/leads', new Blob([JSON.stringify(payload)],{type:'application/json'})); } catch(e){}
+      try { navigator.sendBeacon('https://dblv-leads.davidbello.workers.dev/api/v1/leads', new Blob([JSON.stringify(payload)],{type:'application/json'})); } catch(e){}
     }
 
     // ── Particles ──
