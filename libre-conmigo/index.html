@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Libre conmigo | David Bello</title>
+  <meta name="description" content="Libre conmigo, un bolero en homenaje a México. La nueva canción de David Bello del universo Tú de qué vas, El Musical. Escúchala en Spotify y Apple Music." />
+  <link rel="canonical" href="https://davidbellolv.com/libre-conmigo/" />
+
+  <!-- SEO / Social — esto es lo que se ve al compartir en WhatsApp/redes -->
+  <meta property="og:type" content="music.song" />
+  <meta property="og:url" content="https://davidbellolv.com/libre-conmigo/" />
+  <meta property="og:image" content="https://davidbellolv.com/img/libre-conmigo-cover.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="1200" />
+  <meta property="og:title" content="&#127926; Libre conmigo — David Bello" />
+  <meta property="og:description" content="Un bolero en homenaje a México. Inspirado en el capítulo «Celos» de la novela Tú de qué vas. Escúchala ahora." />
+  <meta property="og:site_name" content="David Bello — Tú de qué vas, El Musical" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="&#127926; Libre conmigo — David Bello" />
+  <meta name="twitter:description" content="Un bolero en homenaje a México. Escúchala ahora." />
+  <meta name="twitter:image" content="https://davidbellolv.com/img/libre-conmigo-cover.jpg" />
+  <meta name="theme-color" content="#0a0a0a" />
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --text: #e5e5e5;
+      --accent: #d97706;
+      --accent-hover: #b45309;
+      --serif: 'Playfair Display', serif;
+      --display: 'Cinzel', serif;
+      --sans: 'Montserrat', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); line-height: 1.6; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; transition: .25s; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* ── HERO ── */
+    .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 60px 24px 40px; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%,rgba(217,119,6,.12) 0%,transparent 60%), radial-gradient(ellipse 60% 50% at 20% 100%,rgba(139,69,19,.10) 0%,transparent 50%), radial-gradient(ellipse 60% 50% at 80% 100%,rgba(217,119,6,.08) 0%,transparent 50%); z-index: 0; animation: pulseGlow 8s ease-in-out infinite alternate; }
+    @keyframes pulseGlow { 0%{opacity:.6;transform:scale(1)} 100%{opacity:1;transform:scale(1.05)} }
+    .particles { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+    .particle { position: absolute; width: 3px; height: 3px; background: var(--accent); border-radius: 50%; opacity: 0; animation: float linear infinite; }
+    @keyframes float { 0%{transform:translateY(100vh) scale(0);opacity:0} 10%{opacity:.6} 90%{opacity:.3} 100%{transform:translateY(-10vh) scale(1);opacity:0} }
+    .hero-content { position: relative; z-index: 2; max-width: 680px; animation: fadeUp 1s ease-out; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+    .kicker { color: var(--accent); text-transform: uppercase; letter-spacing: 4px; font-size: .78rem; font-weight: 600; margin-bottom: 16px; }
+    .song-title { font-family: var(--serif); font-size: clamp(2.8rem,8vw,5rem); color: #fff; line-height: 1.1; margin-bottom: 8px; text-shadow: 0 4px 30px rgba(217,119,6,.15); }
+    .song-artist { font-family: var(--sans); font-size: 1.1rem; color: #a8a29e; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 28px; }
+    .song-desc { font-size: 1.05rem; color: #d6d3d1; max-width: 520px; margin: 0 auto 36px; font-style: italic; line-height: 1.75; }
+    .divider { width: 50px; height: 3px; background: var(--accent); margin: 0 auto 28px; border-radius: 2px; }
+    .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
+    .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 32px; font-size: .82rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; border: 1px solid transparent; border-radius: 999px; cursor: pointer; transition: all .35s ease; text-decoration: none; font-family: var(--sans); }
+    .btn-spotify { background: #1db954; color: #fff; }
+    .btn-spotify:hover { background: #169c46; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(29,185,84,.3); }
+    .btn-apple { background: #111; border-color: rgba(255,255,255,.5); color: #fff; }
+    .btn-apple:hover { background: #000; border-color: #fff; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255,255,255,.1); }
+    .btn svg { width: 18px; height: 18px; fill: currentColor; }
+    .scroll-hint { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 2; color: #57534e; font-size: .72rem; letter-spacing: 2px; text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 6px; animation: bounce 2s ease-in-out infinite; }
+    .scroll-hint::after { content: ''; width: 1px; height: 24px; background: linear-gradient(to bottom,#57534e,transparent); }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+    /* ── SNIPPET PLAYER ── */
+    .snippet { padding: 50px 24px 40px; text-align: center; }
+    .snippet-card { max-width: 480px; margin: 0 auto; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 28px 24px; }
+    .snippet-label { color: #78716c; font-size: .72rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
+    .snippet-wave { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .snippet-play { width: 48px; height: 48px; border-radius: 50%; background: var(--accent); border: none; color: #000; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform .2s, box-shadow .2s; flex-shrink: 0; }
+    .snippet-play:hover { transform: scale(1.08); box-shadow: 0 4px 16px rgba(217,119,6,.4); }
+    .snippet-bars { flex: 1; display: flex; align-items: center; gap: 2px; height: 36px; }
+    .snippet-bars span { display: block; width: 3px; background: var(--accent); border-radius: 2px; opacity: .4; transition: height .15s, opacity .15s; }
+    .snippet-bars.playing span { animation: barPulse .6s ease-in-out infinite alternate; opacity: .8; }
+    @keyframes barPulse { 0%{height:8px} 100%{height:var(--bar-h)} }
+    .snippet-time { color: #57534e; font-size: .78rem; font-variant-numeric: tabular-nums; }
+
+    /* ── ESCUCHAR ── */
+    .listen { padding: 60px 24px; max-width: 1100px; margin: 0 auto; }
+    .section-head { text-align: center; margin-bottom: 48px; }
+    .section-head h2 { font-family: var(--serif); font-size: 2rem; color: #fff; margin-bottom: 10px; }
+    .section-head p { color: #a8a29e; font-style: italic; }
+    .embeds { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+    .embed-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 16px; overflow: hidden; transition: transform .3s, box-shadow .3s; }
+    .embed-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,.4); }
+    .embed-label { padding: 16px 20px 0; font-size: .75rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #78716c; }
+    .embed-body { padding: 12px 20px 20px; }
+    .embed-body iframe { width: 100%; border: none; border-radius: 12px; }
+
+    /* ── REACCIONES ── */
+    .reactions { padding: 50px 24px; text-align: center; }
+    .reactions h2 { font-family: var(--serif); font-size: 1.6rem; color: #fff; margin-bottom: 8px; }
+    .reactions p { color: #78716c; font-size: .9rem; margin-bottom: 24px; }
+    .reaction-row { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .reaction-btn { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 20px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 14px; cursor: pointer; transition: all .25s; font-family: var(--sans); color: var(--text); min-width: 80px; }
+    .reaction-btn:hover { transform: translateY(-3px); border-color: var(--accent); background: rgba(217,119,6,.08); }
+    .reaction-btn.voted { border-color: var(--accent); background: rgba(217,119,6,.15); }
+    .reaction-emoji { font-size: 1.8rem; }
+    .reaction-label { font-size: .7rem; letter-spacing: 1px; text-transform: uppercase; }
+    .reaction-count { font-size: .75rem; color: var(--accent); font-weight: 600; }
+
+    /* ── COMPARTIR ── */
+    .share { padding: 50px 24px; text-align: center; }
+    .share h2 { font-family: var(--serif); font-size: 1.6rem; color: #fff; margin-bottom: 8px; }
+    .share p { color: #78716c; font-size: .9rem; margin-bottom: 24px; }
+    .share-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .share-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 999px; font-size: .8rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; border: 1px solid rgba(255,255,255,.12); color: #fff; cursor: pointer; transition: all .25s; background: transparent; font-family: var(--sans); text-decoration: none; }
+    .share-btn:hover { transform: translateY(-2px); }
+    .share-btn.wa { border-color: #25d366; color: #25d366; }
+    .share-btn.wa:hover { background: rgba(37,211,102,.12); }
+    .share-btn.ig { border-color: #e4405f; color: #e4405f; }
+    .share-btn.ig:hover { background: rgba(228,64,95,.12); }
+    .share-btn.x { border-color: #fff; }
+    .share-btn.x:hover { background: rgba(255,255,255,.08); }
+    .share-btn.copy { border-color: var(--accent); color: var(--accent); }
+    .share-btn.copy:hover { background: rgba(217,119,6,.1); }
+    .share-btn svg { width: 16px; height: 16px; fill: currentColor; }
+    .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #000; padding: 10px 24px; border-radius: 999px; font-size: .85rem; font-weight: 600; z-index: 8000; opacity: 0; transition: opacity .3s; pointer-events: none; }
+    .toast.show { opacity: 1; }
+
+    /* ── HISTORIA ── */
+    .story { padding: 80px 24px; background: #11100f; border-top: 1px solid rgba(255,255,255,.06); border-bottom: 1px solid rgba(255,255,255,.06); }
+    .story-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+    .story-inner h2 { font-family: var(--serif); font-size: 2rem; color: #fff; margin-bottom: 10px; }
+    .song-cover { width: 280px; border-radius: 14px; box-shadow: 0 20px 50px rgba(0,0,0,.5); border: 1px solid rgba(255,255,255,.1); margin: 0 auto 32px; }
+    .book-link { color: var(--accent); border-bottom: 1px solid transparent; transition: border-color .25s; }
+    .book-link:hover { border-bottom-color: var(--accent); }
+    .story-text { color: #d6d3d1; line-height: 1.85; margin-bottom: 24px; font-size: 1.02rem; }
+    .story-quote { padding: 20px 24px; border-left: 3px solid var(--accent); background: rgba(255,255,255,.04); border-radius: 8px; font-style: italic; color: #f5f5f4; text-align: left; margin: 28px auto; max-width: 560px; }
+    .tags { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 28px; }
+    .tag { padding: 6px 16px; border: 1px solid rgba(217,119,6,.3); border-radius: 999px; font-size: .75rem; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; }
+
+    /* ── INSTAGRAM + NEWSLETTER ── */
+    .connect { padding: 60px 24px; text-align: center; background: var(--bg); }
+    .connect-inner { max-width: 520px; margin: 0 auto; }
+    .connect h2 { font-family: var(--serif); font-size: 1.6rem; color: #fff; margin-bottom: 8px; }
+    .connect p { color: #78716c; font-size: .9rem; margin-bottom: 24px; }
+    .ig-btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 32px; border-radius: 999px; font-size: .85rem; font-weight: 600; letter-spacing: 1px; background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color: #fff; border: none; cursor: pointer; transition: transform .2s, box-shadow .2s; text-decoration: none; margin-bottom: 28px; }
+    .ig-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(225,48,108,.3); }
+    .ig-btn svg { width: 20px; height: 20px; fill: #fff; }
+    .newsletter-form { display: flex; gap: 8px; max-width: 400px; margin: 0 auto; }
+    .newsletter-form input { flex: 1; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 999px; padding: 12px 18px; color: #fff; font-size: .85rem; font-family: var(--sans); outline: none; }
+    .newsletter-form input::placeholder { color: #57534e; }
+    .newsletter-form input:focus { border-color: var(--accent); }
+    .newsletter-form button { padding: 12px 24px; background: var(--accent); color: #000; border: none; border-radius: 999px; font-size: .8rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: background .2s; font-family: var(--sans); }
+    .newsletter-form button:hover { background: var(--accent-hover); }
+    .newsletter-ok { color: #22c55e; font-size: .85rem; margin-top: 10px; display: none; }
+
+    /* ── ALBUM LINK ── */
+    .album-link { padding: 50px 24px; text-align: center; }
+    .album-link p { color: #78716c; font-size: .9rem; margin-bottom: 14px; }
+    .album-link a { color: var(--accent); font-weight: 600; border-bottom: 1px solid transparent; }
+    .album-link a:hover { border-bottom-color: var(--accent); }
+
+    /* ── FOOTER ── */
+    footer { padding: 32px 24px; text-align: center; border-top: 1px solid rgba(255,255,255,.06); color: #57534e; font-size: .78rem; }
+    footer a { color: var(--accent); }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── CHAT ── */
+    .chat-fab { position: fixed; bottom: 24px; right: 24px; z-index: 9000; width: 56px; height: 56px; border-radius: 50%; background: var(--accent); color: #000; border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(217,119,6,.4); display: flex; align-items: center; justify-content: center; transition: transform .2s, box-shadow .2s; font-size: 1.4rem; }
+    .chat-fab:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(217,119,6,.5); }
+    .chat-fab.has-badge::after { content: ''; position: absolute; top: 4px; right: 4px; width: 12px; height: 12px; background: #ef4444; border-radius: 50%; border: 2px solid var(--bg); }
+    .chat-panel { position: fixed; bottom: 92px; right: 24px; z-index: 9001; width: 360px; max-height: 520px; background: #1a1918; border: 1px solid rgba(255,255,255,.1); border-radius: 16px; display: none; flex-direction: column; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.6); animation: chatIn .25s ease-out; }
+    .chat-panel.open { display: flex; }
+    @keyframes chatIn { from{opacity:0;transform:translateY(12px) scale(.96)} to{opacity:1;transform:translateY(0) scale(1)} }
+    .chat-header { padding: 16px 18px; border-bottom: 1px solid rgba(255,255,255,.08); display: flex; align-items: center; gap: 10px; }
+    .chat-header-dot { width: 10px; height: 10px; background: #22c55e; border-radius: 50%; flex-shrink: 0; }
+    .chat-header-text { flex: 1; }
+    .chat-header-text strong { display: block; color: #fff; font-size: .85rem; }
+    .chat-header-text span { color: #78716c; font-size: .72rem; }
+    .chat-close { background: none; border: none; color: #78716c; cursor: pointer; font-size: 1.2rem; padding: 4px; }
+    .chat-close:hover { color: #fff; }
+    .chat-messages { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px; min-height: 250px; max-height: 340px; }
+    .chat-msg { max-width: 85%; padding: 10px 14px; border-radius: 14px; font-size: .88rem; line-height: 1.5; }
+    .chat-msg.bot { background: rgba(255,255,255,.07); color: #e5e5e5; align-self: flex-start; border-bottom-left-radius: 4px; }
+    .chat-msg.user { background: var(--accent); color: #000; align-self: flex-end; border-bottom-right-radius: 4px; }
+    .chat-input-row { padding: 12px 16px; border-top: 1px solid rgba(255,255,255,.08); display: flex; gap: 8px; }
+    .chat-input-row input { flex: 1; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 999px; padding: 10px 16px; color: #fff; font-size: .85rem; font-family: var(--sans); outline: none; }
+    .chat-input-row input::placeholder { color: #57534e; }
+    .chat-input-row input:focus { border-color: var(--accent); }
+    .chat-input-row button { background: var(--accent); border: none; color: #000; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: background .2s; }
+    .chat-input-row button:hover { background: var(--accent-hover); }
+
+    /* ── COOKIE BANNER ── */
+    .cookie-banner { position: fixed; bottom: 0; left: 0; width: 100%; z-index: 9999; background: rgba(10,10,10,.97); backdrop-filter: blur(10px); border-top: 1px solid rgba(255,255,255,.1); padding: 18px 24px; display: none; }
+    .cookie-banner.show { display: block; }
+    .cookie-box { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+    .cookie-text { flex: 1; min-width: 240px; font-size: .85rem; color: #d6d3d1; }
+    .cookie-text a { color: var(--accent); }
+    .cookie-actions { display: flex; gap: 10px; }
+    .cookie-btn { padding: 10px 22px; border-radius: 999px; font-size: .8rem; font-weight: 600; letter-spacing: 1px; cursor: pointer; border: 1px solid rgba(255,255,255,.2); background: transparent; color: #fff; font-family: var(--sans); transition: all .2s; }
+    .cookie-btn:hover { border-color: var(--accent); }
+    .cookie-btn.accept { background: var(--accent); color: #000; border-color: var(--accent); }
+    .cookie-btn.accept:hover { background: var(--accent-hover); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .embeds { grid-template-columns: 1fr; }
+      .song-title { font-size: clamp(2.2rem,10vw,3.5rem); }
+      .cta-row, .share-row { flex-direction: column; align-items: center; }
+      .btn, .share-btn { width: 100%; max-width: 300px; justify-content: center; }
+      .newsletter-form { flex-direction: column; }
+      .newsletter-form button { width: 100%; }
+      .reaction-row { gap: 10px; }
+      .reaction-btn { min-width: 68px; padding: 12px 14px; }
+    }
+    @media (max-width: 440px) {
+      .chat-panel { right: 8px; left: 8px; width: auto; bottom: 84px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="particles" id="particles"></div>
+    <div class="hero-content">
+      <p class="kicker">Nuevo single &middot; Bolero</p>
+      <h1 class="song-title">Libre conmigo</h1>
+      <p class="song-artist">David Bello</p>
+      <div class="divider"></div>
+      <p class="song-desc">Un bolero en homenaje a M&eacute;xico y a su m&uacute;sica. Inspirado en el cap&iacute;tulo <em>Celos</em> de la novela <em>T&uacute; de qu&eacute; vas</em>.</p>
+      <div class="cta-row">
+        <a href="https://open.spotify.com/album/5dvuDbyoaRmZQiXPf1uI1g" target="_blank" rel="noopener" class="btn btn-spotify" data-track="listen_spotify" data-platform="spotify">
+          <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          Spotify
+        </a>
+        <a href="https://music.apple.com/us/album/libre-conmigo/1891114986?i=1891115137" target="_blank" rel="noopener" class="btn btn-apple" data-track="listen_apple" data-platform="apple_music">
+          <svg viewBox="0 0 24 24"><path d="M23.994 6.124a9.23 9.23 0 0 0-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043A5.022 5.022 0 0 0 19.32.028C18.188-.01 17.052 0 15.916 0h-7.84C7.012 0 5.936 0 4.852.04A5.09 5.09 0 0 0 2.42.958C1.3 1.69.554 2.69.24 4c-.167.706-.237 1.428-.24 2.15-.012.656-.02 1.312-.02 1.968v7.762c0 .656.008 1.312.02 1.968.003.722.073 1.444.24 2.15.315 1.31 1.062 2.31 2.18 3.043A5.023 5.023 0 0 0 4.68 23.97c1.132.04 2.268.03 3.404.03h7.84c1.064 0 2.14 0 3.224-.04a5.09 5.09 0 0 0 2.432-.918c1.12-.733 1.866-1.733 2.18-3.043.167-.706.237-1.428.24-2.15.012-.656.02-1.312.02-1.968V8.092c0-.656-.008-1.312-.02-1.968z"/></svg>
+          Apple Music
+        </a>
+      </div>
+    </div>
+    <div class="scroll-hint">Escuchar</div>
+  </section>
+
+  <!-- ===== SNIPPET PLAYER ===== -->
+  <section class="snippet">
+    <div class="snippet-card">
+      <p class="snippet-label">Adelanto &middot; 30 segundos</p>
+      <div class="snippet-wave">
+        <button class="snippet-play" id="snippetPlay" aria-label="Reproducir adelanto" data-track="snippet_play" data-platform="web">&#9654;</button>
+        <div class="snippet-bars" id="snippetBars"></div>
+        <span class="snippet-time" id="snippetTime">0:00</span>
+      </div>
+      <audio id="snippetAudio" preload="metadata" src="snippet.mp3"></audio>
+    </div>
+  </section>
+
+  <!-- ===== ESCUCHAR ===== -->
+  <section class="listen" id="escuchar">
+    <div class="section-head">
+      <h2>Escucha ahora</h2>
+      <div class="divider"></div>
+      <p>Disponible en todas las plataformas</p>
+    </div>
+    <div class="embeds">
+      <div class="embed-card">
+        <p class="embed-label">Spotify</p>
+        <div class="embed-body">
+          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/5dvuDbyoaRmZQiXPf1uI1g?utm_source=generator" height="352" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+      </div>
+      <div class="embed-card">
+        <p class="embed-label">Apple Music</p>
+        <div class="embed-body">
+          <iframe allow="autoplay *; encrypted-media *;" height="150" style="overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/album/libre-conmigo/1891114986?i=1891115137"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== REACCIONES ===== -->
+  <section class="reactions" id="reacciones">
+    <h2>&iquest;Qu&eacute; te transmite?</h2>
+    <p>Elige lo que sientes al escucharla</p>
+    <div class="reaction-row" id="reactionRow">
+      <button class="reaction-btn" data-reaction="amor" data-track="reaction_amor"><span class="reaction-emoji">&#10084;&#65039;</span><span class="reaction-label">Amor</span><span class="reaction-count" id="count-amor">0</span></button>
+      <button class="reaction-btn" data-reaction="nostalgia" data-track="reaction_nostalgia"><span class="reaction-emoji">&#128172;</span><span class="reaction-label">Nostalgia</span><span class="reaction-count" id="count-nostalgia">0</span></button>
+      <button class="reaction-btn" data-reaction="libertad" data-track="reaction_libertad"><span class="reaction-emoji">&#128038;</span><span class="reaction-label">Libertad</span><span class="reaction-count" id="count-libertad">0</span></button>
+      <button class="reaction-btn" data-reaction="pasion" data-track="reaction_pasion"><span class="reaction-emoji">&#128293;</span><span class="reaction-label">Pasi&oacute;n</span><span class="reaction-count" id="count-pasion">0</span></button>
+      <button class="reaction-btn" data-reaction="mexico" data-track="reaction_mexico"><span class="reaction-emoji">&#127474;&#127485;</span><span class="reaction-label">M&eacute;xico</span><span class="reaction-count" id="count-mexico">0</span></button>
+    </div>
+  </section>
+
+  <!-- ===== COMPARTIR ===== -->
+  <section class="share">
+    <h2>Comp&aacute;rtela con el mundo</h2>
+    <p>Ayuda a que m&aacute;s gente la descubra</p>
+    <div class="share-row">
+      <a class="share-btn wa" id="shareWA" target="_blank" rel="noopener" data-track="share_whatsapp" data-platform="whatsapp">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+      <a class="share-btn x" id="shareX" target="_blank" rel="noopener" data-track="share_x" data-platform="x">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        X / Twitter
+      </a>
+      <button class="share-btn copy" id="shareCopy" data-track="share_copy" data-platform="clipboard">
+        <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+        Copiar enlace
+      </button>
+    </div>
+    <div class="toast" id="toast">Enlace copiado</div>
+  </section>
+
+  <!-- ===== HISTORIA ===== -->
+  <section class="story">
+    <div class="story-inner">
+      <p class="kicker">La historia</p>
+      <h2>Un homenaje a M&eacute;xico</h2>
+      <div class="divider"></div>
+      <img src="../img/libre-conmigo-cover.jpg" alt="Portada de Libre conmigo (Celos) — David Bello López-Valeiras" class="song-cover" loading="lazy" decoding="async" />
+      <p class="story-text"><strong>Libre conmigo</strong> es un bolero que David Bello compuso como homenaje a M&eacute;xico y a su m&uacute;sica, que le apasiona. La canci&oacute;n estaba terminada justo cuando lleg&oacute; a tierras mexicanas, donde la recibi&oacute; ya lista.</p>
+      <p class="story-text">Inspirada en el cap&iacute;tulo <a href="https://amzn.eu/d/hEMYm7o" target="_blank" rel="noopener" class="book-link"><em>&laquo;Celos&raquo;</em></a> de la novela <a href="https://amzn.eu/d/hEMYm7o" target="_blank" rel="noopener" class="book-link"><em>T&uacute; de qu&eacute; vas</em></a>, la canci&oacute;n explora los celos desde una perspectiva &iacute;ntima: la tensi&oacute;n entre el amor y la necesidad de libertad.</p>
+      <div class="story-quote">Si la hubiese compuesto antes, ser&iacute;a la quinta canci&oacute;n del &aacute;lbum <em>T&uacute; de qu&eacute; vas, El Musical</em>. Ah&iacute; encaja perfectamente.</div>
+      <p class="story-text">Un homenaje en forma de bolero. A las noches de M&eacute;xico, a su gente, a esa intensidad que solo se vive all&iacute;.</p>
+      <div class="tags">
+        <span class="tag">Bolero</span>
+        <span class="tag">M&eacute;xico</span>
+        <span class="tag">T&uacute; de qu&eacute; vas</span>
+        <span class="tag">Celos</span>
+        <span class="tag">Amor propio</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== INSTAGRAM + NEWSLETTER ===== -->
+  <section class="connect">
+    <div class="connect-inner">
+      <h2>S&iacute;gueme en el camino</h2>
+      <p>Pr&oacute;ximos lanzamientos, conciertos y novedades</p>
+      <a href="https://www.instagram.com/davidbellolv/" target="_blank" rel="noopener" class="ig-btn" data-track="follow_instagram" data-platform="instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        @davidbellolv
+      </a>
+      <p style="color:#a8a29e;font-size:.85rem;margin-bottom:14px;">&#161;O d&eacute;jame tu email para avisarte del pr&oacute;ximo lanzamiento!</p>
+      <form class="newsletter-form" id="newsletterForm">
+        <input type="email" placeholder="tu@email.com" required id="nlEmail" />
+        <button type="submit">Avisarme</button>
+      </form>
+      <p class="newsletter-ok" id="nlOk">&#10004; &#161;Apuntado! Te avisaremos.</p>
+    </div>
+  </section>
+
+  <!-- ===== LINK AL ÁLBUM ===== -->
+  <section class="album-link">
+    <p>Del universo de</p>
+    <a href="https://davidbellolv.com/" data-track="album_link" data-platform="website">T&uacute; de qu&eacute; vas, El Musical &rarr;</a>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <p>&copy; 2026 <a href="https://davidbellolv.com/">David Bello</a>. Todos los derechos reservados.</p>
+    <p style="margin-top:8px;">
+      <a href="../aviso-legal/">Aviso legal</a> &nbsp;|&nbsp;
+      <a href="../politica-privacidad/">Privacidad</a> &nbsp;|&nbsp;
+      <a href="../cookies/">Cookies</a>
+    </p>
+  </footer>
+
+  <!-- ===== COOKIE BANNER ===== -->
+  <div id="cookieBanner" class="cookie-banner" role="dialog" aria-live="polite" aria-label="Aviso de cookies">
+    <div class="cookie-box">
+      <div class="cookie-text">
+        Usamos cookies para mejorar tu experiencia y medir el rendimiento.
+        Puedes aceptar o rechazar. M&aacute;s info en <a href="../cookies/">Cookies</a>.
+      </div>
+      <div class="cookie-actions">
+        <button class="cookie-btn" id="cookieReject">Rechazar</button>
+        <button class="cookie-btn accept" id="cookieAccept">Aceptar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CHAT ===== -->
+  <button class="chat-fab has-badge" id="chatFab" aria-label="Abrir chat">&#9993;</button>
+  <div class="chat-panel" id="chatPanel">
+    <div class="chat-header">
+      <span class="chat-header-dot"></span>
+      <div class="chat-header-text"><strong>David Bello</strong><span>Pregunta lo que quieras</span></div>
+      <button class="chat-close" id="chatClose">&times;</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-msg bot">&#161;Hola! Soy el asistente de David. Pregunta lo que quieras sobre <strong>Libre conmigo</strong>, el libro <em>T&uacute; de qu&eacute; vas</em> o la m&uacute;sica. &#127925;</div>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Escribe tu mensaje..." autocomplete="off" />
+      <button id="chatSend" aria-label="Enviar">&#10148;</button>
+    </div>
+  </div>
+  <div class="toast" id="toast">Enlace copiado</div>
+
+  <!-- ===== ANALYTICS ===== -->
+  <script>
+    window.TDQV_ANALYTICS_CONFIG = { ga4MeasurementId: "G-4V3KPXTJPN", clarityProjectId: "vif42io02i" };
+  </script>
+  <script src="../js/analytics.js"></script>
+  <script>
+  (function(){
+    "use strict";
+    var T = window.TDQVAnalytics;
+    var COOKIE_KEY = 'tdqv_cookie_consent';
+    function getConsent(){ var v=localStorage.getItem(COOKIE_KEY); if(v==='accepted') return 'all'; if(v==='rejected') return 'essential'; return 'unset'; }
+    function applyConsent(){ if(T) T.applyConsent(getConsent(),{language:'es'}); }
+    applyConsent();
+    if (!localStorage.getItem(COOKIE_KEY)) document.getElementById('cookieBanner').classList.add('show');
+    document.getElementById('cookieAccept').addEventListener('click',function(){ localStorage.setItem(COOKIE_KEY,'accepted'); document.getElementById('cookieBanner').classList.remove('show'); applyConsent(); });
+    document.getElementById('cookieReject').addEventListener('click',function(){ localStorage.setItem(COOKIE_KEY,'rejected'); document.getElementById('cookieBanner').classList.remove('show'); });
+
+    var SHARE_URL = 'https://davidbellolv.com/libre-conmigo/';
+    var SHARE_TEXT = '🎶 Libre conmigo — el nuevo bolero de David Bello. Un homenaje a México. Escúchala:';
+
+    // ── Visitor data ──
+    var V = {
+      id: 'v_' + Math.random().toString(36).slice(2,10) + Date.now().toString(36),
+      referrer: document.referrer || 'direct',
+      utm_source: new URLSearchParams(location.search).get('utm_source') || '',
+      utm_medium: new URLSearchParams(location.search).get('utm_medium') || '',
+      utm_campaign: new URLSearchParams(location.search).get('utm_campaign') || '',
+      language: navigator.language || '',
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || '',
+      screen: screen.width + 'x' + screen.height,
+      device: /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
+      arrived_at: new Date().toISOString()
+    };
+    if (T) T.track('landing_visit', { page:'libre-conmigo', referrer:V.referrer, utm_source:V.utm_source, utm_medium:V.utm_medium, utm_campaign:V.utm_campaign, device:V.device, timezone:V.timezone });
+
+    function sendLead(data) {
+      var payload = Object.assign({}, V, data, { page:'libre-conmigo', captured_at: new Date().toISOString() });
+      if (T) T.track('lead_captured', { page:'libre-conmigo', source:data.source||'unknown', has_email:!!data.email });
+      try { navigator.sendBeacon('https://dblvglobal.com/api/v1/leads', new Blob([JSON.stringify(payload)],{type:'application/json'})); } catch(e){}
+    }
+
+    // ── Particles ──
+    (function(){
+      var c = document.getElementById('particles'), n = innerWidth < 600 ? 15 : 30;
+      for (var i=0;i<n;i++) { var p=document.createElement('span'); p.className='particle'; p.style.left=Math.random()*100+'%'; p.style.animationDuration=(6+Math.random()*10)+'s'; p.style.animationDelay=(Math.random()*8)+'s'; p.style.width=p.style.height=(2+Math.random()*3)+'px'; c.appendChild(p); }
+    })();
+
+    // ── Snippet player ──
+    (function(){
+      var audio = document.getElementById('snippetAudio');
+      var btn = document.getElementById('snippetPlay');
+      var bars = document.getElementById('snippetBars');
+      var time = document.getElementById('snippetTime');
+      var barCount = 50;
+      for (var i=0;i<barCount;i++) { var s=document.createElement('span'); s.style.setProperty('--bar-h',(12+Math.random()*22)+'px'); s.style.height='8px'; s.style.animationDelay=(Math.random()*.5)+'s'; bars.appendChild(s); }
+      btn.addEventListener('click', function(){
+        if (audio.paused) { audio.play(); btn.textContent='\u275A\u275A'; bars.classList.add('playing'); if(T) T.track('snippet_play',{page:'libre-conmigo'}); }
+        else { audio.pause(); btn.textContent='\u25B6'; bars.classList.remove('playing'); }
+      });
+      audio.addEventListener('timeupdate', function(){ var m=Math.floor(audio.currentTime/60), s=Math.floor(audio.currentTime%60); time.textContent=m+':'+(s<10?'0':'')+s; });
+      audio.addEventListener('ended', function(){ btn.textContent='\u25B6'; bars.classList.remove('playing'); if(T) T.track('snippet_complete',{page:'libre-conmigo'}); });
+    })();
+
+    // ── Reactions ──
+    (function(){
+      var counts = JSON.parse(localStorage.getItem('lc_reactions')||'{}');
+      var voted = localStorage.getItem('lc_voted');
+      function render(){ ['amor','nostalgia','libertad','pasion','mexico'].forEach(function(k){ var el=document.getElementById('count-'+k); if(el) el.textContent=counts[k]||0; }); }
+      render();
+      document.getElementById('reactionRow').addEventListener('click', function(e){
+        var b = e.target.closest('.reaction-btn');
+        if (!b || voted) return;
+        var r = b.dataset.reaction;
+        counts[r] = (counts[r]||0) + 1;
+        localStorage.setItem('lc_reactions', JSON.stringify(counts));
+        localStorage.setItem('lc_voted', r);
+        voted = r;
+        b.classList.add('voted');
+        render();
+        if(T) T.track('reaction', { page:'libre-conmigo', reaction:r });
+        sendLead({ source:'reaction', reaction:r });
+      });
+      if (voted) { var el=document.querySelector('[data-reaction="'+voted+'"]'); if(el) el.classList.add('voted'); }
+    })();
+
+    // ── Share ──
+    document.getElementById('shareWA').href = 'https://wa.me/?text=' + encodeURIComponent(SHARE_TEXT + ' ' + SHARE_URL);
+    document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(SHARE_TEXT) + '&url=' + encodeURIComponent(SHARE_URL);
+    document.getElementById('shareCopy').addEventListener('click', function(){
+      navigator.clipboard.writeText(SHARE_URL).then(function(){
+        var t=document.getElementById('toast'); t.classList.add('show'); setTimeout(function(){t.classList.remove('show');},2000);
+      });
+      if(T) T.track('share_copy',{page:'libre-conmigo'});
+    });
+
+    // ── Newsletter ──
+    document.getElementById('newsletterForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      var email = document.getElementById('nlEmail').value.trim();
+      if (!email) return;
+      sendLead({ email:email, source:'newsletter' });
+      document.getElementById('nlOk').style.display='block';
+      this.style.display='none';
+      if(T) T.track('newsletter_signup',{page:'libre-conmigo'});
+    });
+
+    // ── Chat ──
+    (function(){
+      var fab=document.getElementById('chatFab'), panel=document.getElementById('chatPanel');
+      var closeBtn=document.getElementById('chatClose'), input=document.getElementById('chatInput');
+      var sendBtn=document.getElementById('chatSend'), msgs=document.getElementById('chatMessages');
+      var log=[];
+      fab.addEventListener('click',function(){ panel.classList.toggle('open'); fab.classList.remove('has-badge'); if(panel.classList.contains('open')){input.focus();if(T)T.track('chat_open',{page:'libre-conmigo'});} });
+      closeBtn.addEventListener('click',function(){ panel.classList.remove('open'); });
+      function addMsg(t,r){ var d=document.createElement('div'); d.className='chat-msg '+r; d.innerHTML=t; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; log.push({role:r,text:t,ts:new Date().toISOString()}); }
+      function reply(msg){
+        var m=msg.toLowerCase();
+        if(/hola|hey|buenas/.test(m)) return '\u00a1Hola! \ud83d\udc4b \u00bfQu\u00e9 te gustar\u00eda saber sobre <strong>Libre conmigo</strong>?';
+        if(/spotify|escuchar|o[ií]r|play/.test(m)) return 'Puedes escucharla en <a href="https://open.spotify.com/album/5dvuDbyoaRmZQiXPf1uI1g" target="_blank" style="color:var(--accent)">Spotify</a> y en <a href="https://music.apple.com/us/album/libre-conmigo/1891114986?i=1891115137" target="_blank" style="color:var(--accent)">Apple Music</a>. \ud83c\udfa7';
+        if(/libro|novela|leer|amazon/.test(m)) return 'La canci\u00f3n est\u00e1 inspirada en el cap\u00edtulo \u00abCelos\u00bb de la novela <a href="https://amzn.eu/d/hEMYm7o" target="_blank" style="color:var(--accent)"><em>T\u00fa de qu\u00e9 vas</em></a>. \u00a1Es una historia fant\u00e1stica! \ud83d\udcd6';
+        if(/celos|cap[ií]tulo/.test(m)) return '\u00abCelos\u00bb es uno de los cap\u00edtulos m\u00e1s intensos de <em>T\u00fa de qu\u00e9 vas</em>. Libre conmigo nace justo ah\u00ed. Pod\u00e9s leerlo <a href="https://amzn.eu/d/hEMYm7o" target="_blank" style="color:var(--accent)">aqu\u00ed</a>.';
+        if(/m[eé]xico|bolero|homenaje/.test(m)) return 'David compuso esta canci\u00f3n como homenaje a M\u00e9xico y a su m\u00fasica. Es un bolero que captura la intensidad de ese pa\u00eds. \ud83c\uddf2\ud83c\uddfd';
+        if(/album|musical|disco|canciones/.test(m)) return 'Libre conmigo forma parte del universo de <em>T\u00fa de qu\u00e9 vas, El Musical</em>. Desc\u00fabrelo en <a href="https://davidbellolv.com/" target="_blank" style="color:var(--accent)">davidbellolv.com</a> \ud83c\udfb5';
+        if(/david|autor|qui[eé]n/.test(m)) return 'David Bello L\u00f3pez-Valeiras es escritor, m\u00fasico y emprendedor. S\u00edguelo en <a href="https://instagram.com/davidbellolv" target="_blank" style="color:var(--accent)">@davidbellolv</a> \ud83c\udfb6';
+        if(/instagram|insta|ig/.test(m)) return 'S\u00edguelo en Instagram: <a href="https://instagram.com/davidbellolv" target="_blank" style="color:var(--accent)">@davidbellolv</a> \ud83d\udcf8';
+        if(/gr[aá]cias|thank/.test(m)) return '\u00a1De nada! Si tienes m\u00e1s preguntas, aqu\u00ed estoy. \ud83d\ude0a';
+        if(/@|correo|email|mail/.test(m)){ var em=msg.match(/[\w.-]+@[\w.-]+\.\w+/); if(em){sendLead({email:em[0],source:'chat'});return'\u00a1Apuntado! David te tendr\u00e1 en cuenta. \ud83d\udc8c';} return 'Si quieres que David te contacte, d\u00e9jame tu email aqu\u00ed.'; }
+        return '\u00a1Buena pregunta! La apunto para David. Mientras, esc\u00fachala en <a href="https://open.spotify.com/album/5dvuDbyoaRmZQiXPf1uI1g" target="_blank" style="color:var(--accent)">Spotify</a> \ud83d\udc46';
+      }
+      function handleSend(){ var t=input.value.trim(); if(!t)return; addMsg(t,'user'); input.value=''; if(T)T.track('chat_message',{page:'libre-conmigo',n:log.length}); var em=t.match(/[\w.-]+@[\w.-]+\.\w+/); setTimeout(function(){ addMsg(reply(t),'bot'); if(log.length>=2)sendLead({email:em?em[0]:'',source:'chat',last_message:t,chat_log:log}); },600+Math.random()*400); }
+      sendBtn.addEventListener('click',handleSend);
+      input.addEventListener('keydown',function(e){if(e.key==='Enter')handleSend();});
+    })();
+  })();
+  </script>
+</body>
+</html>
