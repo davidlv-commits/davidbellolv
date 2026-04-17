@@ -1,36 +1,17 @@
 {
-  "last_updated": "2026-04-16T08:02:07.783738+00:00",
   "window_days": 30,
-  "kpis": {
-    "users_7d": 0,
-    "sessions_7d": 0,
-    "engagement_rate": 0.0,
-    "cta_clicks_7d": 0,
-    "pageviews_7d": 0
-  },
+  "kpis": {},
   "series": {
     "labels": [],
     "sessions": [],
     "users": []
   },
-  "cta_breakdown": {
-    "Spotify": 0,
-    "Apple Music": 0,
-    "Novela": 0,
-    "Instagram": 0,
-    "Regalo": 0,
-    "Música": 0
-  },
+  "cta_breakdown": {},
   "top_pages": [],
   "events": [],
   "countries": [],
   "devices": [],
   "channels": [],
-  "source": {
-    "property_id": "262596275",
-    "ga4_measurement_id": "G-4V3KPXTJPN",
-    "clarity_project_id": "vif42io02i"
-  },
   "clarity": {
     "project_id": "vif42io02i",
     "window_days": 3,
@@ -47,12 +28,18 @@
     "sync": {
       "status": "disabled",
       "message": "Clarity token not configured.",
-      "last_attempted": "2026-04-16T08:02:07.783729+00:00"
+      "last_attempted": "2026-04-17T08:03:01.320808+00:00"
     }
   },
+  "source": {
+    "property_id": "262596275",
+    "ga4_measurement_id": "G-4V3KPXTJPN",
+    "clarity_project_id": "vif42io02i"
+  },
   "sync": {
-    "status": "ok",
-    "message": "Metrics updated from GA4 successfully.",
-    "last_attempted": "2026-04-16T08:02:07.783785+00:00"
+    "status": "error",
+    "message": "401 Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project. [reason: \"ACCOUNT_STATE_INVALID\"\ndomain: \"googleapis.com\"\nmetadata {\n  key: \"service\"\n  value: \"analyticsdata.googleapis.com\"\n}\nmetadata {\n  key: \"method\"\n  value: \"google.analytics.data.v1beta.BetaAnalyticsData.RunReport\"\n}\nmetadata {\n  key: \"email\"\n  value: \"codex-play-upload@pobr-activab-yec3sc.iam.gserviceaccount.com\"\n}\n]",
+    "error_type": "Unauthenticated",
+    "last_attempted": "2026-04-17T08:03:01.320838+00:00"
   }
 }
