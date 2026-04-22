@@ -28,7 +28,7 @@
     "sync": {
       "status": "disabled",
       "message": "Clarity token not configured.",
-      "last_attempted": "2026-04-21T08:07:03.045433+00:00"
+      "last_attempted": "2026-04-22T08:04:26.165441+00:00"
     }
   },
   "source": {
@@ -40,6 +40,6 @@
     "status": "error",
     "message": "401 Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project. [reason: \"ACCOUNT_STATE_INVALID\"\ndomain: \"googleapis.com\"\nmetadata {\n  key: \"service\"\n  value: \"analyticsdata.googleapis.com\"\n}\nmetadata {\n  key: \"method\"\n  value: \"google.analytics.data.v1beta.BetaAnalyticsData.RunReport\"\n}\nmetadata {\n  key: \"email\"\n  value: \"codex-play-upload@pobr-activab-yec3sc.iam.gserviceaccount.com\"\n}\n]",
     "error_type": "Unauthenticated",
-    "last_attempted": "2026-04-21T08:07:03.045468+00:00"
+    "last_attempted": "2026-04-22T08:04:26.165474+00:00"
   }
 }
