@@ -28,7 +28,7 @@
     "sync": {
       "status": "disabled",
       "message": "Clarity token not configured.",
-      "last_attempted": "2026-07-10T09:50:51.537736+00:00"
+      "last_attempted": "2026-07-11T08:12:40.457998+00:00"
     }
   },
   "source": {
@@ -40,6 +40,6 @@
     "status": "error",
     "message": "401 Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.",
     "error_type": "Unauthenticated",
-    "last_attempted": "2026-07-10T09:50:51.537767+00:00"
+    "last_attempted": "2026-07-11T08:12:40.458022+00:00"
   }
 }
