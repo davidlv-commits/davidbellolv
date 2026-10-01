@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>David Bello · Todo mi universo</title>
+  <meta name="description" content="Cuaderno de bitácora, música, novelas y la app Tú de qué vas. Todo lo que hago, en un solo sitio." />
+  <link rel="canonical" href="https://davidbellolv.com/hola/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="David Bello · Todo mi universo" />
+  <meta property="og:description" content="Cuaderno de bitácora, música, novelas y la app Tú de qué vas." />
+  <meta property="og:image" content="https://davidbellolv.com/img/hola/aranjuez.jpg" />
+  <meta property="og:url" content="https://davidbellolv.com/hola/" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg:#0a0a0a; --card:#151312; --card-2:#1c1917; --line:#2c2622;
+      --text:#ece7df; --muted:#a8a097; --accent:#d97706; --gold:#edc26b; --paper:#F5F2EB;
+      --serif:'Playfair Display',serif; --display:'Cinzel',serif; --sans:'Montserrat',system-ui,sans-serif;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{-webkit-text-size-adjust:100%}
+    body{
+      background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.5;
+      background-image:radial-gradient(120% 60% at 50% -10%, rgba(217,119,6,.22), transparent 60%);
+      background-repeat:no-repeat; min-height:100vh;
+    }
+    a{color:inherit;text-decoration:none}
+    main{max-width:560px;margin:0 auto;padding:36px 16px 56px}
+    .head{text-align:center;margin-bottom:26px}
+    .avatar{width:112px;height:112px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);box-shadow:0 0 0 6px rgba(237,194,107,.12)}
+    h1{font-family:var(--display);font-weight:700;font-size:1.7rem;letter-spacing:.06em;margin-top:16px}
+    .tag{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:1.02rem;margin-top:6px}
+    h2{font-family:var(--display);font-weight:400;font-size:.82rem;letter-spacing:.24em;color:var(--gold);text-transform:uppercase;margin:30px 4px 12px}
+
+    /* destacado */
+    .feature{display:block;border-radius:18px;overflow:hidden;background:var(--card);border:1px solid var(--line);position:relative}
+    .feature .thumb{position:relative;aspect-ratio:16/9;background:#000}
+    .feature img{width:100%;height:100%;object-fit:cover;display:block}
+    .feature .play{position:absolute;inset:0;display:grid;place-items:center}
+    .feature .play span{width:64px;height:64px;border-radius:50%;background:rgba(10,10,10,.62);border:2px solid #fff;display:grid;place-items:center;backdrop-filter:blur(4px)}
+    .feature .play svg{width:26px;height:26px;margin-left:4px;fill:#fff}
+    .badge{position:absolute;top:12px;left:12px;background:var(--accent);color:#fff;font-size:.68rem;font-weight:600;letter-spacing:.14em;padding:5px 10px;border-radius:999px;text-transform:uppercase}
+    .feature .txt{padding:14px 16px 16px}
+    .feature .k{font-size:.7rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+    .feature .t{font-family:var(--serif);font-size:1.22rem;line-height:1.25;margin-top:4px}
+    .feature .d{color:var(--muted);font-size:.9rem;margin-top:6px}
+
+    /* botones */
+    .btn{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-bottom:10px;min-height:68px;transition:transform .12s ease,border-color .12s ease,background .12s ease}
+    .btn:hover,.btn:focus-visible{border-color:var(--gold);background:var(--card-2);transform:translateY(-1px);outline:none}
+    .btn .ico{flex:0 0 44px;height:44px;border-radius:12px;background:var(--card-2);border:1px solid var(--line);display:grid;place-items:center;overflow:hidden}
+    .btn .ico img{width:100%;height:100%;object-fit:cover}
+    .btn .ico svg{width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .btn .lbl{flex:1;min-width:0}
+    .btn .a{font-weight:600;font-size:.98rem}
+    .btn .b{color:var(--muted);font-size:.82rem;margin-top:1px}
+    .btn .go{flex:0 0 auto;color:var(--muted);font-size:1.1rem}
+    .soon{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(237,194,107,.5);border-radius:999px;padding:3px 8px;margin-left:8px;vertical-align:2px;white-space:nowrap}
+
+    /* redes */
+    .social{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+    .social a{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 4px 10px;text-align:center;font-size:.7rem;color:var(--muted);transition:border-color .12s ease,color .12s ease}
+    .social a:hover,.social a:focus-visible{border-color:var(--gold);color:var(--text);outline:none}
+    .social svg{width:22px;height:22px;display:block;margin:0 auto 6px;stroke:var(--gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+    /* regalo */
+    .gift{background:var(--paper);color:#1c1917;border-radius:18px;padding:18px 16px;display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:start}
+    .gift img{width:96px;border-radius:8px;box-shadow:0 8px 20px rgba(0,0,0,.28);display:block}
+    .gift .t{font-family:var(--serif);font-weight:700;font-size:1.22rem;line-height:1.2}
+    .gift p{font-size:.88rem;color:#44403c;margin-top:6px}
+    .gift form{grid-column:1/-1;margin-top:4px}
+    .row{display:flex;gap:8px}
+    .gift input[type=email]{flex:1;min-width:0;font:inherit;font-size:1rem;padding:12px 14px;border-radius:12px;border:1px solid #cfc8bb;background:#fff;color:#1c1917}
+    .gift button{font:inherit;font-weight:600;border:0;border-radius:12px;background:var(--accent);color:#fff;padding:12px 16px;cursor:pointer;white-space:nowrap}
+    .gift button:disabled{opacity:.6;cursor:default}
+    .ok{display:flex;gap:8px;align-items:flex-start;font-size:.76rem;color:#57534e;margin-top:10px;line-height:1.4}
+    .ok input{margin-top:2px;accent-color:var(--accent);flex:0 0 auto}
+    .ok a{text-decoration:underline}
+    .msg{font-size:.9rem;font-weight:600;margin-top:10px;min-height:1.2em}
+    .msg.err{color:#b91c1c}.msg.done{color:#15803d}
+
+    footer{text-align:center;color:var(--muted);font-size:.74rem;margin-top:34px;line-height:1.9}
+    footer a{text-decoration:underline;text-underline-offset:2px}
+    .web{display:inline-block;margin-top:6px;font-family:var(--display);letter-spacing:.14em;color:var(--gold);text-decoration:none}
+    @media (prefers-reduced-motion:reduce){.btn,.social a{transition:none}}
+  </style>
+</head>
+<body>
+<main>
+  <div class="head">
+    <img class="avatar" src="../img/hola/avatar.jpg" width="112" height="112" alt="David Bello" />
+    <h1>DAVID BELLO</h1>
+    <p class="tag">Lugares con historia, canciones y novelas</p>
+  </div>
+
+  <!-- DESTACADO: se cambia en cada estreno (texto, imagen y enlace) -->
+  <a class="feature" id="destacado" data-k="destacado-aranjuez" target="_blank" rel="noopener"
+     href="https://youtube.com/@davidbellolopez-valeiras24">
+    <div class="thumb">
+      <img src="../img/hola/aranjuez.jpg" width="1280" height="720" alt="David Bello ante el Palacio Real de Aranjuez" />
+      <span class="badge">Nuevo</span>
+      <span class="play"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></span>
+    </div>
+    <div class="txt">
+      <div class="k">Cuaderno de bitácora · 02</div>
+      <div class="t">Aranjuez: el palacio donde nació el concierto más famoso de España</div>
+      <div class="d">El vídeo completo, con el motín de 1808 y el paseo de Joaquín Rodrigo.</div>
+    </div>
+  </a>
+
+  <h2>Escucha</h2>
+  <a class="btn" data-k="spotify" target="_blank" rel="noopener" href="https://open.spotify.com/album/3O7kN7Wb8Bhtrz1ZEGivMY">
+    <span class="ico"><img src="../img/hola/album.jpg" alt="" /></span>
+    <span class="lbl"><div class="a">Tú de qué vas, El Musical</div><div class="b">El álbum en Spotify</div></span><span class="go">›</span>
+  </a>
+  <a class="btn" data-k="apple-music" target="_blank" rel="noopener" href="https://music.apple.com/us/album/t%C3%BA-de-qu%C3%A9-vas/1861250197">
+    <span class="ico"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+    <span class="lbl"><div class="a">Apple Music</div><div class="b">El álbum y los sencillos</div></span><span class="go">›</span>
+  </a>
+
+  <h2>Lee</h2>
+  <a class="btn" data-k="novela-amazon" target="_blank" rel="noopener" href="https://amzn.eu/d/hEMYm7o">
+    <span class="ico"><img src="../img/hola/novela.jpg" alt="" /></span>
+    <span class="lbl"><div class="a">Tú de qué vas, la novela</div><div class="b">Consíguela en Amazon</div></span><span class="go">›</span>
+  </a>
+  <a class="btn" data-k="app-tdqv" target="_blank" rel="noopener" href="https://tudequevas.app">
+    <span class="ico"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></span>
+    <span class="lbl"><div class="a">La app <span class="soon">Muy pronto</span></div><div class="b">La novela que se lee con su música</div></span><span class="go">›</span>
+  </a>
+  <a class="btn" data-k="web-musical" href="../">
+    <span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
+    <span class="lbl"><div class="a">El universo completo</div><div class="b">Canciones, videoclips y la historia detrás</div></span><span class="go">›</span>
+  </a>
+
+  <h2>Un regalo</h2>
+  <div class="gift">
+    <img src="../img/hola/libreto.jpg" width="96" height="136" alt="Portada del libreto de Tú de qué vas, El Musical" />
+    <div>
+      <div class="t">El libreto del musical</div>
+      <p>Las letras completas y mis notas de cada canción. Estoy terminando la edición nueva, con <em>Libre conmigo</em> y <em>No te querré siempre</em>: déjame tu correo y te lo envío en cuanto salga.</p>
+    </div>
+    <form id="regalo" novalidate>
+      <div class="row">
+        <input type="email" id="correo" name="email" autocomplete="email" inputmode="email" placeholder="Tu correo" aria-label="Tu correo electrónico" required />
+        <button type="submit">Lo quiero</button>
+      </div>
+      <label class="ok"><input type="checkbox" id="acepto" required />
+        <span>Acepto recibir el libreto y novedades de David Bello por correo. Puedo darme de baja cuando quiera. <a href="../politica-privacidad/">Privacidad</a>.</span></label>
+      <div class="msg" id="msg" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+
+  <h2>Sígueme</h2>
+  <div class="social">
+    <a data-k="instagram" target="_blank" rel="noopener" href="https://www.instagram.com/davidbellolv/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg>Instagram</a>
+    <a data-k="youtube" target="_blank" rel="noopener" href="https://youtube.com/@davidbellolopez-valeiras24"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z"/></svg>YouTube</a>
+    <a data-k="tiktok" target="_blank" rel="noopener" href="https://www.tiktok.com/@davidbellolpezval"><svg viewBox="0 0 24 24"><path d="M14 4v10a4 4 0 1 1-4-4"/><path d="M14 4c.5 2.5 2.5 4.5 5 5"/></svg>TikTok</a>
+    <a data-k="facebook" target="_blank" rel="noopener" href="https://www.facebook.com/david.bellolopezvaleiras/"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M13 21v-8h3l.5-3H13V8.5c0-1 .5-1.5 1.6-1.5H17V4.2c-.6-.1-1.6-.2-2.6-.2C11.900 4 10 5.500 10 8.200V10H7.500v3H10v8"/></svg>Facebook</a>
+    <a data-k="threads" target="_blank" rel="noopener" href="https://www.threads.net/@davidbellolv"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/></svg>Threads</a>
+  </div>
+
+  <footer>
+    <a class="web" href="../">DAVIDBELLOLV.COM</a><br />
+    <a href="../aviso-legal/">Aviso legal</a> · <a href="../politica-privacidad/">Privacidad</a> · <a href="../cookies/">Cookies</a><br />
+    Esta página no usa cookies. Solo cuenta visitas y clics de forma agregada.
+  </footer>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  var API = "https://dblv-leads.davidbello.workers.dev/api/v1/leads";
+  var q = new URLSearchParams(location.search);
+  var base = {
+    page: "hola",
+    referrer: document.referrer || "",
+    utm_source: q.get("utm_source") || "", utm_medium: q.get("utm_medium") || "", utm_campaign: q.get("utm_campaign") || "",
+    language: navigator.language || "",
+    timezone: (Intl.DateTimeFormat().resolvedOptions().timeZone) || "",
+    screen: screen.width + "x" + screen.height,
+    device: /Mobi|Android/i.test(navigator.userAgent) ? "mobile" : "desktop",
+    arrived_at: new Date().toISOString()
+  };
+  // Petición «simple» (text/plain, sin credenciales): no necesita preflight y permite saber si llegó.
+  function enviar(extra) {
+    var p = {}; for (var k in base) p[k] = base[k]; for (var e in extra) p[e] = extra[e];
+    p.captured_at = new Date().toISOString();
+    return fetch(API, { method: "POST", mode: "cors", credentials: "omit", keepalive: true,
+                        headers: { "Content-Type": "text/plain;charset=UTF-8" }, body: JSON.stringify(p) })
+      .then(function (r) { return r.ok; }).catch(function () { return false; });
+  }
+  enviar({ source: "visita" });
+  document.querySelectorAll("[data-k]").forEach(function (a) {
+    a.addEventListener("click", function () { enviar({ source: "clic:" + a.getAttribute("data-k") }); });
+  });
+
+  var form = document.getElementById("regalo"), msg = document.getElementById("msg");
+  form.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var correo = document.getElementById("correo").value.trim();
+    msg.className = "msg err";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(correo)) { msg.textContent = "Revisa el correo: parece que falta algo."; return; }
+    if (!document.getElementById("acepto").checked) { msg.textContent = "Marca la casilla para poder enviártelo."; return; }
+    var boton = form.querySelector("button"); boton.disabled = true; msg.className = "msg"; msg.textContent = "Enviando…";
+    enviar({ source: "regalo-libreto", email: correo }).then(function (ok) {
+      if (!ok) { boton.disabled = false; msg.className = "msg err"; msg.textContent = "No se pudo enviar. Inténtalo de nuevo en un momento."; return; }
+      msg.className = "msg done"; msg.textContent = "¡Apuntado! Te lo envío en cuanto esté la edición nueva.";
+    });
+  });
+})();
+</script>
+</body>
+</html>
