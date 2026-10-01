@@ -23,6 +23,15 @@
       .then(function (r) { return r.ok; }).catch(function () { return false; });
   }
   enviar({ source: "visita" });
+
+  // Metricool solo si la persona ya aceptó la analítica en el aviso de cookies de la portada
+  // (estas páginas no muestran aviso porque no guardan nada por su cuenta).
+  var acepta = null; try { acepta = localStorage.getItem("tdqv_cookie_consent"); } catch (e) {}
+  if (acepta === "accepted") {
+    var m = document.createElement("script"); m.async = true; m.src = "https://tracker.metricool.com/resources/be.js";
+    m.onload = function () { if (window.beTracker) window.beTracker.t({ hash: "518b8b62166b774793276d906202bacc" }); };
+    document.head.appendChild(m);
+  }
   document.querySelectorAll("[data-k]").forEach(function (a) {
     a.addEventListener("click", function () { enviar({ source: "clic:" + a.getAttribute("data-k") }); });
   });

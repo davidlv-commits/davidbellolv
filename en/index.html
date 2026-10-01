@@ -183,7 +183,6 @@
 
     .libretto-container{display:grid;grid-template-columns:1fr 1fr;gap:50px;padding:40px}
     .libretto-img img{box-shadow:0 20px 50px rgba(0,0,0,.6);transform:rotate(-2deg);border-radius:8px}
-    .clientify-box{padding:20px;width:100%;text-align:center}
 
     .regalo-form{text-align:left}
     .regalo-row{display:flex;gap:8px;flex-wrap:wrap}
@@ -198,6 +197,30 @@
     .regalo-form .msg.err{color:#b91c1c}
     .regalo-form .msg.done{color:#15803d}
     .regalo-form [hidden]{display:none!important}
+
+    .resena-form{text-align:left;display:grid;gap:16px}
+    .resena-form label{display:block;font-size:.9rem;font-weight:600;color:#292524}
+    .resena-form label small{font-weight:400;color:#78716c}
+    .resena-form input[type=text],.resena-form input[type=email],.resena-form textarea{display:block;width:100%;margin-top:6px;font:inherit;font-size:1rem;font-weight:400;padding:12px 14px;border-radius:10px;border:1px solid #cfc8bb;background:#fff;color:#1c1917}
+    .resena-form textarea{resize:vertical;min-height:130px;line-height:1.5}
+    .resena-form input:focus-visible,.resena-form textarea:focus-visible{outline:2px solid var(--color-accent);outline-offset:1px;border-color:var(--color-accent)}
+    .resena-dos{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .resena-estrellas{border:0;padding:0;margin:0}
+    .resena-estrellas legend{font-size:.9rem;font-weight:600;color:#292524;padding:0;margin-bottom:2px}
+    .resena-estrellas div{display:inline-flex;flex-direction:row-reverse}
+    .resena-estrellas input{position:absolute;opacity:0;width:1px;height:1px}
+    .resena-estrellas label{font-size:2rem;line-height:1;color:#d6d0c4;cursor:pointer;padding:0 3px;font-weight:400}
+    .resena-estrellas input:checked~label,.resena-estrellas label:hover,.resena-estrellas label:hover~label{color:var(--color-accent)}
+    .resena-estrellas input:focus-visible+label{outline:2px solid var(--color-accent);border-radius:6px}
+    .resena-trampa{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
+    .resena-form .regalo-ok{margin-top:0;font-weight:400}
+    .resena-form button{justify-self:start;font:inherit;font-weight:600;border:0;border-radius:10px;background:var(--color-accent);color:#fff;padding:13px 26px;cursor:pointer}
+    .resena-form button:disabled{opacity:.6;cursor:default}
+    .resena-form .msg{font-size:.95rem;font-weight:600;min-height:1.2em}
+    .resena-form .msg.err{color:#b91c1c}
+    .resena-form .msg.done{color:#15803d;font-size:1.05rem}
+    .resena-form [hidden]{display:none!important}
+    @media (max-width:640px){.resena-dos{grid-template-columns:1fr}}
 
     .vertical-video-section{background:var(--color-bg);padding:80px 0}
     .vertical-video-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
@@ -278,7 +301,6 @@
       .platforms-container{transform:translateY(-70px)!important;margin-bottom:-70px!important}
       .release-story-grid,.release-context-grid,.album-intro-grid,.libretto-container,.tracklist-grid,.book-grid,.vertical-video-grid{grid-template-columns:1fr}
       .tracklist-media{position:relative;top:0;margin-bottom:30px}
-      .clientify-box{padding:0;width:100%;overflow:hidden}
       .fab .label{display:none}
     }
     @media (max-width:767px){
@@ -609,9 +631,20 @@
       </div>
 
       <div class="form-grid">
-        <div class="clientify-box">
-          <script type="text/javascript" src="https://api.clientify.net/web-marketing/superforms/script/270040.js"></script>
-        </div>
+        <form class="resena-form" data-resena data-page="resenas" novalidate>
+          <div class="resena-dos resena-pide">
+            <label>Your name<input type="text" name="name" autocomplete="given-name" maxlength="80" required /></label>
+            <label>Your city <small>(optional)</small><input type="text" name="city" autocomplete="address-level2" maxlength="80" /></label>
+          </div>
+          <label class="resena-pide">Your email <small>(never published)</small><input type="email" name="email" autocomplete="email" inputmode="email" maxlength="200" required /></label>
+          <fieldset class="resena-estrellas resena-pide"><legend>Your rating</legend><div><input type="radio" name="rating" id="est5" value="5" checked /><label for="est5" aria-label="5 stars" title="5">★</label><input type="radio" name="rating" id="est4" value="4" /><label for="est4" aria-label="4 stars" title="4">★</label><input type="radio" name="rating" id="est3" value="3" /><label for="est3" aria-label="3 stars" title="3">★</label><input type="radio" name="rating" id="est2" value="2" /><label for="est2" aria-label="2 stars" title="2">★</label><input type="radio" name="rating" id="est1" value="1" /><label for="est1" aria-label="1 stars" title="1">★</label></div></fieldset>
+          <label class="resena-pide">Your review<textarea name="message" rows="5" maxlength="3000" required></textarea></label>
+          <input class="resena-trampa" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <label class="regalo-ok resena-pide"><input type="checkbox" name="acepto" required />
+            <span>I agree to my review being published on this website with my name and city. <a href="../politica-privacidad/index.html">Privacy</a>.</span></label>
+          <button type="submit" class="resena-pide">Send my review</button>
+          <div class="msg" role="status" aria-live="polite"></div>
+        </form>
       </div>
     </div>
   </section>
@@ -845,5 +878,6 @@
     });
   </script>
 <script src="../js/regalo.js" defer></script>
+<script src="../js/resena.js" defer></script>
 </body>
 </html>

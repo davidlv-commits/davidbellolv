@@ -6,6 +6,7 @@
     enabled: false,
     gaLoaded: false,
     clarityLoaded: false,
+    metricoolLoaded: false,
     pageViewSent: false,
     engagementSent: false,
     scrollMilestones: {}
@@ -66,6 +67,22 @@
     })(window, document, "clarity", "script", clarityId);
 
     state.clarityLoaded = true;
+  }
+
+  // Metricool (marca «David Bello - Libros y Música»): estadística web junto a la de redes.
+  // El píxel no usa cookies, pero la política de privacidad lo anuncia como analítica con consentimiento.
+  var METRICOOL_HASH = "518b8b62166b774793276d906202bacc";
+  function loadMetricool() {
+    var hash = config.metricoolHash || METRICOOL_HASH;
+    if (state.metricoolLoaded || !hasValue(hash)) return;
+    state.metricoolLoaded = true;
+    var script = document.createElement("script");
+    script.async = true;
+    script.src = "https://tracker.metricool.com/resources/be.js";
+    script.onload = function () {
+      if (window.beTracker) window.beTracker.t({ hash: hash });
+    };
+    document.head.appendChild(script);
   }
 
   function track(eventName, params) {
@@ -180,6 +197,7 @@
     if (!state.enabled) {
       loadGa();
       loadClarity();
+      loadMetricool();
       state.enabled = true;
     }
 
