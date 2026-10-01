@@ -1,0 +1,15 @@
+.git
+.github
+node_modules
+wrangler.jsonc
+.assetsignore
+.gitignore
+.wrangler
+.DS_Store
+README.md
+# restos del alojamiento antiguo (Hostinger): PHP que aquí no se ejecuta y se servía como texto
+*.php
+.htaccess
+evento-soledad
+s
+scripts
