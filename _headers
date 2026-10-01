@@ -1,0 +1,3 @@
+# El libreto se entrega desde el formulario del regalo: que no aparezca suelto en buscadores.
+/descargas/*
+  X-Robots-Tag: noindex

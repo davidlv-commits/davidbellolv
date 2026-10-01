@@ -490,6 +490,20 @@
     }
     .clientify-box{padding:10px 0;width:100%;text-align:center}
 
+    .regalo-form{text-align:left}
+    .regalo-row{display:flex;gap:8px;flex-wrap:wrap}
+    .regalo-row input{flex:1 1 200px;min-width:0;font:inherit;font-size:1rem;padding:13px 14px;border-radius:10px;border:1px solid #cfc8bb;background:#fff;color:#1c1917}
+    .regalo-row button,.regalo-descarga{font:inherit;font-weight:600;border:0;border-radius:10px;background:var(--color-accent);color:#fff;padding:13px 20px;cursor:pointer}
+    .regalo-row button:disabled{opacity:.6;cursor:default}
+    .regalo-descarga{display:block;text-align:center}
+    .regalo-ok{display:flex;gap:8px;align-items:flex-start;font-size:.8rem;color:#57534e;margin-top:12px;line-height:1.45}
+    .regalo-ok input{margin-top:3px;accent-color:var(--color-accent);flex:0 0 auto}
+    .regalo-ok a{text-decoration:underline}
+    .regalo-form .msg{font-size:.92rem;font-weight:600;margin-top:10px;min-height:1.2em}
+    .regalo-form .msg.err{color:#b91c1c}
+    .regalo-form .msg.done{color:#15803d}
+    .regalo-form [hidden]{display:none!important}
+
     /* VIDEO VERTICAL */
     .vertical-video-section{background:var(--color-bg);padding:80px 0}
     .vertical-video-grid{
@@ -991,10 +1005,16 @@
         </div>
         <div>
           <h3 style="font-family: var(--font-serif); font-size: 2.2rem; margin-bottom: 16px;">Un Regalo para Ti</h3>
-          <p style="margin-bottom: 22px;">Descarga la <strong>Edición Digital</strong>. Incluye las letras completas y anotaciones exclusivas del autor.</p>
-          <div class="clientify-box">
-            <script type="text/javascript" src="https://api.clientify.net/web-marketing/superforms/script/269964.js"></script>
-          </div>
+          <p style="margin-bottom: 22px;">Descarga la <strong>Edición Digital</strong> del libreto: las catorce canciones, con su letra y la historia que hay detrás de cada una.</p>
+          <form class="regalo-form" data-regalo data-page="home" novalidate>
+            <div class="regalo-row regalo-pide">
+              <input type="email" name="email" autocomplete="email" inputmode="email" placeholder="Tu correo" aria-label="Tu correo electrónico" required />
+              <button type="submit">Lo quiero</button>
+            </div>
+            <label class="regalo-ok regalo-pide"><input type="checkbox" required />
+              <span>Acepto recibir novedades de David Bello por correo. Puedo darme de baja cuando quiera. <a href="politica-privacidad/index.html">Privacidad</a>.</span></label>
+            <div class="msg" role="status" aria-live="polite"></div>
+          </form>
         </div>
       </div>
     </div>
@@ -1330,5 +1350,6 @@
     });
   </script>
 
+<script src="js/regalo.js" defer></script>
 </body>
 </html>

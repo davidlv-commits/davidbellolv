@@ -68,7 +68,7 @@
     .social svg{width:22px;height:22px;display:block;margin:0 auto 6px;stroke:var(--gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
     /* regalo */
-    .gift{background:var(--paper);color:#1c1917;border-radius:18px;padding:18px 16px;display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:start}
+    .gift{scroll-margin-top:16px;background:var(--paper);color:#1c1917;border-radius:18px;padding:18px 16px;display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:start}
     .gift img{width:96px;border-radius:8px;box-shadow:0 8px 20px rgba(0,0,0,.28);display:block}
     .gift .t{font-family:var(--serif);font-weight:700;font-size:1.22rem;line-height:1.2}
     .gift p{font-size:.88rem;color:#44403c;margin-top:6px}
@@ -82,6 +82,9 @@
     .ok a{text-decoration:underline}
     .msg{font-size:.9rem;font-weight:600;margin-top:10px;min-height:1.2em}
     .msg.err{color:#b91c1c}.msg.done{color:#15803d}
+    .regalo-descarga{display:block;text-align:center;font-weight:600;border-radius:12px;background:var(--accent);color:#fff;padding:14px 16px;margin-top:4px}
+    .regalo-descarga:hover,.regalo-descarga:focus-visible{background:#b45309;outline:none}
+    [hidden]{display:none!important}
 
     footer{text-align:center;color:var(--muted);font-size:.74rem;margin-top:34px;line-height:1.9}
     footer a{text-decoration:underline;text-underline-offset:2px}
@@ -89,7 +92,7 @@
     @media (prefers-reduced-motion:reduce){.btn,.social a{transition:none}}
   </style>
 </head>
-<body>
+<body data-page="hola">
 <main>
   <div class="head">
     <img class="avatar" src="../img/hola/avatar.jpg" width="112" height="112" alt="David Bello" />
@@ -137,19 +140,19 @@
   </a>
 
   <h2>Un regalo</h2>
-  <div class="gift">
+  <div class="gift" id="regalo">
     <img src="../img/hola/libreto.jpg" width="96" height="136" alt="Portada del libreto de Tú de qué vas, El Musical" />
     <div>
       <div class="t">El libreto del musical</div>
-      <p>Las letras completas y mis notas de cada canción. Estoy terminando la edición nueva, con <em>Libre conmigo</em> y <em>No te querré siempre</em>: déjame tu correo y te lo envío en cuanto salga.</p>
+      <p>Las catorce canciones, con su letra y la historia que hay detrás de cada una. Edición nueva, con <em>Libre conmigo</em> y <em>No te querré siempre</em>. Déjame tu correo y te lo descargas ahora mismo.</p>
     </div>
-    <form id="regalo" novalidate>
-      <div class="row">
+    <form data-regalo data-page="hola" novalidate>
+      <div class="row regalo-pide">
         <input type="email" id="correo" name="email" autocomplete="email" inputmode="email" placeholder="Tu correo" aria-label="Tu correo electrónico" required />
         <button type="submit">Lo quiero</button>
       </div>
-      <label class="ok"><input type="checkbox" id="acepto" required />
-        <span>Acepto recibir el libreto y novedades de David Bello por correo. Puedo darme de baja cuando quiera. <a href="../politica-privacidad/">Privacidad</a>.</span></label>
+      <label class="ok regalo-pide"><input type="checkbox" id="acepto" required />
+        <span>Acepto recibir novedades de David Bello por correo. Puedo darme de baja cuando quiera. <a href="../politica-privacidad/">Privacidad</a>.</span></label>
       <div class="msg" id="msg" role="status" aria-live="polite"></div>
     </form>
   </div>
@@ -170,48 +173,7 @@
   </footer>
 </main>
 
-<script>
-(function () {
-  "use strict";
-  var API = "https://dblv-leads.davidbello.workers.dev/api/v1/leads";
-  var q = new URLSearchParams(location.search);
-  var base = {
-    page: "hola",
-    referrer: document.referrer || "",
-    utm_source: q.get("utm_source") || "", utm_medium: q.get("utm_medium") || "", utm_campaign: q.get("utm_campaign") || "",
-    language: navigator.language || "",
-    timezone: (Intl.DateTimeFormat().resolvedOptions().timeZone) || "",
-    screen: screen.width + "x" + screen.height,
-    device: /Mobi|Android/i.test(navigator.userAgent) ? "mobile" : "desktop",
-    arrived_at: new Date().toISOString()
-  };
-  // Petición «simple» (text/plain, sin credenciales): no necesita preflight y permite saber si llegó.
-  function enviar(extra) {
-    var p = {}; for (var k in base) p[k] = base[k]; for (var e in extra) p[e] = extra[e];
-    p.captured_at = new Date().toISOString();
-    return fetch(API, { method: "POST", mode: "cors", credentials: "omit", keepalive: true,
-                        headers: { "Content-Type": "text/plain;charset=UTF-8" }, body: JSON.stringify(p) })
-      .then(function (r) { return r.ok; }).catch(function () { return false; });
-  }
-  enviar({ source: "visita" });
-  document.querySelectorAll("[data-k]").forEach(function (a) {
-    a.addEventListener("click", function () { enviar({ source: "clic:" + a.getAttribute("data-k") }); });
-  });
-
-  var form = document.getElementById("regalo"), msg = document.getElementById("msg");
-  form.addEventListener("submit", function (ev) {
-    ev.preventDefault();
-    var correo = document.getElementById("correo").value.trim();
-    msg.className = "msg err";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(correo)) { msg.textContent = "Revisa el correo: parece que falta algo."; return; }
-    if (!document.getElementById("acepto").checked) { msg.textContent = "Marca la casilla para poder enviártelo."; return; }
-    var boton = form.querySelector("button"); boton.disabled = true; msg.className = "msg"; msg.textContent = "Enviando…";
-    enviar({ source: "regalo-libreto", email: correo }).then(function (ok) {
-      if (!ok) { boton.disabled = false; msg.className = "msg err"; msg.textContent = "No se pudo enviar. Inténtalo de nuevo en un momento."; return; }
-      msg.className = "msg done"; msg.textContent = "¡Apuntado! Te lo envío en cuanto esté la edición nueva.";
-    });
-  });
-})();
-</script>
+<script src="../js/hub.js" defer></script>
+<script src="../js/regalo.js" defer></script>
 </body>
 </html>

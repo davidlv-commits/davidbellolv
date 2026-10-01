@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Tú de qué vas, El Musical · Escúchalo</title>
+  <meta name="description" content="Tú de qué vas, El Musical: catorce canciones de David Bello. Escucha el álbum y los sencillos en Spotify y Apple Music." />
+  <link rel="canonical" href="https://davidbellolv.com/musical/" />
+  <meta property="og:type" content="music.album" />
+  <meta property="og:title" content="Tú de qué vas, El Musical" />
+  <meta property="og:description" content="Catorce escenas de un mismo viaje. Escucha el álbum y los sencillos." />
+  <meta property="og:image" content="https://davidbellolv.com/img/musical/album.jpg" />
+  <meta property="og:url" content="https://davidbellolv.com/musical/" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg:#0a0a0a; --card:#151312; --card-2:#1c1917; --line:#2c2622;
+      --text:#ece7df; --muted:#a8a097; --accent:#d97706; --gold:#edc26b;
+      --serif:'Playfair Display',serif; --display:'Cinzel',serif; --sans:'Montserrat',system-ui,sans-serif;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{-webkit-text-size-adjust:100%}
+    body{
+      background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.5;
+      background-image:radial-gradient(120% 60% at 50% -10%, rgba(217,119,6,.22), transparent 60%);
+      background-repeat:no-repeat; min-height:100vh;
+    }
+    a{color:inherit;text-decoration:none}
+    main{max-width:560px;margin:0 auto;padding:32px 16px 56px}
+    .head{text-align:center;margin-bottom:22px}
+    .cover{width:min(64vw,260px);height:auto;aspect-ratio:1;border-radius:16px;object-fit:cover;box-shadow:0 22px 50px rgba(0,0,0,.55);border:1px solid var(--line)}
+    h1{font-family:var(--display);font-weight:700;font-size:1.6rem;letter-spacing:.06em;margin-top:20px;line-height:1.2}
+    h1 small{display:block;font-weight:400;font-size:.86rem;letter-spacing:.3em;color:var(--gold);margin-top:6px}
+    .tag{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:1.02rem;margin-top:8px}
+    h2{font-family:var(--display);font-weight:400;font-size:.82rem;letter-spacing:.24em;color:var(--gold);text-transform:uppercase;margin:30px 4px 12px}
+
+    .btn{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-bottom:10px;min-height:68px;transition:transform .12s ease,border-color .12s ease,background .12s ease}
+    a.btn:hover,a.btn:focus-visible{border-color:var(--gold);background:var(--card-2);transform:translateY(-1px);outline:none}
+    .btn .ico{flex:0 0 44px;height:44px;border-radius:12px;background:var(--card-2);border:1px solid var(--line);display:grid;place-items:center;overflow:hidden}
+    .btn .ico img{width:100%;height:100%;object-fit:cover}
+    .btn .ico svg{width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .btn .lbl{flex:1;min-width:0}
+    .btn .a{font-weight:600;font-size:.98rem}
+    .btn .b{color:var(--muted);font-size:.82rem;margin-top:1px}
+    .btn .go{flex:0 0 auto;color:var(--muted);font-size:1.1rem}
+    .btn.main{background:var(--accent);border-color:var(--accent)}
+    .btn.main .b,.btn.main .go{color:rgba(255,255,255,.85)}
+    .btn.main .ico{background:rgba(0,0,0,.18);border-color:rgba(255,255,255,.25)}
+    .btn.main .ico svg{stroke:#fff}
+    a.btn.main:hover,a.btn.main:focus-visible{background:#b45309;border-color:#fff}
+
+    /* sencillos: una fila con dos destinos */
+    .pair{flex:0 0 auto;display:flex;gap:6px}
+    .pair a{font-size:.76rem;font-weight:600;border:1px solid var(--line);border-radius:999px;padding:9px 12px;color:var(--text);background:var(--card-2);transition:border-color .12s ease}
+    .pair a:hover,.pair a:focus-visible{border-color:var(--gold);outline:none}
+
+    footer{text-align:center;color:var(--muted);font-size:.74rem;margin-top:34px;line-height:1.9}
+    footer a{text-decoration:underline;text-underline-offset:2px}
+    .web{display:inline-block;margin-top:6px;font-family:var(--display);letter-spacing:.14em;color:var(--gold);text-decoration:none}
+    @media (max-width:480px){.pair{flex-direction:column}.pair a{padding:6px 12px;text-align:center}}
+    @media (prefers-reduced-motion:reduce){.btn,.pair a{transition:none}}
+  </style>
+</head>
+<body data-page="musical">
+<main>
+  <div class="head">
+    <img class="cover" src="../img/musical/album.jpg" width="720" height="720" alt="Portada del álbum Tú de qué vas, El Musical" />
+    <h1>TÚ DE QUÉ VAS<small>EL MUSICAL</small></h1>
+    <p class="tag">Catorce escenas de un mismo viaje</p>
+  </div>
+
+  <h2>El álbum</h2>
+  <a class="btn main" data-k="album-spotify" target="_blank" rel="noopener" href="https://open.spotify.com/album/3O7kN7Wb8Bhtrz1ZEGivMY">
+    <span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 10c3-1 6-.7 8.500 .8M8.500 13c2.300-.7 4.600-.4 6.500 .7M9 16c1.700-.4 3.300-.2 4.700 .6"/></svg></span>
+    <span class="lbl"><div class="a">Escuchar en Spotify</div><div class="b">El álbum completo</div></span><span class="go">›</span>
+  </a>
+  <a class="btn" data-k="album-apple" target="_blank" rel="noopener" href="https://music.apple.com/us/album/t%C3%BA-de-qu%C3%A9-vas/1861250197">
+    <span class="ico"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+    <span class="lbl"><div class="a">Escuchar en Apple Music</div><div class="b">El álbum completo</div></span><span class="go">›</span>
+  </a>
+
+  <h2>Los sencillos</h2>
+  <div class="btn">
+    <span class="ico"><img src="../img/musical/ntqs.jpg" width="88" height="88" alt="" /></span>
+    <span class="lbl"><div class="a">No te querré siempre</div><div class="b">Sencillo</div></span>
+    <span class="pair">
+      <a data-k="ntqs-spotify" target="_blank" rel="noopener" href="https://open.spotify.com/album/2XVm8EkY7tadPJmRhMOX0f" aria-label="No te querré siempre en Spotify">Spotify</a>
+      <a data-k="ntqs-apple" target="_blank" rel="noopener" href="https://music.apple.com/us/album/no-te-querr%C3%A9-siempre-single/1876539482" aria-label="No te querré siempre en Apple Music">Apple</a>
+    </span>
+  </div>
+  <div class="btn">
+    <span class="ico"><img src="../img/musical/libre.jpg" width="88" height="88" alt="" /></span>
+    <span class="lbl"><div class="a">Libre conmigo</div><div class="b">Sencillo</div></span>
+    <span class="pair">
+      <a data-k="libre-spotify" target="_blank" rel="noopener" href="https://open.spotify.com/album/5dvuDbyoaRmZQiXPf1uI1g" aria-label="Libre conmigo en Spotify">Spotify</a>
+      <a data-k="libre-apple" target="_blank" rel="noopener" href="https://music.apple.com/us/album/libre-conmigo/1891114986?i=1891115137" aria-label="Libre conmigo en Apple Music">Apple</a>
+    </span>
+  </div>
+
+  <h2>Míralo</h2>
+  <a class="btn" data-k="videoclip-carta" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=jVmXHY6X0vQ">
+    <span class="ico"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z"/></svg></span>
+    <span class="lbl"><div class="a">La carta más bonita del mundo</div><div class="b">El videoclip, en YouTube</div></span><span class="go">›</span>
+  </a>
+
+  <h2>La historia</h2>
+  <a class="btn" data-k="libreto" href="../hola/#regalo">
+    <span class="ico"><img src="../img/hola/libreto.jpg" alt="" /></span>
+    <span class="lbl"><div class="a">El libreto, de regalo</div><div class="b">Las letras y la historia de cada canción</div></span><span class="go">›</span>
+  </a>
+  <a class="btn" data-k="novela-amazon" target="_blank" rel="noopener" href="https://amzn.eu/d/hEMYm7o">
+    <span class="ico"><img src="../img/hola/novela.jpg" alt="" /></span>
+    <span class="lbl"><div class="a">Tú de qué vas, la novela</div><div class="b">Consíguela en Amazon</div></span><span class="go">›</span>
+  </a>
+  <a class="btn" data-k="hola" href="../hola/">
+    <span class="ico"><img src="../img/hola/avatar.jpg" alt="" /></span>
+    <span class="lbl"><div class="a">David Bello</div><div class="b">Todo lo que hago, en un solo sitio</div></span><span class="go">›</span>
+  </a>
+
+  <footer>
+    <a class="web" href="../">DAVIDBELLOLV.COM</a><br />
+    <a href="../aviso-legal/">Aviso legal</a> · <a href="../politica-privacidad/">Privacidad</a> · <a href="../cookies/">Cookies</a><br />
+    Esta página no usa cookies. Solo cuenta visitas y clics de forma agregada.
+  </footer>
+</main>
+
+<script src="../js/hub.js" defer></script>
+</body>
+</html>

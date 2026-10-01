@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /descargas/
 
 Sitemap: https://davidbellolv.com/sitemap.xml
