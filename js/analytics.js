@@ -70,7 +70,8 @@
   }
 
   // Metricool (marca «David Bello - Libros y Música»): estadística web junto a la de redes.
-  // El píxel no usa cookies, pero la política de privacidad lo anuncia como analítica con consentimiento.
+  // El píxel no usa cookies ni guarda nada en el dispositivo: cuenta todas las visitas, sin esperar
+  // al aviso de cookies (así lo recoge la política de privacidad desde el 1-oct-2026).
   var METRICOOL_HASH = "518b8b62166b774793276d906202bacc";
   function loadMetricool() {
     var hash = config.metricoolHash || METRICOOL_HASH;
@@ -197,12 +198,13 @@
     if (!state.enabled) {
       loadGa();
       loadClarity();
-      loadMetricool();
       state.enabled = true;
     }
 
     trackPageView(meta || {});
   }
+
+  loadMetricool();
 
   window.TDQVAnalytics = {
     applyConsent: applyConsent,
