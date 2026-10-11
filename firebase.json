@@ -1,0 +1,29 @@
+{
+  "hosting": {
+    "site": "davidbellolv",
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      ".firebaserc",
+      "**/.*",
+      "**/.*/**",
+      "**/node_modules/**",
+      "README.md",
+      "wrangler.jsonc",
+      "_headers",
+      "**/*.php",
+      "evento-soledad/**",
+      "s/**",
+      "scripts/**",
+      "functions/**",
+      "docs/**"
+    ],
+    "trailingSlash": true,
+    "headers": [
+      {
+        "source": "/descargas/**",
+        "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }]
+      }
+    ]
+  }
+}

@@ -6,3 +6,5 @@
 !.dev.vars.example
 .env*
 !.env.example
+# caché local del despliegue en Google
+.firebase/

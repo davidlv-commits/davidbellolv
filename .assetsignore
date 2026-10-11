@@ -14,3 +14,9 @@ README.md
 evento-soledad
 s
 scripts
+# alojamiento en Google (Firebase Hosting): su configuración no es parte de la web
+firebase.json
+.firebaserc
+docs
+functions
+.firebase
