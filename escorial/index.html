@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>El Escorial por dentro · Guía de David Bello</title>
+  <meta name="description" content="Qué ver en el Monasterio de El Escorial, horarios, precios y cómo llegar, con el vídeo del recorrido completo por la basílica de Felipe II." />
+  <link rel="canonical" href="https://davidbellolv.com/escorial/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="El Escorial por dentro · La guía" />
+  <meta property="og:description" content="Lo que no te puedes perder en el Monasterio de El Escorial, horarios, precios y cómo llegar." />
+  <meta property="og:image" content="https://davidbellolv.com/img/escorial/portada.jpg" />
+  <meta property="og:url" content="https://davidbellolv.com/escorial/" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg:#0a0a0a; --card:#151312; --card-2:#1c1917; --line:#2c2622;
+      --text:#ece7df; --muted:#a8a097; --accent:#d97706; --gold:#edc26b;
+      --serif:'Playfair Display',serif; --display:'Cinzel',serif; --sans:'Montserrat',system-ui,sans-serif;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{-webkit-text-size-adjust:100%}
+    body{
+      background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.55;
+      background-image:radial-gradient(120% 50% at 50% -10%, rgba(217,119,6,.20), transparent 60%);
+      background-repeat:no-repeat; min-height:100vh;
+    }
+    a{color:inherit}
+    main{max-width:640px;margin:0 auto;padding:30px 16px 56px}
+    .back{display:inline-block;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-decoration:none;margin-bottom:18px}
+    .k{font-family:var(--display);font-size:.78rem;letter-spacing:.24em;color:var(--gold);text-transform:uppercase}
+    h1{font-family:var(--display);font-weight:700;font-size:clamp(1.7rem,6vw,2.3rem);letter-spacing:.04em;line-height:1.15;margin-top:6px;text-wrap:balance}
+    .lead{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:1.06rem;margin-top:8px}
+    h2{font-family:var(--display);font-weight:400;font-size:.86rem;letter-spacing:.24em;color:var(--gold);text-transform:uppercase;margin:38px 2px 14px}
+
+    /* vídeo: no se carga YouTube hasta que se pulsa */
+    .video{position:relative;display:block;width:100%;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#000;border:1px solid var(--line);margin-top:22px;cursor:pointer;padding:0}
+    .video img{width:100%;height:100%;object-fit:cover;display:block}
+    .video .play{position:absolute;inset:0;display:grid;place-items:center}
+    .video .play span{width:70px;height:70px;border-radius:50%;background:rgba(10,10,10,.62);border:2px solid #fff;display:grid;place-items:center;backdrop-filter:blur(4px)}
+    .video .play svg{width:28px;height:28px;margin-left:4px;fill:#fff}
+    .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .vnote{color:var(--muted);font-size:.76rem;margin-top:8px}
+    .vnote a{color:var(--gold)}
+
+    /* paradas */
+    .stop{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:14px}
+    .stop img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;display:block}
+    .stop .txt{padding:14px 16px 16px}
+    .stop .n{font-family:var(--display);color:var(--gold);font-size:.72rem;letter-spacing:.2em}
+    .stop h3{font-family:var(--serif);font-weight:700;font-size:1.24rem;line-height:1.25;margin-top:2px}
+    .stop p{color:#cfc8bd;font-size:.93rem;margin-top:6px}
+    .also{color:#cfc8bd;font-size:.93rem;padding:0 4px}
+
+    /* datos prácticos */
+    .facts{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:6px 16px}
+    .fact{display:grid;grid-template-columns:104px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+    .fact:last-child{border-bottom:0}
+    .fact dt{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);padding-top:3px}
+    .fact dd{font-size:.94rem}
+    .fact dd small{display:block;color:var(--muted);font-size:.8rem;margin-top:2px}
+    .num{font-variant-numeric:tabular-nums}
+    .src{color:var(--muted);font-size:.76rem;margin-top:10px;padding:0 4px}
+    .src a{color:var(--gold)}
+    ul.tips{list-style:none;display:grid;gap:10px}
+    ul.tips li{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:.93rem}
+
+    /* llamadas */
+    .btn{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-bottom:10px;min-height:64px;text-decoration:none;transition:border-color .12s ease,background .12s ease}
+    .btn:hover,.btn:focus-visible{border-color:var(--gold);background:var(--card-2);outline:none}
+    .btn .ico{flex:0 0 42px;height:42px;border-radius:12px;background:var(--card-2);border:1px solid var(--line);display:grid;place-items:center}
+    .btn .ico svg{width:21px;height:21px;stroke:var(--gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .btn .a{font-weight:600;font-size:.97rem}
+    .btn .b{color:var(--muted);font-size:.82rem}
+    .btn .lbl{flex:1;min-width:0}
+    .btn .go{color:var(--muted);font-size:1.1rem}
+
+    footer{text-align:center;color:var(--muted);font-size:.74rem;margin-top:34px;line-height:1.9}
+    footer a{text-underline-offset:2px}
+    .web{display:inline-block;margin-top:6px;font-family:var(--display);letter-spacing:.14em;color:var(--gold);text-decoration:none}
+    @media (max-width:420px){.fact{grid-template-columns:1fr;gap:2px}}
+    @media (prefers-reduced-motion:reduce){.btn{transition:none}}
+  </style>
+</head>
+<body data-page="escorial">
+<main>
+  <a class="back" href="../hola/" data-k="volver-hola">‹ Todo mi universo</a>
+  <div class="k">Cuaderno de bitácora · Guía</div>
+  <h1>El Escorial por dentro</h1>
+  <p class="lead">Lo que no te puedes perder en el monasterio de Felipe II, y cómo organizar la visita.</p>
+
+  <button class="video" id="video" type="button" data-k="video-play" aria-label="Reproducir el vídeo El Escorial por dentro">
+    <img src="../img/escorial/portada.jpg" width="1280" height="720" alt="David Bello ante el retablo mayor de la basílica de El Escorial" />
+    <span class="play"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></span>
+  </button>
+  <p class="vnote">El recorrido completo en 4 minutos. Al darle al play se carga YouTube. <a href="https://youtu.be/F7TCGBgNzwc" target="_blank" rel="noopener" data-k="video-youtube">Verlo en YouTube</a></p>
+
+  <h2>Lo imprescindible</h2>
+
+  <article class="stop">
+    <img src="../img/escorial/patio.jpg" width="1280" height="720" loading="lazy" alt="El Patio de los Reyes con la fachada de la basílica y sus dos torres" />
+    <div class="txt"><div class="n">01</div><h3>El Patio de los Reyes</h3>
+      <p>Es la puerta de la visita. Al fondo, la fachada de la basílica y, sobre ella, seis reyes de Judá de Juan Bautista Monegro: de granito, con las cabezas y las manos de mármol.</p></div>
+  </article>
+
+  <article class="stop">
+    <img src="../img/escorial/david.jpg" width="1280" height="720" loading="lazy" alt="La estatua del rey David, con su arpa y su nombre en el pedestal" />
+    <div class="txt"><div class="n">02</div><h3>Busca a David</h3>
+      <p>Josafat, Ezequías, David, Salomón, Josías y Manasés. El que lleva arpa tiene su nombre en el pedestal. Mi tocayo lleva más de cuatro siglos esperando ahí arriba: no te vayas sin saludarle.</p></div>
+  </article>
+
+  <article class="stop">
+    <img src="../img/escorial/basilica.jpg" width="1280" height="720" loading="lazy" alt="La puerta de la basílica se abre a la nave y al retablo mayor" />
+    <div class="txt"><div class="n">03</div><h3>La basílica</h3>
+      <p>Planta de cruz griega, pilares colosales y una cúpula a más de noventa metros del suelo. Por fuera todo es granito; por dentro, el color: casi todas las bóvedas las pintó al fresco Luca Giordano a finales del siglo XVII.</p></div>
+  </article>
+
+  <article class="stop">
+    <img src="../img/escorial/cupula.jpg" width="1280" height="720" loading="lazy" alt="La cúpula de la basílica vista desde abajo" />
+    <div class="txt"><div class="n">04</div><h3>Mira hacia arriba</h3>
+      <p>Ponte debajo del crucero y levanta la vista: la cúpula y las pechinas pintadas son de las mejores fotos de la visita (sin flash, que no se permite).</p></div>
+  </article>
+
+  <article class="stop">
+    <img src="../img/escorial/retablo.jpg" width="1280" height="720" loading="lazy" alt="El retablo mayor de la basílica, de jaspes, mármoles y bronce dorado" />
+    <div class="txt"><div class="n">05</div><h3>El retablo mayor</h3>
+      <p>Unos veintiséis metros de jaspes, mármoles y bronce dorado. Lo trazó Juan de Herrera, con esculturas de Pompeo Leoni y lienzos de Tibaldi y Zuccaro.</p></div>
+  </article>
+
+  <article class="stop">
+    <img src="../img/escorial/cenotafios.jpg" width="1280" height="720" loading="lazy" alt="El oratorio con el cenotafio de bronce dorado junto al altar mayor" />
+    <div class="txt"><div class="n">06</div><h3>Los cenotafios y el Panteón</h3>
+      <p>A los lados del altar, en bronce dorado y de rodillas, Carlos V y Felipe II con sus familias, mirando al altar para siempre. Y bajo ese altar, en el Panteón de Reyes, descansan casi todos los reyes de España desde Carlos I.</p></div>
+  </article>
+
+  <article class="stop">
+    <img src="../img/escorial/cristo.jpg" width="1280" height="720" loading="lazy" alt="El Cristo de mármol blanco de Benvenuto Cellini" />
+    <div class="txt"><div class="n">07</div><h3>El Cristo de Cellini</h3>
+      <p>Mármol de Carrara, 1559–1562. Benvenuto Cellini lo talló para su propia tumba y acabó aquí, regalo de los Médici a Felipe II. Está en una capilla lateral: mucha gente pasa de largo.</p></div>
+  </article>
+
+  <article class="stop">
+    <img src="../img/escorial/jardines.jpg" width="1280" height="720" loading="lazy" alt="Los Jardines de los Frailes con la cúpula al fondo" />
+    <div class="txt"><div class="n">08</div><h3>Los Jardines de los Frailes</h3>
+      <p>Para terminar: boj recortado, estanques y la cúpula vigilando desde arriba. En esta temporada abren hasta las 18:00.</p></div>
+  </article>
+
+  <p class="also">La entrada general también incluye espacios como la Biblioteca, las Salas Capitulares o los Palacios de los Austrias y de los Borbones. Algún día puede haber salas cerradas: compruébalo antes de ir.</p>
+
+  <h2>Planifica la visita</h2>
+  <dl class="facts">
+    <div class="fact"><dt>Horario</dt><dd class="num">Martes a domingo, de 10:00 a 18:00<small>Taquillas y último acceso: 16:45 · Lunes cerrado</small></dd></div>
+    <div class="fact"><dt>Entrada</dt><dd class="num">14 € general · 7 € reducida<small>Guía, 8 € más · audioguía, 5 € más</small></dd></div>
+    <div class="fact"><dt>Gratis</dt><dd class="num">Miércoles y domingos, de 15:00 a 18:00<small>Con las condiciones de Patrimonio Nacional</small></dd></div>
+    <div class="fact"><dt>Novedad</dt><dd>Los Museos de Pintura y Arquitectura, gratis hasta el 31 de diciembre de 2026<small>Ya incluidos en la entrada general</small></dd></div>
+    <div class="fact"><dt>Entradas</dt><dd>Online en <a href="https://tickets.patrimonionacional.es" target="_blank" rel="noopener" data-k="entradas">tickets.patrimonionacional.es</a><small>O en el Centro de Recepción de Visitantes: Av. Don Juan de Borbón y Battenberg, 4 (frente a la fachada norte)</small></dd></div>
+    <div class="fact"><dt>Se entra</dt><dd>Por el Patio de Reyes (fachada oeste), si vas por tu cuenta</dd></div>
+  </dl>
+  <p class="src">Horario de octubre a marzo. Datos de <a href="https://www.patrimonionacional.es/visita/real-monasterio-de-san-lorenzo-de-el-escorial" target="_blank" rel="noopener" data-k="web-oficial">Patrimonio Nacional</a>, consultados el 16 de octubre de 2026. En verano cambian: compruébalos antes de ir.</p>
+
+  <h2>Cómo llegar</h2>
+  <dl class="facts">
+    <div class="fact"><dt>Tren</dt><dd>Cercanías C-8, Madrid–El Escorial</dd></div>
+    <div class="fact"><dt>Autobús</dt><dd class="num">Líneas 661 y 664 desde el intercambiador de Moncloa</dd></div>
+    <div class="fact"><dt>Coche</dt><dd class="num">A-6 hasta la salida 29 y luego la M-505</dd></div>
+  </dl>
+
+  <h2>Mis consejos</h2>
+  <ul class="tips">
+    <li>Saca la entrada por internet y ve sin mochila: dentro no la quieren y vas más cómodo.</li>
+    <li>Fotos sí, pero sin flash, trípode ni palo selfie: son las normas de la visita.</li>
+    <li>Antes de entrar, busca a David en la fachada. Ya me contarás si lo encuentras. 😉</li>
+  </ul>
+
+  <h2>Seguimos</h2>
+  <a class="btn" data-k="youtube-canal" target="_blank" rel="noopener" href="https://youtube.com/@davidbellolopez-valeiras24?sub_confirmation=1">
+    <span class="ico"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z"/></svg></span>
+    <span class="lbl"><div class="a">Suscríbete en YouTube</div><div class="b">Más lugares con historia, contados por dentro</div></span><span class="go">›</span>
+  </a>
+  <a class="btn" data-k="instagram" target="_blank" rel="noopener" href="https://www.instagram.com/davidbellolv/">
+    <span class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></span>
+    <span class="lbl"><div class="a">Sígueme en Instagram</div><div class="b">@davidbellolv · el Cuaderno de bitácora, cada semana</div></span><span class="go">›</span>
+  </a>
+  <a class="btn" data-k="hola" href="../hola/">
+    <span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
+    <span class="lbl"><div class="a">Todo mi universo</div><div class="b">Rutas, música y novelas</div></span><span class="go">›</span>
+  </a>
+
+  <footer>
+    <a class="web" href="../">DAVIDBELLOLV.COM</a><br />
+    <a href="../aviso-legal/">Aviso legal</a> · <a href="../politica-privacidad/">Privacidad</a> · <a href="../cookies/">Cookies</a><br />
+    Esta página no usa cookies. Solo cuenta visitas y clics de forma agregada.<br />
+    El vídeo de YouTube solo se carga si le das al play.
+  </footer>
+</main>
+
+<script>
+  // El vídeo: hasta que se pulsa no se carga nada de YouTube.
+  document.getElementById('video').addEventListener('click', function () {
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/F7TCGBgNzwc?autoplay=1&rel=0';
+    f.title = 'El Escorial por dentro';
+    f.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen';
+    f.allowFullscreen = true;
+    this.replaceChildren(f);
+    this.style.cursor = 'default';
+  }, { once: true });
+</script>
+<script src="../js/hub.js" defer></script>
+</body>
+</html>
