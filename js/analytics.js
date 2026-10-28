@@ -69,21 +69,18 @@
     state.clarityLoaded = true;
   }
 
-  // Metricool (marca «David Bello - Libros y Música»): estadística web junto a la de redes.
-  // El píxel no usa cookies ni guarda nada en el dispositivo: cuenta todas las visitas, sin esperar
-  // al aviso de cookies (así lo recoge la política de privacidad desde el 1-oct-2026).
-  var METRICOOL_HASH = "518b8b62166b774793276d906202bacc";
+  // Contador propio (28-oct-2026; sustituye al píxel de Metricool, dado de baja): al cargar cada página se manda
+  // a nuestro servidor la ruta y de qué sitio se llega. Sin cookies, sin guardar nada en el dispositivo, sin IP:
+  // solo cuentas por día. Por eso funciona aunque se rechacen las cookies (así lo recoge la política de privacidad).
+  var COUNTER_URL = "https://dblv-studio.davidbello.workers.dev/w/visita";
   function loadMetricool() {
-    var hash = config.metricoolHash || METRICOOL_HASH;
-    if (state.metricoolLoaded || !hasValue(hash)) return;
+    if (state.metricoolLoaded) return;
     state.metricoolLoaded = true;
-    var script = document.createElement("script");
-    script.async = true;
-    script.src = "https://tracker.metricool.com/resources/be.js";
-    script.onload = function () {
-      if (window.beTracker) window.beTracker.t({ hash: hash });
-    };
-    document.head.appendChild(script);
+    try {
+      var body = JSON.stringify({ p: window.location.pathname, r: document.referrer || "" });
+      if (navigator.sendBeacon) navigator.sendBeacon(COUNTER_URL, new Blob([body], { type: "text/plain" }));
+      else fetch(COUNTER_URL, { method: "POST", body: body, keepalive: true, mode: "cors" });
+    } catch (e) { /* sin contar esta visita */ }
   }
 
   function track(eventName, params) {
