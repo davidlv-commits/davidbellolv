@@ -84,6 +84,26 @@
     .msg.err{color:#b91c1c}.msg.done{color:#15803d}
     .regalo-descarga{display:block;text-align:center;font-weight:600;border-radius:12px;background:var(--accent);color:#fff;padding:14px 16px;margin-top:4px}
     .regalo-descarga:hover,.regalo-descarga:focus-visible{background:#b45309;outline:none}
+
+    /* aviso de estrenos */
+    .aviso{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:12px}
+    .aviso .t{font-weight:600;font-size:.95rem;margin-bottom:8px}
+    .aviso input[type=email]{flex:1;min-width:0;font:inherit;font-size:1rem;padding:11px 13px;border-radius:12px;border:1px solid var(--line);background:#fff;color:#1c1917}
+    .aviso button{font:inherit;font-weight:600;border:0;border-radius:12px;background:var(--accent);color:#fff;padding:11px 14px;cursor:pointer;white-space:nowrap}
+    .aviso .ok{color:var(--muted)}
+    .aviso .msg.done{color:#4ade80}
+
+    /* ¿te vas sin tu regalo? */
+    .salida{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.62);display:flex;align-items:center;justify-content:center;padding:16px}
+    .salida .caja{position:relative;background:var(--paper);color:#1c1917;border-radius:18px;padding:20px 18px 14px;max-width:380px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.45)}
+    .salida img{width:80px;border-radius:8px;box-shadow:0 8px 20px rgba(0,0,0,.28);margin:0 auto 10px;display:block}
+    .salida .t{font-family:var(--serif);font-weight:700;font-size:1.3rem;line-height:1.2}
+    .salida p{font-size:.88rem;color:#44403c;margin:6px 0 12px}
+    .salida input[type=email]{flex:1;min-width:0;font:inherit;font-size:1rem;padding:12px 14px;border-radius:12px;border:1px solid #cfc8bb;background:#fff;color:#1c1917}
+    .salida button[type=submit]{font:inherit;font-weight:600;border:0;border-radius:12px;background:var(--accent);color:#fff;padding:12px 16px;cursor:pointer;white-space:nowrap}
+    .salida .ok{text-align:left}
+    .salida .cerrar{position:absolute;top:6px;right:10px;border:0;background:none;font-size:1.6rem;line-height:1;color:#78716c;cursor:pointer}
+    .salida .seguir{display:inline-block;margin-top:8px;font-size:.82rem;color:#78716c;text-decoration:underline}
     [hidden]{display:none!important}
 
     footer{text-align:center;color:var(--muted);font-size:.74rem;margin-top:34px;line-height:1.9}
@@ -100,22 +120,56 @@
     <p class="tag">Lugares con historia, canciones y novelas</p>
   </div>
 
+  <h2>Un regalo para ti</h2>
+  <div class="gift" id="regalo">
+    <img src="../img/hola/libreto.jpg" width="96" height="136" alt="Portada del libreto de Tú de qué vas, El Musical" />
+    <div>
+      <div class="t">El libreto del musical</div>
+      <p>Las catorce canciones, con su letra y la historia que hay detrás de cada una. Edición nueva, con <em>Libre conmigo</em> y <em>No te querré siempre</em>. Déjame tu correo y te lo descargas ahora mismo.</p>
+    </div>
+    <form data-regalo data-page="hola" novalidate>
+      <div class="row regalo-pide">
+        <input type="email" id="correo" name="email" autocomplete="email" inputmode="email" placeholder="Tu correo" aria-label="Tu correo electrónico" required />
+        <button type="submit">Lo quiero</button>
+      </div>
+      <label class="ok regalo-pide"><input type="checkbox" id="acepto" required />
+        <span>Acepto recibir novedades de David Bello por correo. Puedo darme de baja cuando quiera. <a href="../politica-privacidad/">Privacidad</a>.</span></label>
+      <div class="msg" id="msg" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+
   <!-- DESTACADO: se cambia en cada estreno (texto, imagen y enlace) -->
-  <a class="feature" id="destacado" data-k="destacado-grand-model-star" target="_blank" rel="noopener"
-     href="https://www.youtube.com/watch?v=J6OIATJxeYk">
+  <a class="feature" id="destacado" data-k="destacado-spring-colors" target="_blank" rel="noopener"
+     href="https://www.youtube.com/watch?v=VbmECRXBm9k">
     <div class="thumb">
-      <img src="../img/hola/grand-model-star.jpg" width="1280" height="720" alt="Corona y título de Grand Model Star 2026" />
+      <img src="../img/hola/spring-colors.jpg" width="1280" height="720" alt="David Bello en la pasarela de Spring Colors Madrid 2026" />
       <span class="badge">Estreno</span>
       <span class="play"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></span>
     </div>
     <div class="txt">
       <div class="k">Película · YouTube</div>
-      <div class="t">Grand Model Star 2026 · La película</div>
-      <div class="d">Catorce candidatas, una sola corona. Las pasadas, las actuaciones en directo y el momento del fallo, en los Salones Venecia de Madrid.</div>
+      <div class="t">Spring Colors Madrid 2026 · La película</div>
+      <div class="d">Nueve firmas, el Ballet Dominicano en Europa y una capa pintada en directo, en el Hotel Meliá Princesa.</div>
     </div>
   </a>
 
+  <!-- Aviso de estrenos (31-oct-2026, idea aprobada por David) -->
+  <form class="aviso" data-aviso data-page="hola" novalidate>
+    <div class="t">Avísame del próximo estreno</div>
+    <div class="row">
+      <input type="email" name="email" autocomplete="email" inputmode="email" placeholder="Tu correo" aria-label="Tu correo electrónico" required />
+      <button type="submit">Avísame</button>
+    </div>
+    <label class="ok"><input type="checkbox" required />
+      <span>Acepto recibir novedades de David Bello por correo. Puedo darme de baja cuando quiera. <a href="../politica-privacidad/">Privacidad</a>.</span></label>
+    <div class="msg" role="status" aria-live="polite"></div>
+  </form>
+
   <h2>Películas</h2>
+  <a class="btn" data-k="grand-model-star" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=J6OIATJxeYk">
+    <span class="ico"><img src="../img/hola/grand-model-star.jpg" alt="" /></span>
+    <span class="lbl"><div class="a">Grand Model Star 2026</div><div class="b">El concurso de modelos de Caluga en los Salones Venecia</div></span><span class="go">›</span>
+  </a>
   <a class="btn" data-k="atelier-couture" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=RqhCgQqUiSw">
     <span class="ico"><img src="../img/hola/atelier-couture.jpg" alt="" /></span>
     <span class="lbl"><div class="a">Atelier Couture 2026</div><div class="b">Semana de la Moda de Madrid en la Real Fábrica de Tapices</div></span><span class="go">›</span>
@@ -175,24 +229,6 @@
     <span class="lbl"><div class="a">El universo completo</div><div class="b">Canciones, videoclips y la historia detrás</div></span><span class="go">›</span>
   </a>
 
-  <h2>Un regalo</h2>
-  <div class="gift" id="regalo">
-    <img src="../img/hola/libreto.jpg" width="96" height="136" alt="Portada del libreto de Tú de qué vas, El Musical" />
-    <div>
-      <div class="t">El libreto del musical</div>
-      <p>Las catorce canciones, con su letra y la historia que hay detrás de cada una. Edición nueva, con <em>Libre conmigo</em> y <em>No te querré siempre</em>. Déjame tu correo y te lo descargas ahora mismo.</p>
-    </div>
-    <form data-regalo data-page="hola" novalidate>
-      <div class="row regalo-pide">
-        <input type="email" id="correo" name="email" autocomplete="email" inputmode="email" placeholder="Tu correo" aria-label="Tu correo electrónico" required />
-        <button type="submit">Lo quiero</button>
-      </div>
-      <label class="ok regalo-pide"><input type="checkbox" id="acepto" required />
-        <span>Acepto recibir novedades de David Bello por correo. Puedo darme de baja cuando quiera. <a href="../politica-privacidad/">Privacidad</a>.</span></label>
-      <div class="msg" id="msg" role="status" aria-live="polite"></div>
-    </form>
-  </div>
-
   <h2>Sígueme</h2>
   <div class="social">
     <a data-k="instagram" target="_blank" rel="noopener" href="https://www.instagram.com/davidbellolv/"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg>Instagram</a>
@@ -210,6 +246,27 @@
 </main>
 
 <script src="../js/hub.js" defer></script>
+
+<!-- ¿Te vas sin tu regalo? (31-oct-2026): sale una vez si aún no lo has pedido, al ir al vídeo o al salir de la página -->
+<div class="salida" id="salida" hidden role="dialog" aria-modal="true" aria-labelledby="salida-t">
+  <div class="caja">
+    <button class="cerrar" type="button" data-cerrar aria-label="Cerrar">×</button>
+    <img src="../img/hola/libreto.jpg" width="80" height="113" alt="" />
+    <div class="t" id="salida-t">¿Te vas sin tu regalo?</div>
+    <p>El libreto del musical, gratis: las catorce canciones con su letra y la historia de cada una.</p>
+    <form data-regalo data-page="hola-salida" novalidate>
+      <div class="row regalo-pide">
+        <input type="email" name="email" autocomplete="email" inputmode="email" placeholder="Tu correo" aria-label="Tu correo electrónico" required />
+        <button type="submit">Lo quiero</button>
+      </div>
+      <label class="ok regalo-pide"><input type="checkbox" required />
+        <span>Acepto recibir novedades de David Bello por correo. Puedo darme de baja cuando quiera. <a href="../politica-privacidad/">Privacidad</a>.</span></label>
+      <div class="msg" role="status" aria-live="polite"></div>
+    </form>
+    <a class="seguir" href="#" data-seguir>No, gracias</a>
+  </div>
+</div>
 <script src="../js/regalo.js" defer></script>
+<script src="../js/salida.js" defer></script>
 </body>
 </html>
