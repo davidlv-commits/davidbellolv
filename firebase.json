@@ -22,7 +22,21 @@
     "headers": [
       {
         "source": "/descargas/**",
-        "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }]
+        "headers": [
+          {
+            "key": "X-Robots-Tag",
+            "value": "noindex"
+          }
+        ]
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/t/**",
+        "function": {
+          "functionId": "tarjeta",
+          "region": "europe-west1"
+        }
       }
     ]
   }
